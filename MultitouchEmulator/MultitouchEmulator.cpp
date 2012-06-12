@@ -11,7 +11,8 @@
 using namespace cv;
 
 #define HOMOGRAPHY
-#define CAMa
+//#define JUST_PHOTO
+//#define CAM
 
 
 void onMouse(int event, int x, int y, int flags, void* param)
@@ -27,6 +28,25 @@ void onMouse(int event, int x, int y, int flags, void* param)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+
+#ifdef JUST_PHOTO
+  VideoCapture cap(0); // open the default camera
+  if(!cap.isOpened())  // check if we succeeded
+    return -1;
+
+  cv::Mat frame;
+  while (true)
+  {
+    cap >> frame;
+    imshow("frame", frame);
+    if(waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
+
+  imwrite("photo.jpg", frame);
+#endif
 
 #ifdef HOMOGRAPHY
   VideoCapture cap(0); // open the default camera
@@ -71,7 +91,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     erode(binary, binary, strel);
     dilate(binary, binary, strel);
-    
+
     dilate(binary, binary, strel);
     erode(binary, binary, strel);
 
@@ -79,14 +99,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
     ss.findScreenAtBinaryImage(binary);
     std::vector<cv::Point> cor = ss.getCorners();
-    
+
     std::vector<cv::Point>::iterator begin, end;
-  /*      std::vector<cv::Point> scre = ss.getScreen();
+    /*      std::vector<cv::Point> scre = ss.getScreen();
     end = scre.end();
     for (begin = scre.begin(); begin != end; ++begin)
     {
-      //std::cout << begin->x << " " <<begin->y << " ! ";
-      circle(gray, *begin, 10, cv::Scalar(0,255,0), 10);
+    //std::cout << begin->x << " " <<begin->y << " ! ";
+    circle(gray, *begin, 10, cv::Scalar(0,255,0), 10);
     }*/
 
     end = cor.end();
@@ -96,17 +116,17 @@ int _tmain(int argc, _TCHAR* argv[])
       circle(gray, *begin, 10, cv::Scalar(255,0,0), 10);
     }
 
-    std::cout << "\n";
+    //std::cout << "\n";
     imshow("gray", gray);
-    
+
     if(waitKey(30) >= 0)
     {
       break;
     }
   }
-  
+
   destroyAllWindows();
-  
+
   //set corners as points on image to transformation
   cv::Mat image(4,1, CV_32FC2);
   std::vector<cv::Point> cor = ss.getCorners();
@@ -118,7 +138,7 @@ int _tmain(int argc, _TCHAR* argv[])
   {
     image.at<cv::Point2f>(i++,0) = cv::Point2f((float)(begin->y), (float)(begin->x));
   }
-  
+
   /*/
   //Manual selecting points 
   //*
@@ -129,13 +149,13 @@ int _tmain(int argc, _TCHAR* argv[])
 
   while(true)
   {
-    cap >> frame;
-    cvtColor(frame, gray, CV_RGB2GRAY);
-    imshow("gray", gray);
-    if(waitKey(30) >= 0 || hom.isPointsSet())
-    {
-      break;
-    }
+  cap >> frame;
+  cvtColor(frame, gray, CV_RGB2GRAY);
+  imshow("gray", gray);
+  if(waitKey(30) >= 0 || hom.isPointsSet())
+  {
+  break;
+  }
   }
 
   cv::setMouseCallback("gray", NULL, 0);
@@ -145,12 +165,12 @@ int _tmain(int argc, _TCHAR* argv[])
   //hom.setGeneratedImageSize(1800,1000);
   hom.setGeneratedImageSize(1000,700);
   hom.runHomography(image);
-  
+
   cv::Mat hsv_all, bin1, bin2;
   cv::Mat hsv[3];
   /*for (int i=0; i < 3; ++i)
   {
-    rgb[i] = cv::Mat(frame.rows, frame.cols, CV_64FC1);
+  rgb[i] = cv::Mat(frame.rows, frame.cols, CV_64FC1);
   }/
   int fromto[] = {0,0,1,1,2,2};*/
 
@@ -159,16 +179,19 @@ int _tmain(int argc, _TCHAR* argv[])
 
     cap >> frame; // get a new frame from camera
     cvtColor(frame, gray, CV_RGB2GRAY);
-    cvtColor(frame, hsv_all, CV_RGB2HSV);
+    cvtColor(frame, hsv_all, CV_BGR2HSV);
     split(hsv_all, hsv);
 
     imshow("gray", gray);
 
-    split(frame, hsv);
+    inRange(hsv_all, cv::Scalar(20, 100, 100), cv::Scalar(50,255,255), binary);
+    //inRange(hsv_all, cv::Scalar(235, 127, 75), cv::Scalar(255,255,125), bin2);
 
-    threshold(hsv[0], bin1, 30, 255, THRESH_BINARY_INV);
-    threshold(hsv[0], bin2, 330, 255, THRESH_BINARY);
-    bitwise_or(bin1, bin2, binary);
+    //split(frame, hsv);
+
+    //threshold(hsv[0], bin1, 30, 255, THRESH_BINARY_INV);
+    //threshold(hsv[0], bin2, 330, 255, THRESH_BINARY);
+    //bitwise_or(bin1, bin2, binary);
 
     imshow("bin", binary);
     //imshow("g", hsv[1]);
