@@ -81,13 +81,13 @@ int _tmain(int argc, _TCHAR* argv[])
     std::vector<cv::Point> cor = ss.getCorners();
     
     std::vector<cv::Point>::iterator begin, end;
-        std::vector<cv::Point> scre = ss.getScreen();
+  /*      std::vector<cv::Point> scre = ss.getScreen();
     end = scre.end();
     for (begin = scre.begin(); begin != end; ++begin)
     {
       //std::cout << begin->x << " " <<begin->y << " ! ";
       circle(gray, *begin, 10, cv::Scalar(0,255,0), 10);
-    }
+    }*/
 
     end = cor.end();
     for (begin = cor.begin(); begin != end; ++begin)
@@ -106,9 +106,8 @@ int _tmain(int argc, _TCHAR* argv[])
       break;
     }
   }
-
+  
   //set corners as points on image to transformation
-
   cv::Mat image(4,1, CV_32FC2);
   std::vector<cv::Point> cor = ss.getCorners();
 
@@ -119,6 +118,7 @@ int _tmain(int argc, _TCHAR* argv[])
   {
     image.at<cv::Point2f>(i++,0) = cv::Point2f((float)(begin->y), (float)(begin->x));
   }
+  
   /*/
   //Manual selecting points 
   //*
@@ -145,6 +145,7 @@ int _tmain(int argc, _TCHAR* argv[])
   //hom.setGeneratedImageSize(1800,1000);
   hom.setGeneratedImageSize(1000,700);
   hom.runHomography(image);
+  
 
   for(;;)
   {

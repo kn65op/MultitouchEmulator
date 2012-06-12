@@ -154,3 +154,9 @@ void Homography::runHomography(cv::Mat image_points)
 
   runHomography();
 }
+
+void Homography::setROI(cv::Mat & frame) const
+{
+  frame = cv::Mat(frame, cv::Rect(min_y, min_x, max_y - min_y, max_x - min_x));
+}
+

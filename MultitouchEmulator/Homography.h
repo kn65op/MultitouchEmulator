@@ -25,6 +25,8 @@ public:
   void setImageSize(int x, int y);
   void setImageSize(cv::Size size);
 
+  void setROI(cv::Mat & frame) const;
+
   void makeLUT();
 private:
   cv::Mat H;
