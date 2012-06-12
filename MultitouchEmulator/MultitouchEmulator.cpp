@@ -1,0 +1,350 @@
+// MultitouchEmulator.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <opencv2\opencv.hpp>
+
+#include "ImageOperations.h"
+#include "Homography.h"
+#include "ScreenShape.h"
+
+using namespace cv;
+
+#define HOMOGRAPHY
+#define CAMa
+
+
+void onMouse(int event, int x, int y, int flags, void* param)
+{
+  if (event == CV_EVENT_LBUTTONDOWN)
+  {
+    std::cout << x << " " << y << "\n";
+  }
+}
+
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+
+#ifdef HOMOGRAPHY
+  VideoCapture cap(0); // open the default camera
+  if(!cap.isOpened())  // check if we succeeded
+    return -1;
+
+
+  Homography hom;
+  ScreenShape ss;
+
+  Mat frame, gray;
+  //Mat generated(100,100, CV_8UC1);
+
+  //namedWindow("gray",2);
+
+  //cv::Mat real(4,1, CV_32FC2);
+  //real.at<cv::Point2f>(0,0) = cv::Point2f(0,0);
+  //real.at<cv::Point2f>(1,0) = cv::Point2f(0,100);
+  //real.at<cv::Point2f>(2,0) = cv::Point2f(100,0);
+  //real.at<cv::Point2f>(3,0) = cv::Point2f(100,100);
+
+  //cv::Mat image(4,1, CV_32FC2);
+
+  //image.at<cv::Point2f>(0,0) = cv::Point2f(50,50);
+  //image.at<cv::Point2f>(1,0) = cv::Point2f(50,300);
+  //image.at<cv::Point2f>(2,0) = cv::Point2f(200,50);
+  //image.at<cv::Point2f>(3,0) = cv::Point2f(200,300);
+
+  //Automatic slecting points
+  //*
+  Mat binary;
+  double thres = 140;
+
+  Mat strel = getStructuringElement(MORPH_ELLIPSE, Size(9,9));
+
+  while (true)
+  {
+    cap >> frame;
+    cvtColor(frame, gray, CV_RGB2GRAY);
+    threshold(gray, binary, thres, 255, CV_THRESH_OTSU);
+    imshow("bin", binary);
+
+    erode(binary, binary, strel);
+    dilate(binary, binary, strel);
+    
+    dilate(binary, binary, strel);
+    erode(binary, binary, strel);
+
+    imshow("ost", binary);
+
+    ss.findScreenAtBinaryImage(binary);
+    std::vector<cv::Point> cor = ss.getCorners();
+    
+    std::vector<cv::Point>::iterator begin, end;
+        std::vector<cv::Point> scre = ss.getScreen();
+    end = scre.end();
+    for (begin = scre.begin(); begin != end; ++begin)
+    {
+      //std::cout << begin->x << " " <<begin->y << " ! ";
+      circle(gray, *begin, 10, cv::Scalar(0,255,0), 10);
+    }
+
+    end = cor.end();
+    for (begin = cor.begin(); begin != end; ++begin)
+    {
+      //std::cout << begin->x << " " <<begin->y << " ! ";
+      circle(gray, *begin, 10, cv::Scalar(255,0,0), 10);
+    }
+
+
+
+    std::cout << "\n";
+    imshow("gray", gray);
+    
+    if(waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
+
+  //set corners as points on image to transformation
+
+  cv::Mat image(4,1, CV_32FC2);
+  std::vector<cv::Point> cor = ss.getCorners();
+
+  std::vector<cv::Point>::iterator begin, end;
+  end = cor.end();
+  int i = 0;
+  for (begin = cor.begin(); begin != end; ++begin)
+  {
+    image.at<cv::Point2f>(i++,0) = cv::Point2f((float)(begin->y), (float)(begin->x));
+  }
+  /*/
+  //Manual selecting points 
+  //*
+  cap >> frame;
+  cvtColor(frame, gray, CV_RGB2GRAY);
+  imshow("gray", gray);
+  cv::setMouseCallback("gray", getPointsFromImage, &hom);
+
+  while(true)
+  {
+    cap >> frame;
+    cvtColor(frame, gray, CV_RGB2GRAY);
+    imshow("gray", gray);
+    if(waitKey(30) >= 0 || hom.isPointsSet())
+    {
+      break;
+    }
+  }
+
+  cv::setMouseCallback("gray", NULL, 0);
+  //*/
+
+  hom.setImageSize(gray.size());
+  //hom.setGeneratedImageSize(1800,1000);
+  hom.setGeneratedImageSize(1000,700);
+  hom.runHomography(image);
+
+  for(;;)
+  {
+
+    cap >> frame; // get a new frame from camera
+    cvtColor(frame, gray, CV_RGB2GRAY);
+
+    imshow("gray", gray);
+    threshold(gray, binary, thres, 255, CV_THRESH_OTSU);
+    imshow("bin", binary);
+
+    //for (int i=50; i<200; ++i)
+    //{
+    //  for (int j=50; j<300; ++j)
+    //  {
+    //    cv::Point tmp = hom.getRealPoint(i, j);
+    //    generated.at<uchar>(tmp.x, tmp.y) = gray.at<uchar>(i,j);
+    //  }
+    //}
+    imshow("generated", hom.processImage(gray));
+    if(waitKey(30) >= 0)
+    {
+      break;
+    }
+
+  }
+#endif
+
+#ifdef CALIB
+  int numBoards = 10;
+  int numCornersHor = 8;
+  int numCornersVer = 5;
+  int numSquares = numCornersHor * numCornersVer;
+  Size board_sz = Size(numCornersHor, numCornersVer);
+  VideoCapture capture = VideoCapture(0);
+
+  vector<vector<Point3f>> object_points;
+  vector<vector<Point2f>> image_points;
+  vector<Point2f> corners;
+  int successes=0;
+  Mat image;
+  Mat gray_image;
+  capture >> image;
+  vector<Point3f> obj;
+  for(int j=0;j<numSquares;j++)
+    obj.push_back(Point3f(j/numCornersHor, j%numCornersHor, 0.0f));
+  while(successes<numBoards)
+  {
+    cvtColor(image, gray_image, CV_BGR2GRAY);
+    bool found = findChessboardCorners(image, board_sz, corners, CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
+
+    if(found)
+    {
+      std::cout << "OK\n";
+      cornerSubPix(gray_image, corners, Size(11, 11), Size(-1, -1), TermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.1));
+      drawChessboardCorners(gray_image, board_sz, corners, found);
+    }
+    imshow("win1", image);
+    imshow("win2", gray_image);
+
+    capture >> image;
+
+    int key = waitKey(1);
+    if(key==27)
+      return 0;
+
+    if(key==' ' && found!=0)
+    {
+      image_points.push_back(corners);
+      object_points.push_back(obj);
+      printf("Snap stored!\n");
+
+      successes++;
+
+      if(successes>=numBoards)
+        break;
+    }
+  }
+  Mat intrinsic = Mat(3, 3, CV_32FC1);
+  Mat distCoeffs;
+  vector<Mat> rvecs;
+  vector<Mat> tvecs;
+  intrinsic.ptr<float>(0)[0] = 1;
+  intrinsic.ptr<float>(1)[1] = 1;
+  calibrateCamera(object_points, image_points, image.size(), intrinsic, distCoeffs, rvecs, tvecs);
+  Mat imageUndistorted;
+  while(1)
+  {
+    capture >> image;
+    undistort(image, imageUndistorted, intrinsic, distCoeffs);
+
+    imshow("win1", image);
+    imshow("win2", imageUndistorted);
+
+    waitKey(1);
+  }
+  capture.release();
+
+#endif CALIB
+#ifdef CAME
+  /* cv::Mat im1 = cv::imread("stripes1ob.png");
+  cv::Mat im2 = cv::imread("stripes2ob.png");
+
+  cv::Mat gim1, gim2;
+  cv::cvtColor(im1, gim1, CV_RGB2GRAY);
+  cv::cvtColor(im2, gim2, CV_RGB2GRAY);
+
+  cv::Mat sub;
+  subtractAbs(gim1, gim2, sub);
+
+  imshow("sub", sub);*/
+
+  VideoCapture cap(0); // open the default camera
+  if(!cap.isOpened())  // check if we succeeded
+    return -1;
+
+  bool a = true;
+
+  cv::Mat last_frame;
+  cv::Mat act_frame;
+  cv::Mat act_frame_rgb;
+  cv::Mat difference_frame;
+
+  cap >> act_frame_rgb;
+
+  cvtColor(act_frame_rgb, act_frame, CV_RGB2GRAY);
+
+  while(waitKey(30) < 0)
+  {
+    //TODO degub only
+    Sleep(300);
+
+    //capture frame and change to gray scale
+    cap >> act_frame_rgb;
+
+    act_frame.copyTo(last_frame);
+    cvtColor(act_frame_rgb, act_frame, CV_RGB2GRAY);
+
+    //difference
+    subtractAbs(last_frame, act_frame, difference_frame);
+    //imshow("Difference", act_frame);
+
+    //imshow("Difference", difference_frame);
+
+    cv::Mat tmp;
+    cv::Size desktop = getScreenResolution();
+    //createStripesImage(tmp, desktop, 50, a);
+    createStripesImage(tmp, 1000, 1000, 50, a);
+    imshow("Background", tmp);
+
+    imshow("Difference", difference_frame);
+    imshow("Camera", act_frame_rgb);
+
+
+
+    //change stripes
+    a = !a;
+
+  }
+#endif
+
+#ifdef CAM
+  VideoCapture cap(0); // open the default camera
+  if(!cap.isOpened())  // check if we succeeded
+    return -1;
+
+  double thres = 127;
+
+  ScreenShape ss;
+
+  Mat frame, gray;
+  namedWindow("frame",1);
+  namedWindow("gray",2);
+  namedWindow("bin",3);
+  for(;;)
+  {
+
+    cap >> frame; // get a new frame from camera
+    cvtColor(frame, gray, CV_RGB2GRAY);
+    imshow("gray", gray);
+    threshold(gray, gray, thres, 255, CV_THRESH_BINARY);
+    imshow("bin", gray);
+    ss.detectScreen(gray);
+    //  ss.printScreen(frame);
+    imshow("frame", frame);
+    std::vector<double> bord = ss.getSize();
+    for (std::vector<double>::iterator it = bord.begin(); it != bord.end(); ++it)
+    {
+      std::cout << *it << " ";
+    }
+    std::cout << "\n";
+    if(waitKey(30) >= 0)
+    {
+      break;
+    }
+
+  }
+
+  // the camera will be deinitialized automatically in VideoCapture destructor'
+#endif 
+  return 0;
+}
+
