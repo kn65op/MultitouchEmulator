@@ -170,3 +170,4 @@ pip-log.txt
 
 # files for debugging
 photo.jpg
+Debug/*.exe
