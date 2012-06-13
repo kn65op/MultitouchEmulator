@@ -82,11 +82,13 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
   // 255 - background
 
   cv::Size size = source.size();
+  --size.height;
+  --size.width;
   std::map<int, int> map;
   int last_number = 1;
 
   std::set<int> set;
-  std::set<int>::iterator sit, send, sbegin;
+  std::set<int>::iterator sit, send;
 
   //indexing
   for (int i=1; i<size.height; ++i)
@@ -99,6 +101,7 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
         if (source.at<uchar>(i-1, j-1) + source.at<uchar>(i-1, j) + source.at<uchar>(i-1, j+1) + source.at<uchar>(i, j-1)  == 1020) // all pixels are from background
         {
           map[last_number] = last_number;
+          index.at<uchar>(i,j) = last_number;
           ++last_number;
         }
         else //there is some object around
@@ -111,18 +114,21 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
           if (set.size() > 1) //2 values different from 0, then we choose the lowest and change map 
           {
             send = set.end();
-            sbegin = set.begin();
             for (sit = ++(set.begin()); sit != send; ++sit)
             {
-              sbegin = set.begin();
-              map[*sit] = *sbegin;
+              map[*sit] = *(set.begin());
             }
-            index.at<uchar>(i,j) = *sbegin;
+            index.at<uchar>(i,j) = *(set.begin());
           }
-          else //only one value different from 0
+          else if (set.size() > 0)//only one value different from 0
           {
-            sbegin = set.begin();
-            index.at<uchar>(i,j) = sbegin;
+            index.at<uchar>(i,j) = *(set.begin());
+          }
+          else //i or j = 1;
+          {
+            map[last_number] = last_number;
+            index.at<uchar>(i,j) = last_number;
+            ++last_number;
           }
         }
       }
