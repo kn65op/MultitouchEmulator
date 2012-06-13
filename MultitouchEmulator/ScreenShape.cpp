@@ -91,7 +91,7 @@ void ScreenShape::findScreenAtBinaryImage(cv::Mat & bin)
 
   //looking for closest points
 
-  int n;
+  unsigned int n;
   n = std::min_element(dist00.begin(), dist00.end()) - dist00.begin();
   if (n < dist00.size())
   {
