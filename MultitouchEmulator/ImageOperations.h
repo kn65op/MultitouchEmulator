@@ -26,3 +26,8 @@ cv::Size getScreenResolution();
   * Function that calculates negation of binary image (values 0, 255).
   */
 void negation(cv::Mat & im);
+
+/**
+  * Function to index elements on image. Obects must be black.
+  */
+void indexImageBlack(cv::Mat & source, cv::Mat & index);

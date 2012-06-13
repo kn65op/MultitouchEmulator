@@ -167,6 +167,7 @@ int _tmain(int argc, _TCHAR* argv[])
   hom.runHomography(image);
 
   cv::Mat generated, to_show;
+  cv::Mat objects = cv::Mat::zeros(1800,1000, CV_8UC1);
 
   strel = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(11,11));
   cv::Mat strel_big = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(13,13));
@@ -217,12 +218,15 @@ int _tmain(int argc, _TCHAR* argv[])
 
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strel);
-    cv::dilate(to_show, to_show, strel_big);
+    cv::dilate(to_show, to_show, strel_big  );
     
     //cv::dilate(to_show, to_show, strel);
     //cv::erode(to_show, to_show, strel);
 
     imshow("generated", to_show);
+    indexImageBlack(to_show, objects);
+    cv::equalizeHist(objects, objects);
+    imshow("objects", objects);
     if(waitKey(30) >= 0)
     {
       break;
