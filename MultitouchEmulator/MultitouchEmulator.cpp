@@ -167,7 +167,7 @@ int _tmain(int argc, _TCHAR* argv[])
   hom.runHomography(image);
 
   cv::Mat generated, to_show;
-  cv::Mat objects = cv::Mat::zeros(1800,1000, CV_8UC1);
+  cv::Mat objects = cv::Mat::zeros(1000,1800, CV_8UC1);
 
   strel = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(11,11));
   cv::Mat strel_big = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(13,13));
