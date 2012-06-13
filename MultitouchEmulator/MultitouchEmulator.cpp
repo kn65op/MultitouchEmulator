@@ -117,7 +117,7 @@ int _tmain(int argc, _TCHAR* argv[])
     }
 
     //std::cout << "\n";
-    imshow("gray", gray);
+    imshow("gray",gray);
 
     if(waitKey(30) >= 0)
     {
@@ -193,6 +193,7 @@ int _tmain(int argc, _TCHAR* argv[])
     //threshold(hsv[0], bin2, 330, 255, THRESH_BINARY);
     //bitwise_or(bin1, bin2, binary);
 
+    negation(binary);
     imshow("bin", binary);
     //imshow("g", hsv[1]);
     //imshow("b", hsv[2]);
@@ -208,7 +209,9 @@ int _tmain(int argc, _TCHAR* argv[])
     //    generated.at<uchar>(tmp.x, tmp.y) = gray.at<uchar>(i,j);
     //  }
     //}
-    imshow("generated", hom.processImage(gray));
+
+
+    imshow("generated", hom.processImage(binary));
     if(waitKey(30) >= 0)
     {
       break;

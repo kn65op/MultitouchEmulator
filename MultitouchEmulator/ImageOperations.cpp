@@ -54,3 +54,22 @@ cv::Size getScreenResolution()
   }*/
   return cv::Size(GetSystemMetrics(SM_CXFULLSCREEN),GetSystemMetrics(SM_CYFULLSCREEN));
 }
+
+void negation(cv::Mat & im)
+{
+  cv::Size size = im.size();
+  for (int i=0; i<size.height; ++i)
+  {
+    for (int j=0; j<size.width; ++j)
+    {
+      if (im.at<uchar>(i,j))
+      {
+        im.at<uchar>(i,j) = 0;
+      }
+      else
+      {
+        im.at<uchar>(i,j) = 255;
+      }
+    }
+  }
+}

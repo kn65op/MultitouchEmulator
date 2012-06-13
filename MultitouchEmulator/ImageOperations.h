@@ -21,3 +21,8 @@ void createStripesImage(cv::Mat & dest, cv::Size size, int stripe_size, int numb
   * Function returns screen resolution as cv::Size
   */
 cv::Size getScreenResolution();
+
+/**
+  * Function that calculates negation of binary image (values 0, 255).
+  */
+void negation(cv::Mat & im);
