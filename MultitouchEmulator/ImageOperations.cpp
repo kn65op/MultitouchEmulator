@@ -86,7 +86,7 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
   int last_number = 1;
 
   std::set<int> set;
-  std::set<int>::iterator sit, send;
+  std::set<int>::iterator sit, send, sbegin;
 
   //indexing
   for (int i=1; i<size.height; ++i)
@@ -111,15 +111,18 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
           if (set.size() > 1) //2 values different from 0, then we choose the lowest and change map 
           {
             send = set.end();
+            sbegin = set.begin();
             for (sit = ++(set.begin()); sit != send; ++sit)
             {
-              map[*sit] = *(set.begin());
+              sbegin = set.begin();
+              map[*sit] = *sbegin;
             }
-            index.at<uchar>(i,j) = *(set.begin());
+            index.at<uchar>(i,j) = *sbegin;
           }
           else //only one value different from 0
           {
-            index.at<uchar>(i,j) = *(set.begin());
+            sbegin = set.begin();
+            index.at<uchar>(i,j) = sbegin;
           }
         }
       }
