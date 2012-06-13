@@ -93,16 +93,28 @@ void ScreenShape::findScreenAtBinaryImage(cv::Mat & bin)
 
   int n;
   n = std::min_element(dist00.begin(), dist00.end()) - dist00.begin();
-  corners.push_back(cv::Point(screen[n].x, screen[n].y));
+  if (n < dist00.size())
+  {
+    corners.push_back(cv::Point(screen[n].x, screen[n].y));
+  }
   
   n = std::min_element(distm0.begin(), distm0.end()) - distm0.begin();
-  corners.push_back(cv::Point(screen[n].x, screen[n].y));
+  if (n < dist00.size())
+  {
+    corners.push_back(cv::Point(screen[n].x, screen[n].y));
+  }
 
   n = std::min_element(dist0m.begin(), dist0m.end()) - dist0m.begin();
-  corners.push_back(cv::Point(screen[n].x, screen[n].y));
+  if (n < dist00.size())
+  {
+    corners.push_back(cv::Point(screen[n].x, screen[n].y));
+  }
 
   n = std::min_element(distmm.begin(), distmm.end()) - distmm.begin();
-  corners.push_back(cv::Point(screen[n].x, screen[n].y));
+  if (n < dist00.size())
+  {
+    corners.push_back(cv::Point(screen[n].x, screen[n].y));
+  }
 
   /*
   int size = screen.size();
