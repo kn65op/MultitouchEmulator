@@ -1,6 +1,8 @@
 #include "stdafx.h"
 
 #include "ImageOperations.h"
+#include <map>
+#include <set>
 
 void subtractAbs(cv::Mat & s1, cv::Mat & s2, cv::Mat & dest)
 {
@@ -15,7 +17,7 @@ void subtractAbs(cv::Mat & s1, cv::Mat & s2, cv::Mat & dest)
       dest.at<uchar>(j,i) = abs(s1.at<uchar>(j,i) - s2.at<uchar>(j,i)) * 2;
     }
   }
-  
+
 }
 
 void createStripesImage(cv::Mat & dest, int height, int width, int stripe_size, int number)
@@ -45,13 +47,13 @@ void createStripesImage(cv::Mat & dest, cv::Size size, int stripe_size, int numb
 
 cv::Size getScreenResolution()
 {/*
-  LPRECT desktop = 0;
-  const HWND hDesktop = GetDesktopWindow();
+ LPRECT desktop = 0;
+ const HWND hDesktop = GetDesktopWindow();
 
-  if (GetWindowRect(hDesktop, desktop))
-  {
-    return cv::Size(desktop->right, desktop->bottom);
-  }*/
+ if (GetWindowRect(hDesktop, desktop))
+ {
+ return cv::Size(desktop->right, desktop->bottom);
+ }*/
   return cv::Size(GetSystemMetrics(SM_CXFULLSCREEN),GetSystemMetrics(SM_CYFULLSCREEN));
 }
 
@@ -69,6 +71,69 @@ void negation(cv::Mat & im)
       else
       {
         im.at<uchar>(i,j) = 255;
+      }
+    }
+  }
+}
+
+void indexImageBlack(cv::Mat & source, cv::Mat & index)
+{
+  // 0 - object
+  // 255 - background
+
+  cv::Size size = source.size();
+  std::map<int, int> map;
+  int last_number = 1;
+
+  std::set<int> set;
+  std::set<int>::iterator sit, send;
+
+  //indexing
+  for (int i=1; i<size.height; ++i)
+  {
+    for (int j=1; j<size.width; ++j)
+    {
+      //object pixel
+      if (!source.at<uchar>(i,j))
+      {
+        if (source.at<uchar>(i-1, j-1) + source.at<uchar>(i-1, j) + source.at<uchar>(i-1, j+1) + source.at<uchar>(i, j-1)  == 1020) // all pixels are from background
+        {
+          map[last_number] = last_number;
+          ++last_number;
+        }
+        else //there is some object around
+        {
+          set.clear();
+          if (index.at<uchar>(i-1, j-1))  set.insert(index.at<uchar>(i-1, j-1));
+          if (index.at<uchar>(i-1, j)) set.insert(index.at<uchar>(i-1, j));
+          if (index.at<uchar>(i-1, j+1)) set.insert(index.at<uchar>(i-1, j+1));
+          if (index.at<uchar>(i, j-1)) set.insert(index.at<uchar>(i, j-1));
+          if (set.size() > 1) //2 values different from 0, then we choose the lowest and change map 
+          {
+            send = set.end();
+            for (sit = ++(set.begin()); sit != send; ++sit)
+            {
+              map[*sit] = *(set.begin());
+            }
+            index.at<uchar>(i,j) = *(set.begin());
+          }
+          else //only one value different from 0
+          {
+            index.at<uchar>(i,j) = *(set.begin());
+          }
+        }
+      }
+    }
+  }
+
+  //using paste tab
+  for (int i=0; i<size.height; ++i)
+  {
+    for (int j=0; j<size.width; ++j)
+    {
+      if (source.at<uchar>(i,j)) //other value then 0, means that this is object
+      {
+        source.at<uchar>(i,j) = map[source.at<uchar>(i,j)]; //mapping
       }
     }
   }
