@@ -162,8 +162,8 @@ int _tmain(int argc, _TCHAR* argv[])
   //*/
 
   hom.setImageSize(gray.size());
-  //hom.setGeneratedImageSize(1800,1000);
-  hom.setGeneratedImageSize(1000,700);
+  hom.setGeneratedImageSize(1800,1000);
+  //hom.setGeneratedImageSize(1000,700);
   hom.runHomography(image);
 
   cv::Mat hsv_all, bin1, bin2;

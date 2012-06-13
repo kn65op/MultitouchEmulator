@@ -54,7 +54,7 @@ void Homography::setGeneratedImageSize(int x, int y)
 {
   generated_x = y;
   generated_y = x;
-  generated = cv::Mat(y, x, CV_8UC1);
+  //generated = cv::Mat(y, x, CV_8UC1);
 }
 
 void Homography::runHomography()
@@ -77,8 +77,8 @@ bool Homography::isPointsSet()
 
 cv::Mat & Homography::processImage(cv::Mat & image)
 {
-
-  for (int i=min_x -1 ; i<max_x; ++i)
+  generated = cv::Mat(generated_x, generated_y, CV_8UC1, cv::Scalar(255));
+  for (int i=min_x - 1 ; i<max_x; ++i)
   {
     for (int j=min_y - 1; j<max_y; ++j)
     {
