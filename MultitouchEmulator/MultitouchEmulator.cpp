@@ -168,7 +168,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
   cv::Mat generated, to_show;
 
-  strel = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(5,5));
+  strel = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(11,11));
+  cv::Mat strel_big = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(15,15));
 
   cv::Mat hsv_all, bin1, bin2;
   cv::Mat hsv[3];
@@ -216,6 +217,10 @@ int _tmain(int argc, _TCHAR* argv[])
 
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strel);
+    cv::dilate(to_show, to_show, strel);
+    
+    //cv::dilate(to_show, to_show, strel);
+    //cv::erode(to_show, to_show, strel);
 
     imshow("generated", to_show);
     if(waitKey(30) >= 0)
