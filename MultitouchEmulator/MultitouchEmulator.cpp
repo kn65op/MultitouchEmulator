@@ -166,6 +166,10 @@ int _tmain(int argc, _TCHAR* argv[])
   //hom.setGeneratedImageSize(1000,700);
   hom.runHomography(image);
 
+  cv::Mat generated, to_show;
+
+  strel = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(5,5));
+
   cv::Mat hsv_all, bin1, bin2;
   cv::Mat hsv[3];
   /*for (int i=0; i < 3; ++i)
@@ -210,8 +214,10 @@ int _tmain(int argc, _TCHAR* argv[])
     //  }
     //}
 
+    generated = hom.processImage(binary);
+    cv::erode(generated, to_show, strel);
 
-    imshow("generated", hom.processImage(binary));
+    imshow("generated", to_show);
     if(waitKey(30) >= 0)
     {
       break;
