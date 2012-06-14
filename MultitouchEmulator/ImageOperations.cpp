@@ -144,8 +144,6 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
 
   cv::imwrite("tmp.bmp", index);
 
-  bool bad = true;
-
   //fix paste tab
   for (auto i=0; i < last_number; ++i)
   {
@@ -162,10 +160,13 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
     {
       if (!source.at<uchar>(i,j)) //other value then 0, means that this is object
       {
-        source.at<uchar>(i,j) = map[source.at<uchar>(i,j)]; //mapping
+        index.at<uchar>(i,j) = map[source.at<uchar>(i,j)]; //mapping
       }
     }
   }
+  
+  cv::imwrite("raw.bmp", index);
+
 }
 
 void createWhiteImage(cv::Mat & image, int x, int y)
