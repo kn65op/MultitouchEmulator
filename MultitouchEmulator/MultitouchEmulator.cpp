@@ -76,7 +76,7 @@ int _tmain(int argc, _TCHAR* argv[])
   //image.at<cv::Point2f>(2,0) = cv::Point2f(200,50);
   //image.at<cv::Point2f>(3,0) = cv::Point2f(200,300);
 
-  //Automatic slecting points
+  //Automatic selecting points
   //*
   Mat binary;
   double thres = 140;
@@ -94,7 +94,7 @@ int _tmain(int argc, _TCHAR* argv[])
     cap >> frame;
     cvtColor(frame, gray, CV_RGB2GRAY);
     threshold(gray, binary, thres, 255, CV_THRESH_OTSU);
-    imshow("bin", binary);
+    //imshow("bin", binary);
 
     erode(binary, binary, strel);
     dilate(binary, binary, strel);
@@ -102,8 +102,9 @@ int _tmain(int argc, _TCHAR* argv[])
     dilate(binary, binary, strel);
     erode(binary, binary, strel);
 
-    imshow("ost", binary);
+    //imshow("ost", binary);
 
+    ss.findScreenAtBinaryImage(binary);
     std::vector<cv::Point> cor = ss.getCorners();
 
     std::vector<cv::Point>::iterator begin, end;
@@ -124,6 +125,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     //std::cout << "\n";
     imshow("gray",gray);
+    showImageWithoutFrame(L"gray", resoution.width / 3, resoution.height / 3, gray.cols, gray.cols);
 
     if(waitKey(30) >= 0)
     {
