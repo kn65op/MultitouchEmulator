@@ -31,3 +31,13 @@ void negation(cv::Mat & im);
   * Function to index elements on image. Obects must be black.
   */
 void indexImageBlack(cv::Mat & source, cv::Mat & index);
+
+/**
+  * Functions, which creates all white image
+  */
+void createWhiteImage(cv::Mat & image, int x, int y);
+
+/**
+  * Functions, which creates all white image
+  */
+void createWhiteImage(cv::Mat & image, cv::Size & size);

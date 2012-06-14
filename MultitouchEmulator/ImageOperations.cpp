@@ -81,6 +81,8 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
   // 0 - object
   // 255 - background
 
+  index = cv::Mat::zeros(source.size(), source.type());
+
   cv::Size size = source.size();
   --size.height;
   --size.width;
@@ -135,15 +137,34 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
     }
   }
 
+  cv::imwrite("tmp.bmp", index);
+
   //using paste tab
   for (int i=0; i<size.height; ++i)
   {
     for (int j=0; j<size.width; ++j)
     {
-      if (source.at<uchar>(i,j)) //other value then 0, means that this is object
+      if (!source.at<uchar>(i,j)) //other value then 0, means that this is object
       {
         source.at<uchar>(i,j) = map[source.at<uchar>(i,j)]; //mapping
       }
     }
   }
+}
+
+void createWhiteImage(cv::Mat & image, int x, int y)
+{
+  image = cv::Mat(x, y, CV_8UC1);
+  for (int i = 0; i < x; ++i)
+  {
+    for (int j=0; j < y; ++j)
+    {
+      image.at<uchar>(i,j) = 255;
+    }
+  }
+}
+
+void createWhiteImage(cv::Mat & image, cv::Size & size)
+{
+  createWhiteImage(image, size.height, size.width);
 }
