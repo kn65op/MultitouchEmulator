@@ -197,3 +197,8 @@ void showImageWithoutFrame(LPCWSTR name, int width, int height)
 {
   showImageWithoutFrame(name, 0,0, width, height);
 }
+
+void showImageWithoutFrame(LPCWSTR name, cv::Size size)
+{
+  showImageWithoutFrame(name, 0,0, size.width, size.height);
+}

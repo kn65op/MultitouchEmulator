@@ -51,3 +51,8 @@ void showImageWithoutFrame(LPCWSTR name, int width, int height);
   * Function showing window specified position without Windows frame (for example window name)
   */
 void showImageWithoutFrame(LPCWSTR name, int x, int y, int width, int height);
+
+/**
+  * Function showing window specified position without Windows frame (for example window name)
+  */
+void showImageWithoutFrame(LPCWSTR name, cv::Size size);
