@@ -54,7 +54,12 @@ cv::Size getScreenResolution()
  {
  return cv::Size(desktop->right, desktop->bottom);
  }*/
-  return cv::Size(GetSystemMetrics(SM_CXFULLSCREEN),GetSystemMetrics(SM_CYFULLSCREEN));
+  
+  RECT rc;
+  GetWindowRect(GetDesktopWindow(), &rc);
+
+  //return cv::Size(GetSystemMetrics(SM_CXFULLSCREEN),GetSystemMetrics(SM_CYFULLSCREEN));
+  return cv::Size(rc.right - rc.left, rc.bottom - rc.top);
 }
 
 void negation(cv::Mat & im)

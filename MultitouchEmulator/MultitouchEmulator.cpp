@@ -53,9 +53,10 @@ int _tmain(int argc, _TCHAR* argv[])
   if(!cap.isOpened())  // check if we succeeded
     return -1;
 
-
   Homography hom;
   ScreenShape ss;
+
+  cv::Size resoution = getScreenResolution();
 
   Mat frame, gray;
   //Mat generated(100,100, CV_8UC1);
@@ -83,7 +84,7 @@ int _tmain(int argc, _TCHAR* argv[])
   Mat strel = getStructuringElement(MORPH_ELLIPSE, Size(9,9));
 
   cv::Mat white;
-  createWhiteImage(white, getScreenResolution());
+  createWhiteImage(white, resoution);
 
   imshow("white", white);
   showImageWithoutFrame(L"white", white.cols, white.rows);
