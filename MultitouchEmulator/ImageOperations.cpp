@@ -144,6 +144,17 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
 
   cv::imwrite("tmp.bmp", index);
 
+  bool bad = true;
+
+  //fix paste tab
+  for (auto i=0; i < last_number; ++i)
+  {
+    while (map[i] != i && map[map[i]] != map[i])
+    {
+      map[i] = map[map[i]];
+    }
+  }
+
   //using paste tab
   for (int i=0; i<size.height; ++i)
   {
