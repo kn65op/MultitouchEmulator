@@ -169,5 +169,6 @@ pip-log.txt
 ########
 
 # files for debugging
-photo.jpg
+*.jpg
+*.bmp
 Debug/*.exe
