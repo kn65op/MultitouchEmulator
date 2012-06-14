@@ -243,7 +243,7 @@ int _tmain(int argc, _TCHAR* argv[])
     //cv::erode(to_show, to_show, strel);
 
     
-    indexImageBlack(binary, objects);
+    indexImageBlack(to_show, objects);
     cv::equalizeHist(objects, objects);
     imshow("objects", objects);
     imwrite("objects.jpg", objects);
