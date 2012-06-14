@@ -168,3 +168,27 @@ void createWhiteImage(cv::Mat & image, cv::Size & size)
 {
   createWhiteImage(image, size.height, size.width);
 }
+
+void showImageWithoutFrame(LPCWSTR name, int x, int y, int width, int height)
+{
+  HWND win_handle = FindWindow(0, name);
+  if (!win_handle)
+  {
+    return;
+  }
+
+  // Resize
+  unsigned int flags = (SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOZORDER);
+  flags &= ~SWP_NOSIZE;
+  SetWindowPos(win_handle, HWND_NOTOPMOST, x, y, width, height, flags);
+
+  // Borderless
+  SetWindowLong(win_handle, GWL_STYLE, GetWindowLong(win_handle, GWL_EXSTYLE) | WS_EX_TOPMOST);
+  ShowWindow(win_handle, SW_SHOW);
+
+}
+
+void showImageWithoutFrame(LPCWSTR name, int width, int height)
+{
+  showImageWithoutFrame(name, 0,0, width, height);
+}

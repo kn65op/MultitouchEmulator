@@ -38,6 +38,16 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index);
 void createWhiteImage(cv::Mat & image, int x, int y);
 
 /**
-  * Functions, which creates all white image
+  * Function, which creates all white image
   */
 void createWhiteImage(cv::Mat & image, cv::Size & size);
+
+/**
+  * Function showing window at (0,0) positions without Windows frame (for example window name)
+  */
+void showImageWithoutFrame(LPCWSTR name, int width, int height);
+
+/**
+  * Function showing window specified position without Windows frame (for example window name)
+  */
+void showImageWithoutFrame(LPCWSTR name, int x, int y, int width, int height);

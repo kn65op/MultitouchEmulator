@@ -86,48 +86,7 @@ int _tmain(int argc, _TCHAR* argv[])
   createWhiteImage(white, getScreenResolution());
 
   imshow("white", white);
-
-  HWND win_handle = FindWindow(0, L"white");
-  if (!win_handle)
-  {
-    printf("Failed FindWindow\n");
-  }
-
-  // Resize
-  unsigned int flags = (SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOZORDER);
-  flags &= ~SWP_NOSIZE;
-  unsigned int x = 0;
-  unsigned int y = 0;
-  unsigned int w = white.cols;
-  unsigned int h = white.rows;
-  SetWindowPos(win_handle, HWND_NOTOPMOST, x, y, w, h, flags);
-
-  // Borderless
-  SetWindowLong(win_handle, GWL_STYLE, GetWindowLong(win_handle, GWL_EXSTYLE) | WS_EX_TOPMOST);
-  ShowWindow(win_handle, SW_SHOW);
-
-  cap >> frame;
-  imshow("frame", frame);
-
-     win_handle = FindWindow(0, L"frame");
-  if (!win_handle)
-  {
-    printf("Failed FindWindow\n");
-  }
-  // Resize
-  flags = (SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOZORDER);
-  flags &= ~SWP_NOSIZE;
-  x = 0;
-  y = 0;
-  w = white.cols;
-  h = white.rows;
-  SetWindowPos(win_handle, HWND_NOTOPMOST, x, y, w, h, flags);
-
-  // Borderless
-  SetWindowLong(win_handle, GWL_STYLE, GetWindowLong(win_handle, GWL_EXSTYLE) | WS_EX_TOPMOST);
-  ShowWindow(win_handle, SW_SHOW);
-
-  Sleep(3000);
+  showImageWithoutFrame(L"white", white.cols, white.rows);
 
   while (true)
   {
@@ -135,6 +94,7 @@ int _tmain(int argc, _TCHAR* argv[])
     cvtColor(frame, gray, CV_RGB2GRAY);
     threshold(gray, binary, thres, 255, CV_THRESH_OTSU);
     imshow("bin", binary);
+    showImageWithoutFrame(L"bin", binary.cols, binary.rows);
 
     erode(binary, binary, strel);
     dilate(binary, binary, strel);
