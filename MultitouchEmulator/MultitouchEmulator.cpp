@@ -94,7 +94,6 @@ int _tmain(int argc, _TCHAR* argv[])
     cvtColor(frame, gray, CV_RGB2GRAY);
     threshold(gray, binary, thres, 255, CV_THRESH_OTSU);
     imshow("bin", binary);
-    showImageWithoutFrame(L"bin", binary.cols, binary.rows);
 
     erode(binary, binary, strel);
     dilate(binary, binary, strel);
@@ -104,7 +103,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
     imshow("ost", binary);
 
-    ss.findScreenAtBinaryImage(binary);
     std::vector<cv::Point> cor = ss.getCorners();
 
     std::vector<cv::Point>::iterator begin, end;
