@@ -10,19 +10,24 @@
 
 using namespace cv;
 
-#define HOMOGRAPHY
-//#define JUST_PHOTO
+//#define HOMOGRAPHY
+#define JUST_PHOTO
 //#define CAM
 
+#ifdef JUST_PHOTO
 
 void onMouse(int event, int x, int y, int flags, void* param)
 {
   if (event == CV_EVENT_LBUTTONDOWN)
   {
-    std::cout << x << " " << y << "\n";
+    cv::Mat* hsv = static_cast<cv::Mat*>(param);
+    cv::Mat tmp[3];
+    split(*hsv, tmp);
+    std::cout << (int)(tmp->at<uchar>(y,x)) << " " << ((int)tmp[1].at<uchar>(y,x)) << " " << ((int)tmp[2].at<uchar>(y,x))  << "\n";
   }
 }
 
+#endif
 
 
 
@@ -34,10 +39,14 @@ int _tmain(int argc, _TCHAR* argv[])
   if(!cap.isOpened())  // check if we succeeded
     return -1;
 
-  cv::Mat frame;
+  cv::Mat frame, hsv_all;
+  cap >> frame;
+  imshow("frame", frame);
+  cv::setMouseCallback("frame", onMouse, &hsv_all);
   while (true)
   {
     cap >> frame;
+    cvtColor(frame, hsv_all, CV_BGR2HSV);
     imshow("frame", frame);
     if(waitKey(30) >= 0)
     {
@@ -125,7 +134,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     //std::cout << "\n";
     imshow("gray",gray);
-    showImageWithoutFrame(L"gray", resoution.width / 3, resoution.height / 3, gray.cols, gray.cols);
+    showImageWithoutFrame(L"gray", resoution.width / 3, resoution.height / 3, gray.cols, gray.rows);
 
     if(waitKey(30) >= 0)
     {
@@ -170,7 +179,7 @@ int _tmain(int argc, _TCHAR* argv[])
   //*/
 
   hom.setImageSize(gray.size());
-  hom.setGeneratedImageSize(1800,1000);
+  hom.setGeneratedImageSize(resoution);
   //hom.setGeneratedImageSize(1000,700);
   hom.runHomography(image);
 
@@ -198,7 +207,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     imshow("gray", gray);
 
-    inRange(hsv_all, cv::Scalar(20, 100, 100), cv::Scalar(50,255,255), binary);
+    inRange(hsv_all, cv::Scalar(20, 30, 180), cv::Scalar(40,120,255), binary);
     //inRange(hsv_all, cv::Scalar(235, 127, 75), cv::Scalar(255,255,125), bin2);
 
     //split(frame, hsv);
@@ -231,12 +240,15 @@ int _tmain(int argc, _TCHAR* argv[])
     //cv::dilate(to_show, to_show, strel);
     //cv::erode(to_show, to_show, strel);
 
-    imshow("generated", to_show);
-
+    
     indexImageBlack(binary, objects);
     cv::equalizeHist(objects, objects);
     imshow("objects", objects);
     imwrite("objects.jpg", objects);
+
+    imshow("generated", to_show);
+    showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+    
     if(waitKey(30) >= 0)
     {
       break;

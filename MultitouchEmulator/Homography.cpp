@@ -52,8 +52,14 @@ void getPointsFromImage(int event, int x, int y, int flags, void* param)
 
 void Homography::setGeneratedImageSize(int x, int y)
 {
-  generated_x = y;
-  generated_y = x;
+  generated_x = x;
+  generated_y = y;
+  //generated = cv::Mat(y, x, CV_8UC1);
+}
+
+void Homography::setGeneratedImageSize(cv::Size size)
+{
+  setGeneratedImageSize(size.height, size.width);
   //generated = cv::Mat(y, x, CV_8UC1);
 }
 

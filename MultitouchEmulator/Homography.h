@@ -17,6 +17,7 @@ public:
   friend void getPointsFromImage(int event, int x, int y, int flags, void* param);
 
   void setGeneratedImageSize(int x, int y);
+  void setGeneratedImageSize(cv::Size size);
 
   bool isPointsSet();
 
