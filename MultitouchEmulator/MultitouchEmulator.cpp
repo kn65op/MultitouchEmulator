@@ -7,7 +7,7 @@
 #include "ImageOperations.h"
 #include "Homography.h"
 #include "ScreenShape.h"
-#include "Device.h"
+#include "Devices.h"
 
 using namespace cv;
 
@@ -70,6 +70,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
   cv::Size resoution = getScreenResolution();
 
+  std::cout << resoution.width << " " << resoution.height << "\n";
+
   Mat frame, gray;
   //Mat generated(100,100, CV_8UC1);
 
@@ -100,6 +102,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
   imshow("white", white);
   showImageWithoutFrame(L"white", white.cols, white.rows);
+
+  int number = 1;
 
   while (true)
   {
@@ -201,10 +205,11 @@ int _tmain(int argc, _TCHAR* argv[])
   }/
   int fromto[] = {0,0,1,1,2,2};*/
 
-  std::vector<Device*> devices;
+  Devices devices;
 
   while(true)
   {
+    std::cout << number << "\n";
 
     cap >> frame; // get a new frame from camera
     cvtColor(frame, gray, CV_RGB2GRAY);
@@ -213,7 +218,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     imshow("gray", gray);
 
-    inRange(hsv_all, cv::Scalar(10, 80, 130), cv::Scalar(30,150,255), binary);
+    inRange(hsv_all, cv::Scalar(10, 80, 80), cv::Scalar(30,150,255), binary);
     //inRange(hsv_all, cv::Scalar(235, 127, 75), cv::Scalar(255,255,125), bin2);
 
     //split(frame, hsv);
@@ -251,14 +256,17 @@ int _tmain(int argc, _TCHAR* argv[])
     //cv::erode(to_show, to_show, strel);
 
     
-    indexImageBlack(to_show, objects);
+    indexImageBlack(to_show, objects, devices);
     cv::equalizeHist(objects, objects);
     imshow("objects", objects);
     imwrite("objects.jpg", objects);
 
-    imshow("generated", to_show);
-    showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
-    
+    if (number ++ > 10)
+    {
+
+      imshow("generated", to_show);
+      showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+    }    
     if(waitKey(30) >= 0)
     {
       break;
