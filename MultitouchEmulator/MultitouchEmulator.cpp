@@ -10,8 +10,8 @@
 
 using namespace cv;
 
-//#define HOMOGRAPHY
-#define JUST_PHOTO
+#define HOMOGRAPHY
+//#define JUST_PHOTO
 //#define CAM
 
 #ifdef JUST_PHOTO

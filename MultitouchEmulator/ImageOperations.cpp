@@ -160,7 +160,7 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
     {
       if (!source.at<uchar>(i,j)) //other value then 0, means that this is object
       {
-        index.at<uchar>(i,j) = map[source.at<uchar>(i,j)]; //mapping
+        index.at<uchar>(i,j) = map[index.at<uchar>(i,j)]; //mapping
       }
     }
   }
