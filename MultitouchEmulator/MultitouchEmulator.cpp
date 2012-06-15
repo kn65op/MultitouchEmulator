@@ -10,8 +10,8 @@
 
 using namespace cv;
 
-#define HOMOGRAPHY
-//#define JUST_PHOTO
+//#define HOMOGRAPHY
+#define JUST_PHOTO
 //#define CAM
 
 #ifdef JUST_PHOTO
@@ -209,7 +209,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     imshow("gray", gray);
 
-    inRange(hsv_all, cv::Scalar(10, 80, 200), cv::Scalar(30,150,255), binary);
+    inRange(hsv_all, cv::Scalar(10, 80, 130), cv::Scalar(30,150,255), binary);
     //inRange(hsv_all, cv::Scalar(235, 127, 75), cv::Scalar(255,255,125), bin2);
 
     //split(frame, hsv);
