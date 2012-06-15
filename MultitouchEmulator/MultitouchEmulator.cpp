@@ -207,9 +207,15 @@ int _tmain(int argc, _TCHAR* argv[])
 
   Devices devices;
 
+  cv::Mat last_gray;
+
+  cap >> frame; // get a new frame from camera
+  cvtColor(frame, gray, CV_RGB2GRAY);
+
   while(true)
   {
     std::cout << number << "\n";
+    gray.copyTo(last_gray);
 
     cap >> frame; // get a new frame from camera
     cvtColor(frame, gray, CV_RGB2GRAY);
@@ -217,6 +223,11 @@ int _tmain(int argc, _TCHAR* argv[])
     split(hsv_all, hsv);
 
     imshow("gray", gray);
+
+    if (isSameImage (last_gray, gray))
+    {
+      continue;
+    }
 
     inRange(hsv_all, cv::Scalar(10, 80, 80), cv::Scalar(30,150,255), binary);
     //inRange(hsv_all, cv::Scalar(235, 127, 75), cv::Scalar(255,255,125), bin2);

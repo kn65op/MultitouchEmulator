@@ -220,3 +220,24 @@ void showImageWithoutFrame(LPCWSTR name, cv::Size size)
 {
   showImageWithoutFrame(name, 0,0, size.width, size.height);
 }
+
+bool isSameImage(cv::Mat & one, cv::Mat & two)
+{
+  if (one.type() != two.type())
+  {
+    return false;
+  }
+  cv::Size size = one.size();
+  for (int i=0; i<size.height; ++i)
+  {
+    for (int j=0; j<size.width; ++j)
+    {
+      int diff = one.at<uchar>(i,j) - two.at<uchar>(i,j);
+      if (diff > 5 || diff < -5)
+      {
+        return false;
+      }
+    }
+  }
+  return true;
+}
