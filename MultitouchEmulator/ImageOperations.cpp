@@ -81,7 +81,7 @@ void negation(cv::Mat & im)
   }
 }
 
-void indexImageBlack(cv::Mat & source, cv::Mat & index)
+void indexImageBlack(cv::Mat & source, cv::Mat & index, Devices & devs)
 {
   // 0 - object
   // 255 - background
@@ -153,6 +153,8 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
     }
   }
 
+  int tmp;
+
   //using paste tab
   for (int i=0; i<size.height; ++i)
   {
@@ -160,10 +162,14 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index)
     {
       if (!source.at<uchar>(i,j)) //other value then 0, means that this is object
       {
-        index.at<uchar>(i,j) = map[index.at<uchar>(i,j)]; //mapping
+        tmp = map[index.at<uchar>(i,j)];
+        index.at<uchar>(i,j) = tmp; //mapping
+        devs.setPixel(tmp, i, j);
       }
     }
   }
+
+  devs.processNewScene();
   
   cv::imwrite("raw.bmp", index);
 

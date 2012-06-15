@@ -3,7 +3,7 @@
 #include <opencv2\opencv.hpp>
 #include <vector>
 
-#include "Device.h"
+#include "Devices.h"
 
 /**
   * Function that substrat two matrixes in grey scale and return matrix form 0 to 255;
@@ -32,9 +32,8 @@ void negation(cv::Mat & im);
 
 /**
   * Function to index elements on image. Obects must be black.
-  //* @returns std::vector with recognized devices. 
   */
-/*std::vector<Device*>*/ void indexImageBlack(cv::Mat & source, cv::Mat & index);
+void indexImageBlack(cv::Mat & source, cv::Mat & index, Devices & devs);
 
 /**
   * Functions, which creates all white image

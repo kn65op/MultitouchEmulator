@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Device.h" />
+    <ClInclude Include="Devices.h" />
     <ClInclude Include="Homography.h" />
     <ClInclude Include="ImageOperations.h" />
     <ClInclude Include="ScreenShape.h" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="Devices.cpp" />
     <ClCompile Include="Homography.cpp" />
     <ClCompile Include="ImageOperations.cpp" />
     <ClCompile Include="MultitouchEmulator.cpp" />
