@@ -80,6 +80,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Device.h" />
     <ClInclude Include="Homography.h" />
     <ClInclude Include="ImageOperations.h" />
     <ClInclude Include="ScreenShape.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Device.cpp" />
     <ClCompile Include="Homography.cpp" />
     <ClCompile Include="ImageOperations.cpp" />
     <ClCompile Include="MultitouchEmulator.cpp" />

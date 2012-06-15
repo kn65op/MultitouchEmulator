@@ -1,6 +1,9 @@
 /** This file contains functions for manipulating images */
 
 #include <opencv2\opencv.hpp>
+#include <vector>
+
+#include "Device.h"
 
 /**
   * Function that substrat two matrixes in grey scale and return matrix form 0 to 255;
@@ -29,8 +32,9 @@ void negation(cv::Mat & im);
 
 /**
   * Function to index elements on image. Obects must be black.
+  //* @returns std::vector with recognized devices. 
   */
-void indexImageBlack(cv::Mat & source, cv::Mat & index);
+/*std::vector<Device*>*/ void indexImageBlack(cv::Mat & source, cv::Mat & index);
 
 /**
   * Functions, which creates all white image

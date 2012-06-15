@@ -7,6 +7,7 @@
 #include "ImageOperations.h"
 #include "Homography.h"
 #include "ScreenShape.h"
+#include "Device.h"
 
 using namespace cv;
 
@@ -190,6 +191,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
   strel = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(11,11));
   cv::Mat strel_big = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(13,13));
+  cv::Mat strel_small = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(7,7));
 
   cv::Mat hsv_all, bin1, bin2;
   cv::Mat hsv[3];
@@ -199,7 +201,9 @@ int _tmain(int argc, _TCHAR* argv[])
   }/
   int fromto[] = {0,0,1,1,2,2};*/
 
-  for(;;)
+  std::vector<Device*> devices;
+
+  while(true)
   {
 
     cap >> frame; // get a new frame from camera
@@ -219,6 +223,10 @@ int _tmain(int argc, _TCHAR* argv[])
     //bitwise_or(bin1, bin2, binary);
 
     negation(binary);
+    cv::dilate(binary, binary, strel_small);
+    cv::erode(binary, binary, strel_small);
+
+
     imshow("bin", binary);
     //imshow("g", hsv[1]);
     //imshow("b", hsv[2]);
