@@ -315,7 +315,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
   while(true)
   {
-    
+    Sleep(500);
     imshow("generated", hom.getGUITransmission(devices));
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);
 

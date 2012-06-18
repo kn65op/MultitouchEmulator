@@ -201,7 +201,8 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   end = devs.getEnd();
   for (it = devs.getBegin(); it != end; ++it)
   {
-    cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
+    it->second->showNextBit(GUI);
+    //cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
   }
   return GUI;
 }

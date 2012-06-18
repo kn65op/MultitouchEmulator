@@ -8,7 +8,10 @@
 class Device
 {
   //types
+public:
   typedef std::vector<bool> message_type;
+
+private:
   typedef message_type::iterator message_iterator;
 
   //members
@@ -24,9 +27,10 @@ public:
 
   void calcRect();
   
-  void setMessage();
+  void setMessage(message_type mes);
   bool getNextBit();
   bool isNextBit();
+  void showNextBit(cv::Mat & image);
 
 private:
   std::vector<int> xs;

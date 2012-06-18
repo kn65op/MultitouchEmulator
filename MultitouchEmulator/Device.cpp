@@ -27,3 +27,23 @@ void Device::calcRect()
 {
   rect = cv::boundingRect(points);
 }
+
+void Device::setMessage(Device::message_type mes)
+{
+  message = mes;
+  mit = message.begin();
+}
+
+void Device::showNextBit(cv::Mat & image)
+{
+  if (isNextBit())
+  {
+    cv::rectangle(image, rect, cv::Scalar(*(mit++) ? 255 : 0), CV_FILLED);
+  }
+}
+
+bool Device::isNextBit()
+{
+  return mit != message.end();
+
+}

@@ -54,10 +54,22 @@ Devices::iterator Devices::getEnd()
 
 void Devices::processToTransmition()
 {
+  //tmp fake
+  int s = devices.size();
+  std::vector<bool> tmp;
+  for (int i =0; i < 10 + s; ++i)
+  {
+    tmp.push_back( i % 3 == 0);
+  }
+  //tmp fake
+  
   iterator it, end;
   end = devices.end();
+  int i =0; //fake
   for (it = devices.begin(); it != end; ++it)
   {
     it->second->calcRect();
+    it->second->setMessage(std::vector<bool>(tmp.begin() + i, tmp.begin() + 10 + i)); //fake
+    i++; //fake
   }
 }
