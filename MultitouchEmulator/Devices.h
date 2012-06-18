@@ -6,8 +6,13 @@
 
 class Devices
 {
+  //types
 private:
   typedef std::map<int, Device*> container;
+public:
+  typedef std::map<int, Device*>::iterator iterator;
+
+  //members
 public:
   Devices(void);
   ~Devices(void);
@@ -34,6 +39,11 @@ public:
     * Function that returns number of devices
     */
   int size() const;
+
+  void processToTransmition();
+
+  iterator getBegin();
+  iterator getEnd();
 private:
   container devices;
 };

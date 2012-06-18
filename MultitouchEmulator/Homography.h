@@ -40,6 +40,10 @@ public:
     * Function returns image with GUI for detecting screen.
     */
   cv::Mat & getGUIDetectScreen();
+  /**
+    * Function returns image with GUI for transmission.
+    */
+  cv::Mat & getGUITransmission(Devices & devs);
 
 private:
   cv::Mat H;

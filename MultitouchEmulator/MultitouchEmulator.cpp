@@ -248,7 +248,7 @@ int _tmain(int argc, _TCHAR* argv[])
     //bitwise_or(bin1, bin2, binary);
 
     inRange(hsv_all, cv::Scalar(20, 140, 45), cv::Scalar(40,220,80), bin1);
-    inRange(hsv_all, cv::Scalar(25, 100, 120), cv::Scalar(40,200,170), bin2);
+    inRange(hsv_all, cv::Scalar(25, 100, 120), cv::Scalar(40,200,200), bin2);
     bitwise_or(bin1, bin2, binary);
     
     imwrite("bin.bmp", binary);
@@ -307,9 +307,22 @@ int _tmain(int argc, _TCHAR* argv[])
     {
       break;
     }
+  }
 
-    //transmission
+  devices.processToTransmition();
 
+  //transmission
+
+  while(true)
+  {
+    
+    imshow("generated", hom.getGUITransmission(devices));
+    showImageWithoutFrame(L"generated", resolution.width, resolution.height);
+
+    if(waitKey(30) >= 0)
+    {
+      break;
+    }
   }
 #endif
 

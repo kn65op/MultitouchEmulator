@@ -193,3 +193,15 @@ void Homography::clearGUI()
   int level = (int)(generated_x * 0.1) - 1;
   cv::rectangle(GUI, cv::Rect(0,0,generated_x, level), cv::Scalar(255), CV_FILLED);
 }
+
+cv::Mat & Homography::getGUITransmission(Devices & devs)
+{
+  clearGUI();
+  Devices::iterator it, end;
+  end = devs.getEnd();
+  for (it = devs.getBegin(); it != end; ++it)
+  {
+    cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
+  }
+  return GUI;
+}

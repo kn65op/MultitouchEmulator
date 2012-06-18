@@ -28,7 +28,7 @@ void Devices::processNewScene()
 
 void Devices::clear()
 {
-  container::iterator it, end;
+  iterator it, end;
   end = devices.end();
   for (it = devices.begin(); it != end; ++it)
   {
@@ -40,4 +40,24 @@ void Devices::clear()
 int Devices::size() const
 {
   return devices.size();
+}
+
+Devices::iterator Devices::getBegin()
+{
+  return devices.begin();
+}
+
+Devices::iterator Devices::getEnd()
+{
+  return devices.end();
+}
+
+void Devices::processToTransmition()
+{
+  iterator it, end;
+  end = devices.end();
+  for (it = devices.begin(); it != end; ++it)
+  {
+    it->second->calcRect();
+  }
 }
