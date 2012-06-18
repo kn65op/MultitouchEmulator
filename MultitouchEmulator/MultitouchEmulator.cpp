@@ -224,19 +224,19 @@ int _tmain(int argc, _TCHAR* argv[])
 
     imshow("gray", gray);
 
-    if (isSameImage (last_gray, gray))
+    /*if (isSameImage (last_gray, gray))
     {
       continue;
-    }
+    }*/
 
-    inRange(hsv_all, cv::Scalar(10, 80, 80), cv::Scalar(30,150,255), binary);
-    //inRange(hsv_all, cv::Scalar(235, 127, 75), cv::Scalar(255,255,125), bin2);
+    inRange(hsv_all, cv::Scalar(10, 80, 80), cv::Scalar(30,150,255), bin1);
+    inRange(hsv_all, cv::Scalar(10, 70, 20), cv::Scalar(50,180,80), bin2);
 
     //split(frame, hsv);
 
     //threshold(hsv[0], bin1, 30, 255, THRESH_BINARY_INV);
     //threshold(hsv[0], bin2, 330, 255, THRESH_BINARY);
-    //bitwise_or(bin1, bin2, binary);
+    bitwise_or(bin1, bin2, binary);
 
     negation(binary);
     cv::dilate(binary, binary, strel_small);
@@ -272,7 +272,7 @@ int _tmain(int argc, _TCHAR* argv[])
     imshow("objects", objects);
     imwrite("objects.jpg", objects);
 
-    if (number ++ > 10)
+    if (number ++ > 5)
     {
 
       imshow("generated", to_show);
