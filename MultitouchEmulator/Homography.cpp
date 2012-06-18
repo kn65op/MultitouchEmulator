@@ -61,6 +61,10 @@ void Homography::setGeneratedImageSize(cv::Size size)
 {
   setGeneratedImageSize(size.height, size.width);
   //generated = cv::Mat(y, x, CV_8UC1);
+  
+  GUI = cv::Mat(generated_x, generated_y, CV_8UC1, cv::Scalar(255));
+  int level = (int)(generated_x * 0.1);
+  cv::line(GUI, cv::Point(0, level), cv::Point(generated_y, level), cv::Scalar(0), 1);
 }
 
 void Homography::runHomography()
@@ -166,3 +170,7 @@ void Homography::setROI(cv::Mat & frame) const
   frame = cv::Mat(frame, cv::Rect(min_y, min_x, max_y - min_y, max_x - min_x));
 }
 
+cv::Mat & Homography::getGUI()
+{
+  return GUI;
+}

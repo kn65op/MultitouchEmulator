@@ -29,6 +29,11 @@ public:
     * Function clears the list of devices
     */
   void clear();
+
+  /**
+    * Function that returns number of devices
+    */
+  int size() const;
 private:
   container devices;
 };

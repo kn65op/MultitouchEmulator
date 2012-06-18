@@ -36,3 +36,8 @@ void Devices::clear()
   }
   devices.clear();
 }
+
+int Devices::size() const
+{
+  return devices.size();
+}

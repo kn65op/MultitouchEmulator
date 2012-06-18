@@ -29,10 +29,17 @@ public:
   void setROI(cv::Mat & frame) const;
 
   void makeLUT();
+
+  /**
+    * Function returns image with GUI
+    */
+  cv::Mat & getGUI();
 private:
   cv::Mat H;
 
   cv::Mat LUT;
+  
+  cv::Mat GUI;
 
   cv::Mat image_points;
   cv::Mat real_points;

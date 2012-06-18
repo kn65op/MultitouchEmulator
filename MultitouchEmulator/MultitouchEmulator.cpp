@@ -104,7 +104,8 @@ int _tmain(int argc, _TCHAR* argv[])
   showImageWithoutFrame(L"white", white.cols, white.rows);
 
   int number = 1;
-
+  
+  //searching for screen
   while (true)
   {
     cap >> frame;
@@ -212,6 +213,7 @@ int _tmain(int argc, _TCHAR* argv[])
   cap >> frame; // get a new frame from camera
   cvtColor(frame, gray, CV_RGB2GRAY);
 
+  //searching for devices
   while(true)
   {
     std::cout << number << "\n";
@@ -279,14 +281,17 @@ int _tmain(int argc, _TCHAR* argv[])
 
     if (number ++ > 5)
     {
-
-      imshow("generated", to_show);
+      devices.size();
+      //imshow("generated", to_show);
+      imshow("generated", hom.getGUI());
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
     }    
     if(waitKey(30) >= 0)
     {
       break;
     }
+
+    //transmission
 
   }
 #endif
