@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <map>
 
 #include "Device.h"
 
@@ -23,6 +23,6 @@ public:
     */
   void processNewScene();
 private:
-  std::vector<Device*> devices;
+  std::map<int, Device*> devices;
 };
 

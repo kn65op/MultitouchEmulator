@@ -229,14 +229,17 @@ int _tmain(int argc, _TCHAR* argv[])
       continue;
     }*/
 
-    inRange(hsv_all, cv::Scalar(10, 80, 80), cv::Scalar(30,150,255), bin1);
-    inRange(hsv_all, cv::Scalar(10, 70, 20), cv::Scalar(50,180,80), bin2);
+    //inRange(hsv_all, cv::Scalar(10, 80, 80), cv::Scalar(30,150,255), bin1);
+    //inRange(hsv_all, cv::Scalar(10, 70, 20), cv::Scalar(50,180,80), bin2);
 
     //split(frame, hsv);
 
     //threshold(hsv[0], bin1, 30, 255, THRESH_BINARY_INV);
     //threshold(hsv[0], bin2, 330, 255, THRESH_BINARY);
-    bitwise_or(bin1, bin2, binary);
+    
+    //bitwise_or(bin1, bin2, binary);
+
+    inRange(hsv_all, cv::Scalar(20, 140, 45), cv::Scalar(40,220,80), binary);
 
     negation(binary);
     cv::dilate(binary, binary, strel_small);
@@ -268,9 +271,11 @@ int _tmain(int argc, _TCHAR* argv[])
 
     
     indexImageBlack(to_show, objects, devices);
-    cv::equalizeHist(objects, objects);
-    imshow("objects", objects);
-    imwrite("objects.jpg", objects);
+
+
+    //cv::equalizeHist(objects, objects);
+    //imshow("objects", objects);
+    //imwrite("objects.jpg", objects);
 
     if (number ++ > 5)
     {
