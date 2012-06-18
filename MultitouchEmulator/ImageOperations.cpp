@@ -155,6 +155,8 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index, Devices & devs)
 
   int tmp;
 
+  devs.clear();
+
   //using paste tab
   for (int i=0; i<size.height; ++i)
   {

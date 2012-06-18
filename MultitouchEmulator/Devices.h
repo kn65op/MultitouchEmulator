@@ -6,6 +6,8 @@
 
 class Devices
 {
+private:
+  typedef std::map<int, Device*> container;
 public:
   Devices(void);
   ~Devices(void);
@@ -22,7 +24,12 @@ public:
     * Function processing founded devices after all added.
     */
   void processNewScene();
+
+  /**
+    * Function clears the list of devices
+    */
+  void clear();
 private:
-  std::map<int, Device*> devices;
+  container devices;
 };
 
