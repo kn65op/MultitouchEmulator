@@ -86,6 +86,9 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index, Devices & devs)
   // 0 - object
   // 255 - background
 
+  
+  cv::imwrite("tmp.bmp", source);
+
   index = cv::Mat::zeros(source.size(), source.type());
 
   cv::Size size = source.size();

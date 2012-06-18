@@ -2,6 +2,8 @@
 
 #include <opencv2\opencv.hpp>
 
+#include "Devices.h"
+
 class Homography
 {
 public:
@@ -31,9 +33,14 @@ public:
   void makeLUT();
 
   /**
-    * Function returns image with GUI
+    * Function returns image with GUI for detecting devices.
     */
-  cv::Mat & getGUI();
+  cv::Mat & getGUIDetectDevice(Devices & devs);
+  /**
+    * Function returns image with GUI for detecting screen.
+    */
+  cv::Mat & getGUIDetectScreen();
+
 private:
   cv::Mat H;
 
@@ -55,4 +62,6 @@ private:
 
   int min_x, max_x, min_y, max_y;
   void setMinMax(int x, int y);
+
+  void clearGUI();
 };

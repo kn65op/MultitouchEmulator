@@ -2,6 +2,7 @@
 #include "Homography.h"
 
 #include <cmath>
+#include <sstream>
 
 Homography::Homography(void)
 {
@@ -170,7 +171,25 @@ void Homography::setROI(cv::Mat & frame) const
   frame = cv::Mat(frame, cv::Rect(min_y, min_x, max_y - min_y, max_x - min_x));
 }
 
-cv::Mat & Homography::getGUI()
+cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
 {
+  clearGUI();
+  std::stringstream text;
+  text << devs.size();
+  text << " devices found. Press any key to start transmission";
+  cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0));
   return GUI;
+}
+
+cv::Mat & Homography::getGUIDetectScreen()
+{
+  clearGUI();
+  cv::putText(GUI, "Press any key when circles points to screen corners", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0));
+  return GUI;
+}
+
+void Homography::clearGUI()
+{
+  int level = (int)(generated_x * 0.1) - 1;
+  cv::rectangle(GUI, cv::Rect(0,0,generated_x, level), cv::Scalar(255), CV_FILLED);
 }

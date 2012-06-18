@@ -68,9 +68,9 @@ int _tmain(int argc, _TCHAR* argv[])
   Homography hom;
   ScreenShape ss;
 
-  cv::Size resoution = getScreenResolution();
+  cv::Size resolution = getScreenResolution();
 
-  std::cout << resoution.width << " " << resoution.height << "\n";
+  std::cout << resolution.width << " " << resolution.height << "\n";
 
   Mat frame, gray;
   //Mat generated(100,100, CV_8UC1);
@@ -90,6 +90,12 @@ int _tmain(int argc, _TCHAR* argv[])
   //image.at<cv::Point2f>(2,0) = cv::Point2f(200,50);
   //image.at<cv::Point2f>(3,0) = cv::Point2f(200,300);
 
+  //setting the Homography
+  cap >> frame;
+  cvtColor(frame, gray, CV_RGB2GRAY);
+  hom.setImageSize(gray.size());
+  hom.setGeneratedImageSize(resolution);
+
   //Automatic selecting points
   //*
   Mat binary;
@@ -97,11 +103,11 @@ int _tmain(int argc, _TCHAR* argv[])
 
   Mat strel = getStructuringElement(MORPH_ELLIPSE, Size(9,9));
 
-  cv::Mat white;
-  createWhiteImage(white, resoution);
+//  cv::Mat white;
+  //createWhiteImage(white, resolution);
 
-  imshow("white", white);
-  showImageWithoutFrame(L"white", white.cols, white.rows);
+  imshow("white", hom.getGUIDetectScreen());
+  showImageWithoutFrame(L"white", resolution.width, resolution.height);
 
   int number = 1;
   
@@ -142,7 +148,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     //std::cout << "\n";
     imshow("gray",gray);
-    showImageWithoutFrame(L"gray", resoution.width / 3, resoution.height / 3, gray.cols, gray.rows);
+    showImageWithoutFrame(L"gray", resolution.width / 3, resolution.height / 3, gray.cols, gray.rows);
 
     if(waitKey(30) >= 0)
     {
@@ -186,8 +192,8 @@ int _tmain(int argc, _TCHAR* argv[])
   cv::setMouseCallback("gray", NULL, 0);
   //*/
 
-  hom.setImageSize(gray.size());
-  hom.setGeneratedImageSize(resoution);
+
+  //run Homography
   //hom.setGeneratedImageSize(1000,700);
   hom.runHomography(image);
 
@@ -196,7 +202,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
   strel = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(11,11));
   cv::Mat strel_big = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(13,13));
-  cv::Mat strel_small = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(7,7));
+  cv::Mat strel_small = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(3,3));
 
   cv::Mat hsv_all, bin1, bin2;
   cv::Mat hsv[3];
@@ -241,11 +247,18 @@ int _tmain(int argc, _TCHAR* argv[])
     
     //bitwise_or(bin1, bin2, binary);
 
-    inRange(hsv_all, cv::Scalar(20, 140, 45), cv::Scalar(40,220,80), binary);
+    inRange(hsv_all, cv::Scalar(20, 140, 45), cv::Scalar(40,220,80), bin1);
+    inRange(hsv_all, cv::Scalar(25, 100, 120), cv::Scalar(40,200,170), bin2);
+    bitwise_or(bin1, bin2, binary);
+    
+    imwrite("bin.bmp", binary);
 
     negation(binary);
+    imwrite("bin.bmp", binary);
     cv::dilate(binary, binary, strel_small);
+    imwrite("bin.bmp", binary);
     cv::erode(binary, binary, strel_small);
+    imwrite("bin.bmp", binary);
 
 
     imshow("bin", binary);
@@ -263,14 +276,19 @@ int _tmain(int argc, _TCHAR* argv[])
     //    generated.at<uchar>(tmp.x, tmp.y) = gray.at<uchar>(i,j);
     //  }
     //}
-
+    
+    imwrite("to_show.bmp", binary);
     generated = hom.processImage(binary);
+    imwrite("to_show.bmp", generated);
     cv::erode(generated, to_show, strel);
+    imwrite("to_show.bmp", to_show);
     cv::dilate(to_show, to_show, strel_big  );
+    imwrite("to_show.bmp", to_show);
     
     //cv::dilate(to_show, to_show, strel);
     //cv::erode(to_show, to_show, strel);
 
+    imwrite("to_show.bmp", to_show);
     
     indexImageBlack(to_show, objects, devices);
 
@@ -281,9 +299,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
     if (number ++ > 5)
     {
-      devices.size();
       //imshow("generated", to_show);
-      imshow("generated", hom.getGUI());
+      imshow("generated", hom.getGUIDetectDevice(devices));
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
     }    
     if(waitKey(30) >= 0)
