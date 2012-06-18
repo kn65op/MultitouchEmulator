@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 //Class representing device.
 class Device
 {
@@ -11,6 +13,9 @@ public:
   
   bool isRealDevice();
 
+private:
+  std::vector<int> xs;
+  std::vector<int> ys;
 
 };
 
