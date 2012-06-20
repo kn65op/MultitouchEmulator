@@ -246,3 +246,10 @@ bool isSameImage(cv::Mat & one, cv::Mat & two)
   }
   return true;
 }
+
+void generatePattern(cv::Mat & pat)
+{
+	pat = cv::Mat(200, 200, CV_8UC3, cv::Scalar(0,148,198));
+	/*pat = cv::Mat(200, 200, CV_8UC3, cv::Scalar(30,255,255));
+	cv::cvtColor(pat, pat, CV_HSV2BGR);//*/
+}

@@ -11,8 +11,8 @@
 
 using namespace cv;
 
-#define HOMOGRAPHY
-//#define JUST_PHOTO
+//#define HOMOGRAPHY
+#define JUST_PHOTO
 //#define CAM
 
 #ifdef JUST_PHOTO
@@ -36,6 +36,9 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 
 #ifdef JUST_PHOTO
+	cv::Mat pattern;
+	generatePattern(pattern);
+
   VideoCapture cap(0); // open the default camera
   if(!cap.isOpened())  // check if we succeeded
     return -1;
@@ -51,6 +54,8 @@ int _tmain(int argc, _TCHAR* argv[])
     cap >> frame;
     cvtColor(frame, hsv_all, CV_BGR2HSV);
     imshow("frame", frame);
+			imshow("pattern", pattern);
+			showImageWithoutFrame(L"pattern", 500, 500, pattern.cols, pattern.rows);
     if(waitKey(30) >= 0)
     {
       break;
@@ -216,6 +221,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
   cv::Mat last_gray;
 
+	cv::Mat pattern;
+	generatePattern(pattern);
+
   cap >> frame; // get a new frame from camera
   cvtColor(frame, gray, CV_RGB2GRAY);
 
@@ -297,11 +305,16 @@ int _tmain(int argc, _TCHAR* argv[])
     //imshow("objects", objects);
     //imwrite("objects.jpg", objects);
 
+			imshow("pattern", pattern);
+			showImageWithoutFrame(L"pattern", 500, 500, pattern.cols, pattern.rows);
+
     if (number ++ > 5)
     {
       //imshow("generated", to_show);
-      imshow("generated", hom.getGUIDetectDevice(devices));
-      showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+ //     imshow("generated", hom.getGUIDetectDevice(devices));
+ //     showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+
+
     }    
     if(waitKey(30) >= 0)
     {

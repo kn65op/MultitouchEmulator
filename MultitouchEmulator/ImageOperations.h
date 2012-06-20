@@ -64,3 +64,8 @@ void showImageWithoutFrame(LPCWSTR name, cv::Size size);
   * Function test if images are equal
   */
 bool isSameImage(cv::Mat & one, cv::Mat & two);
+
+/**
+	* Function creates color pattern image
+	*/
+void generatePattern(cv::Mat & pat);
