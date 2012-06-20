@@ -11,8 +11,8 @@
 
 using namespace cv;
 
-//#define HOMOGRAPHY
-#define JUST_PHOTO
+#define HOMOGRAPHY
+//#define JUST_PHOTO
 //#define CAM
 
 #ifdef JUST_PHOTO
@@ -255,8 +255,8 @@ int _tmain(int argc, _TCHAR* argv[])
     
     //bitwise_or(bin1, bin2, binary);
 
-    inRange(hsv_all, cv::Scalar(20, 140, 45), cv::Scalar(40,220,80), bin1);
-    inRange(hsv_all, cv::Scalar(25, 100, 120), cv::Scalar(40,200,200), bin2);
+    inRange(hsv_all, cv::Scalar(20, 160, 20), cv::Scalar(40,240,80), bin1); //no light
+    inRange(hsv_all, cv::Scalar(25, 100, 120), cv::Scalar(40,200,200), bin2); //light
     bitwise_or(bin1, bin2, binary);
     
     imwrite("bin.bmp", binary);
@@ -305,14 +305,14 @@ int _tmain(int argc, _TCHAR* argv[])
     //imshow("objects", objects);
     //imwrite("objects.jpg", objects);
 
-			imshow("pattern", pattern);
-			showImageWithoutFrame(L"pattern", 500, 500, pattern.cols, pattern.rows);
+	//		imshow("pattern", pattern);
+		//	showImageWithoutFrame(L"pattern", 500, 500, pattern.cols, pattern.rows);
 
     if (number ++ > 5)
     {
       //imshow("generated", to_show);
- //     imshow("generated", hom.getGUIDetectDevice(devices));
- //     showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+      imshow("generated", hom.getGUIDetectDevice(devices));
+      showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
 
 
     }    
