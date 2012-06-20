@@ -8,6 +8,7 @@
 #include "Homography.h"
 #include "ScreenShape.h"
 #include "Devices.h"
+#include "Key.h"
 
 using namespace cv;
 
@@ -322,7 +323,14 @@ int _tmain(int argc, _TCHAR* argv[])
     }
   }
 
-  devices.processToTransmition();
+  //setting transmission
+  Key key;
+  key.setNumberOfDevices(devices.size());
+  key.generateMainKey(128);
+  key.setHashLength(128);
+
+    
+  devices.processToTransmition(key);
 
   //transmission
 

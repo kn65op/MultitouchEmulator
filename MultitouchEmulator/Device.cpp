@@ -30,7 +30,25 @@ void Device::calcRect()
 
 void Device::setMessage(Device::message_type mes)
 {
-  message = mes;
+  Device::message_iterator it, end;
+  it = mes.begin();
+  end = mes.end();
+
+  //Manchester Code
+  for (; it != end; ++it)
+  {
+    if (*it)
+    {
+      message.push_back(true);
+      message.push_back(false);
+    }
+    else
+    {
+      message.push_back(false);
+      message.push_back(true);
+    }
+  }
+
   mit = message.begin();
 }
 

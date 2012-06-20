@@ -52,24 +52,29 @@ Devices::iterator Devices::getEnd()
   return devices.end();
 }
 
-void Devices::processToTransmition()
+void Devices::processToTransmition(Key key)
 {
   //tmp fake
+  /*
   int s = devices.size();
   std::vector<bool> tmp;
   for (int i =0; i < 10 + s; ++i)
   {
     tmp.push_back( i % 3 == 0);
   }
-  //tmp fake
+  //tmp fake*/
   
+  devices.begin()->second->calcRect();
+  devices.begin()->second->setMessage(key.getMasterDeviceCode());
+
   iterator it, end;
   end = devices.end();
-  int i =0; //fake
-  for (it = devices.begin(); it != end; ++it)
+  int i = 0;
+  for (it = ++(devices.begin()); it != end; ++it)
   {
     it->second->calcRect();
-    it->second->setMessage(std::vector<bool>(tmp.begin() + i, tmp.begin() + 10 + i)); //fake
-    i++; //fake
+    it->second->setMessage(key.getSecondaryDeviceCode(++i));
+    //it->second->setMessage(std::vector<bool>(tmp.begin() + i, tmp.begin() + 10 + i)); //fake
+    //i++; //fake
   }
 }

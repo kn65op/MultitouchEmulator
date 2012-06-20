@@ -3,6 +3,7 @@
 #include <map>
 
 #include "Device.h"
+#include "Key.h"
 
 class Devices
 {
@@ -40,7 +41,7 @@ public:
     */
   int size() const;
 
-  void processToTransmition();
+  void processToTransmition(Key key);
 
   iterator getBegin();
   iterator getEnd();
