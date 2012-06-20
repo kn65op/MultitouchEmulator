@@ -325,6 +325,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
   //setting transmission
   Key key;
+  //std::cout << devices.size() << ": ";
   key.setNumberOfDevices(devices.size());
   key.generateMainKey(128);
   key.setHashLength(128);

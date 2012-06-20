@@ -39,6 +39,7 @@ public:
 private:
   int key_length;
   int hash_length;
+  int number_of_devices;
   std::string key;
 
   std::string alphabet;
