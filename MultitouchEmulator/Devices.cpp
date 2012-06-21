@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "Devices.h"
 
+#include <algorithm>
+
 
 Devices::Devices(void)
 {
@@ -23,7 +25,19 @@ void Devices::setPixel(int i, int x, int y)
 
 void Devices::processNewScene()
 {
-
+  iterator it, end;
+  end = devices.end();
+  for (it = devices.begin(); it!=end;)
+  {
+    if (it->second->isRealDevice())
+    {
+      ++it;
+    }
+    else
+    {
+      it = devices.erase(it);
+    }
+  }
 }
 
 void Devices::clear()

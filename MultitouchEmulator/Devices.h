@@ -10,6 +10,7 @@ class Devices
   //types
 private:
   typedef std::map<int, Device*> container;
+  typedef std::pair<int, Device*> pair_type;
 public:
   typedef std::map<int, Device*>::iterator iterator;
 

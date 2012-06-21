@@ -66,3 +66,8 @@ bool Device::isNextBit()
   return mit != message.end();
 
 }
+
+bool Device::isRealDevice()
+{
+  return points.size() > 25;
+}
