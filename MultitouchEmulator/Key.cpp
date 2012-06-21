@@ -90,9 +90,10 @@ std::vector<bool> Key::getMasterDeviceCode()
 
 std::vector<bool> Key::getSecondaryDeviceCode(int n)
 {
+  std::vector<bool> ret;
   //generating md5
   std::stringstream ss;
-  ss << number_of_devices << key;
+  ss << n << key;
   
   BYTE *hash = hash_func((BYTE*)ss.str().c_str(), ss.str().size(), MD5);
 
@@ -101,12 +102,17 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
 		std::cout << "hash: 0x";
 
 		for (int i = 0; i < 16; i ++)
+    {
 			std::cout << std::hex << (int)hash[i];
+      storeHexIntoKey(hash[i], ret);
+    }
+
+    std::cout << "\n";
 	}
 
 	delete [] hash;
 
-  return std::vector<bool>(128);
+  return ret;
 }
 
 unsigned char * Key::hash_func(BYTE *input, int size, HashType type)
@@ -136,4 +142,21 @@ unsigned char * Key::hash_func(BYTE *input, int size, HashType type)
 	}
 
 	return NULL;
+}
+
+void Key::storeHexIntoKey(BYTE hex, std::vector<bool> & key)
+{
+  int tmp = 128;
+  for (int i = 7; i != -1; --i)
+  {
+    if (hex & tmp)
+    {
+      key.push_back(true);
+    }
+    else
+    {
+      key.push_back(false);
+    }
+    tmp /= 2;
+  }
 }

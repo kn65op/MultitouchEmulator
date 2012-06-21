@@ -53,5 +53,7 @@ private:
   };
 
   unsigned char * hash_func(BYTE *input, int size, HashType type);
+
+  void storeHexIntoKey(BYTE hex, std::vector<bool> & key);
 };
 
