@@ -3,6 +3,7 @@
 
 #include <random>
 #include <iostream>
+#include <sstream>
 
 Key::Key(void)
 {
@@ -89,5 +90,50 @@ std::vector<bool> Key::getMasterDeviceCode()
 
 std::vector<bool> Key::getSecondaryDeviceCode(int n)
 {
+  //generating md5
+  std::stringstream ss;
+  ss << number_of_devices << key;
+  
+  BYTE *hash = hash_func((BYTE*)ss.str().c_str(), ss.str().size(), MD5);
+
+	if (hash)
+	{
+		std::cout << "hash: 0x";
+
+		for (int i = 0; i < 16; i ++)
+			std::cout << std::hex << (int)hash[i];
+	}
+
+	delete [] hash;
+
   return std::vector<bool>(128);
+}
+
+unsigned char * Key::hash_func(BYTE *input, int size, HashType type)
+{
+	HCRYPTPROV hCryptProv;
+	HCRYPTHASH hHash;
+	BYTE *pData;
+	DWORD dwHashLength;
+	DWORD dwLength;
+	DWORD dwHashType = (DWORD)type;
+
+	if (CryptAcquireContext(&hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))
+	{
+		if(CryptCreateHash(hCryptProv, dwHashType, 0, 0, &hHash))
+		{
+			if(CryptHashData(hHash, input, size, 0))
+			{
+				CryptGetHashParam(hHash, HP_HASHSIZE, (BYTE*)&dwHashLength, &dwLength, 0);
+				pData = new BYTE [dwHashLength];
+				CryptGetHashParam(hHash, HP_HASHVAL, pData, &dwHashLength, 0);
+				CryptDestroyHash(hHash);
+				CryptReleaseContext(hCryptProv, 0);
+
+				return pData;
+			}
+		}
+	}
+
+	return NULL;
 }

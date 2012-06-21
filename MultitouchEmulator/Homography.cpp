@@ -9,6 +9,9 @@ Homography::Homography(void)
   points_setted = false;
   min_x = min_y = 4000;
   max_x = max_y = 0;
+  colorGUI = cv::Scalar(100,255,100);
+  color_line = cv::Scalar(0,0,0);
+  color_detect_screen = cv::Scalar(255,255,255);
 }
 
 
@@ -63,9 +66,9 @@ void Homography::setGeneratedImageSize(cv::Size size)
   setGeneratedImageSize(size.height, size.width);
   //generated = cv::Mat(y, x, CV_8UC1);
   
-  GUI = cv::Mat(generated_x, generated_y, CV_8UC1, cv::Scalar(255));
+  
   int level = (int)(generated_x * 0.1);
-  cv::line(GUI, cv::Point(0, level), cv::Point(generated_y, level), cv::Scalar(0), 1);
+  cv::line(GUI, cv::Point(0, level), cv::Point(generated_y, level), color_line, 1);
 }
 
 void Homography::runHomography()
@@ -164,6 +167,8 @@ void Homography::runHomography(cv::Mat image_points)
   image_points.copyTo(this->image_points);
 
   runHomography();
+
+  setGUIColor(colorGUI);
 }
 
 void Homography::setROI(cv::Mat & frame) const
@@ -177,21 +182,22 @@ cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
   std::stringstream text;
   text << devs.size();
   text << " devices found. Press any key to start transmission";
-  cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0));
+  cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
 }
 
 cv::Mat & Homography::getGUIDetectScreen()
 {
   clearGUI();
-  cv::putText(GUI, "Press any key when circles points to screen corners", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0));
+  setGUIColor(color_detect_screen);
+  cv::putText(GUI, "Press any key when circles points to screen corners", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
 }
 
 void Homography::clearGUI()
 {
   int level = (int)(generated_x * 0.1) - 1;
-  cv::rectangle(GUI, cv::Rect(0,0,generated_x, level), cv::Scalar(255), CV_FILLED);
+  cv::rectangle(GUI, cv::Rect(0,0,generated_x, level), colorGUI, CV_FILLED);
 }
 
 cv::Mat & Homography::getGUITransmission(Devices & devs)
@@ -205,4 +211,9 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
     //cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
   }
   return GUI;
+}
+
+void Homography::setGUIColor(cv::Scalar & scalar)
+{
+  GUI = cv::Mat(generated_x, generated_y, CV_8UC3, scalar);
 }

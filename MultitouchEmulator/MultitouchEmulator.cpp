@@ -55,8 +55,8 @@ int _tmain(int argc, _TCHAR* argv[])
     cap >> frame;
     cvtColor(frame, hsv_all, CV_BGR2HSV);
     imshow("frame", frame);
-			imshow("pattern", pattern);
-			showImageWithoutFrame(L"pattern", 500, 500, pattern.cols, pattern.rows);
+			//imshow("pattern", pattern);
+		//	showImageWithoutFrame(L"pattern", 500, 500, pattern.cols, pattern.rows);
     if(waitKey(30) >= 0)
     {
       break;
@@ -256,9 +256,11 @@ int _tmain(int argc, _TCHAR* argv[])
     
     //bitwise_or(bin1, bin2, binary);
 
-    inRange(hsv_all, cv::Scalar(20, 160, 20), cv::Scalar(40,240,80), bin1); //no light
-    inRange(hsv_all, cv::Scalar(25, 100, 120), cv::Scalar(40,200,200), bin2); //light
-    bitwise_or(bin1, bin2, binary);
+    inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
+
+    //inRange(hsv_all, cv::Scalar(20, 160, 110), cv::Scalar(40,240,150), bin1); //no light
+    //inRange(hsv_all, cv::Scalar(25, 100, 120), cv::Scalar(40,200,200), bin2); //light
+//    bitwise_or(bin1, bin2, binary);
     
     imwrite("bin.bmp", binary);
 
@@ -314,7 +316,6 @@ int _tmain(int argc, _TCHAR* argv[])
       //imshow("generated", to_show);
       imshow("generated", hom.getGUIDetectDevice(devices));
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
-
 
     }    
     if(waitKey(30) >= 0)

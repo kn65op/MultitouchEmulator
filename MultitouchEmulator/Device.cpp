@@ -56,7 +56,8 @@ void Device::showNextBit(cv::Mat & image)
 {
   if (isNextBit())
   {
-    cv::rectangle(image, rect, cv::Scalar(*(mit++) ? 255 : 0), CV_FILLED);
+    //cv::rectangle(image, rect, cv::Scalar(*(mit++) ? 255 : 0), CV_FILLED);
+    cv::rectangle(image, rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
   }
 }
 

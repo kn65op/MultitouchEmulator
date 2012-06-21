@@ -68,4 +68,10 @@ private:
   void setMinMax(int x, int y);
 
   void clearGUI();
+
+  cv::Scalar colorGUI;
+  cv::Scalar color_detect_screen;
+  cv::Scalar color_line;
+
+  void setGUIColor(cv::Scalar & scalar);
 };

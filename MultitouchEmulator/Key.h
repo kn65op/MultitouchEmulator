@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <windows.h>
 
 class Key
 {
@@ -43,5 +44,14 @@ private:
   std::string key;
 
   std::string alphabet;
+
+  enum HashType
+  {
+    MD2 = CALG_MD2, 
+    MD5 = CALG_MD5, 
+    SHA = CALG_SHA
+  };
+
+  unsigned char * hash_func(BYTE *input, int size, HashType type);
 };
 
