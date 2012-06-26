@@ -33,6 +33,11 @@ public:
     */
   std::vector<bool> getSecondaryDeviceCode(int n);
 
+  /**
+    * Function returns length of the longest message
+    */
+  int getLongestLength() const;
+
 public:
   Key(void);
   ~Key(void);

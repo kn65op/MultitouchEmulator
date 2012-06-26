@@ -71,3 +71,8 @@ bool Device::isRealDevice()
 {
   return points.size() > 25;
 }
+
+int Device::getMessageLength() const
+{
+  return message.size();
+}

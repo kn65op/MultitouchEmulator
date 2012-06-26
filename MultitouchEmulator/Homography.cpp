@@ -203,6 +203,10 @@ void Homography::clearGUI()
 cv::Mat & Homography::getGUITransmission(Devices & devs)
 {
   clearGUI();
+  static int n = -1;
+  static int n_len = devs.getMaxKeyLength();
+  double tmp = static_cast<double>(++n) / static_cast<double>(n_len) * 100.0;
+  tmp = tmp > 100 ? 100 : tmp;
   Devices::iterator it, end;
   end = devs.getEnd();
   for (it = devs.getBegin(); it != end; ++it)
@@ -210,6 +214,9 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
     it->second->showNextBit(GUI);
     //cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
   }
+  std::stringstream ss;
+  ss << "Transmission in progress: " << tmp  << "%.";
+  cv::putText(GUI, ss.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
 }
 

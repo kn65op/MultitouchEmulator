@@ -160,3 +160,8 @@ void Key::storeHexIntoKey(BYTE hex, std::vector<bool> & key)
     tmp /= 2;
   }
 }
+
+int Key::getLongestLength() const
+{
+  return key_length + 8 > 128 ? key_length + 8 : 128;
+}

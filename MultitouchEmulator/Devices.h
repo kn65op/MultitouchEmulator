@@ -46,7 +46,19 @@ public:
 
   iterator getBegin();
   iterator getEnd();
+
+  /**
+    * Fuction calculates length of the longest message.
+    */
+  int getLongestMessage();
+
+    /**
+    * Fuction returns length of the longest message.
+    */
+  int getMaxKeyLength() const;
 private:
   container devices;
+
+  int key_max_length;
 };
 

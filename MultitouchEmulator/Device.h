@@ -32,6 +32,8 @@ public:
   bool isNextBit();
   void showNextBit(cv::Mat & image);
 
+  int getMessageLength() const;
+
 private:
   std::vector<int> xs;
   std::vector<int> ys;

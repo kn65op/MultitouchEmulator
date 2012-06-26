@@ -91,4 +91,30 @@ void Devices::processToTransmition(Key key)
     //it->second->setMessage(std::vector<bool>(tmp.begin() + i, tmp.begin() + 10 + i)); //fake
     //i++; //fake
   }
+
+  key_max_length = getLongestMessage();
+}
+
+int Devices::getMaxKeyLength() const
+{
+  return key_max_length;
+}
+
+int Devices::getLongestMessage()
+{
+  int max = 0;
+  int tmp;
+
+  iterator it, end;
+  end = devices.end();
+  for (it = devices.begin(); it != end; ++it)
+  {
+    tmp = it->second->getMessageLength();
+    if (tmp > max)
+    {
+      max = tmp;
+    }
+  }
+
+  return max;
 }
