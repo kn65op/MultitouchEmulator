@@ -253,3 +253,8 @@ void generatePattern(cv::Mat & pat)
 	/*pat = cv::Mat(200, 200, CV_8UC3, cv::Scalar(30,255,255));
 	cv::cvtColor(pat, pat, CV_HSV2BGR);//*/
 }
+
+double distance(cv::Point2f & a, cv::Point2f & b)
+{
+  return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
+}

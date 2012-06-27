@@ -5,6 +5,8 @@
 #include <sstream>
 #include <random>
 
+#include "ImageOperations.h"
+
 Homography::Homography(void)
 {
   points_setted = false;
@@ -165,6 +167,12 @@ void Homography::setImageSize(cv::Size size)
 
 void Homography::runHomography(cv::Mat image_points)
 {
+  //height
+  std::cout << distance(image_points.at<cv::Point2f>(0), image_points.at<cv::Point2f>(1)) << "\n";
+  std::cout << distance(image_points.at<cv::Point2f>(1), image_points.at<cv::Point2f>(2)) << "\n";
+  std::cout << distance(image_points.at<cv::Point2f>(2), image_points.at<cv::Point2f>(3)) << "\n";
+  std::cout << distance(image_points.at<cv::Point2f>(3), image_points.at<cv::Point2f>(0)) << "\n";
+
   image_points.copyTo(this->image_points);
 
   runHomography();

@@ -69,3 +69,8 @@ bool isSameImage(cv::Mat & one, cv::Mat & two);
 	* Function creates color pattern image
 	*/
 void generatePattern(cv::Mat & pat);
+
+/**
+  * Funtions calculates distance between two points
+  */  
+double distance(cv::Point2f & a, cv::Point2f & b);

@@ -146,10 +146,12 @@ int _tmain(int argc, _TCHAR* argv[])
     }*/
 
     end = cor.end();
+    int qwe = 5;
     for (begin = cor.begin(); begin != end; ++begin)
     {
       //std::cout << begin->x << " " <<begin->y << " ! ";
-      circle(gray, *begin, 10, cv::Scalar(255,0,0), 10);
+      circle(gray, *begin, 10, cv::Scalar(255,0,0), qwe);
+      qwe += 5;
     }
 
     //std::cout << "\n";
@@ -165,7 +167,7 @@ int _tmain(int argc, _TCHAR* argv[])
   destroyAllWindows();
 
   //set corners as points on image to transformation
-  cv::Mat image(4,1, CV_32FC2);
+  cv::Mat image_points(4,1, CV_32FC2);
   std::vector<cv::Point> cor = ss.getCorners();
 
   std::vector<cv::Point>::iterator begin, end;
@@ -173,7 +175,7 @@ int _tmain(int argc, _TCHAR* argv[])
   int i = 0;
   for (begin = cor.begin(); begin != end; ++begin)
   {
-    image.at<cv::Point2f>(i++,0) = cv::Point2f((float)(begin->y), (float)(begin->x));
+    image_points.at<cv::Point2f>(i++,0) = cv::Point2f((float)(begin->y), (float)(begin->x));
   }
 
   /*/
@@ -201,7 +203,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
   //run Homography
   //hom.setGeneratedImageSize(1000,700);
-  hom.runHomography(image);
+  hom.runHomography(image_points);
 
   cv::Mat generated, to_show;
   cv::Mat objects = cv::Mat::zeros(frame.size(), CV_8UC1);
@@ -295,28 +297,15 @@ int _tmain(int argc, _TCHAR* argv[])
     imwrite("to_show.bmp", to_show);
     cv::dilate(to_show, to_show, strel_big  );
     imwrite("to_show.bmp", to_show);
-    
-    //cv::dilate(to_show, to_show, strel);
-    //cv::erode(to_show, to_show, strel);
 
     imwrite("to_show.bmp", to_show);
     
     indexImageBlack(to_show, objects, devices);
 
-
-    //cv::equalizeHist(objects, objects);
-    //imshow("objects", objects);
-    //imwrite("objects.jpg", objects);
-
-	//		imshow("pattern", pattern);
-		//	showImageWithoutFrame(L"pattern", 500, 500, pattern.cols, pattern.rows);
-
     if (number ++ > 5)
     {
-      //imshow("generated", to_show);
       imshow("generated", hom.getGUIDetectDevice(devices));
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
-
     }    
     if(waitKey(30) >= 0)
     {
