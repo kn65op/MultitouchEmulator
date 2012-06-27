@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <random>
 
 #include <opencv2\opencv.hpp>
 
@@ -31,18 +32,27 @@ public:
   bool getNextBit();
   bool isNextBit();
   void showNextBit(cv::Mat & image);
+  void showNoiseAround(cv::Mat & image);
+  void showRandomBlinkAround(cv::Mat & image);
 
   int getMessageLength() const;
 
 private:
   std::vector<int> xs;
   std::vector<int> ys;
+  Device(const Device & copy);
 
   std::vector<cv::Point> points;
 
   cv::Rect rect;
+  cv::Rect bigger_rect;
 
   message_type message;
   message_iterator mit;
+
+  //random
+  std::random_device rd;
+  std::mt19937 *gen;
+  std::uniform_int_distribution<> *dist;
 };
 

@@ -219,6 +219,10 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   end = devs.getEnd();
   for (it = devs.getBegin(); it != end; ++it)
   {
+    //second version of making stupid of atacker
+    //it->second->showRandomBlinkAround(GUI);
+    it->second->showNoiseAround(GUI);
+
     it->second->showNextBit(GUI);
     //cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
   }

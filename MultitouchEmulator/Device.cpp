@@ -4,11 +4,15 @@
 
 Device::Device(void)
 {
+  gen = new std::mt19937(rd());
+  dist = new std::uniform_int_distribution<>(0, 255);
 }
 
 
 Device::~Device(void)
 {
+  delete gen;
+  delete dist;
 }
 
 void Device::addPoint(int x, int y)
@@ -26,6 +30,10 @@ cv::Rect Device::getRect() const
 void Device::calcRect()
 {
   rect = cv::boundingRect(points);
+  bigger_rect.x  = rect.x - 30;
+  bigger_rect.y  = rect.y - 30;
+  bigger_rect.width  = rect.width + 60;
+  bigger_rect.height = rect.height + 60;
 }
 
 void Device::setMessage(Device::message_type mes)
@@ -50,6 +58,16 @@ void Device::setMessage(Device::message_type mes)
   }
 
   mit = message.begin();
+}
+
+void Device::showNoiseAround(cv::Mat & image)
+{
+  cv::rectangle(image, bigger_rect, cv::Scalar((*dist)(*gen),(*dist)(*gen),(*dist)(*gen)), CV_FILLED);
+}
+
+void Device::showRandomBlinkAround(cv::Mat & image)
+{
+  cv::rectangle(image, bigger_rect, (*dist)(*gen) > 127 ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
 }
 
 void Device::showNextBit(cv::Mat & image)
