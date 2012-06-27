@@ -4,6 +4,7 @@
 #include <random>
 #include <iostream>
 #include <sstream>
+#include <WinCrypt.h>
 
 Key::Key(void)
 {
@@ -113,6 +114,11 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
 	delete [] hash;
 
   return ret;
+}
+
+unsigned char * Key::aes(usigned char * input, int size)
+{
+  
 }
 
 unsigned char * Key::hash_func(BYTE *input, int size, HashType type)
