@@ -226,7 +226,7 @@ int _tmain(int argc, _TCHAR* argv[])
   key.generateMainKey(128);
   key.setHashLength(128);
 
-  devices.processToTransmition(key);
+  devices.processToTransmition(key, hom);
 
   //transmission
     while(true)

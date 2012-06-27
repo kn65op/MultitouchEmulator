@@ -77,4 +77,7 @@ private:
   void setGUIColor(cv::Scalar & scalar);
 
   void randomBlink();
+
+  //height
+  double ratio_x, ratio_y;
 };

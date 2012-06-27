@@ -27,6 +27,16 @@ cv::Rect Device::getRect() const
   return rect;
 }
 
+void Device::shift()
+{
+  std::vector<cv::Point>::iterator it, end;
+  end = points.end();
+  for (it = points.begin(); it != end; ++it)
+  {
+    it->x *= 
+  }
+}
+
 void Device::calcRect()
 {
   rect = cv::boundingRect(points);

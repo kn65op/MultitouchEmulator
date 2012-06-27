@@ -167,11 +167,16 @@ void Homography::setImageSize(cv::Size size)
 
 void Homography::runHomography(cv::Mat image_points)
 {
-  //height
+  //distances
   std::cout << distance(image_points.at<cv::Point2f>(0), image_points.at<cv::Point2f>(1)) << "\n";
   std::cout << distance(image_points.at<cv::Point2f>(1), image_points.at<cv::Point2f>(2)) << "\n";
   std::cout << distance(image_points.at<cv::Point2f>(2), image_points.at<cv::Point2f>(3)) << "\n";
   std::cout << distance(image_points.at<cv::Point2f>(3), image_points.at<cv::Point2f>(0)) << "\n";
+
+  ratio_x = distance(image_points.at<cv::Point2f>(1), image_points.at<cv::Point2f>(2)) / distance(image_points.at<cv::Point2f>(3), image_points.at<cv::Point2f>(0));
+  ratio_y = distance(image_points.at<cv::Point2f>(0), image_points.at<cv::Point2f>(1)) / distance(image_points.at<cv::Point2f>(2), image_points.at<cv::Point2f>(3));
+
+  std::cout << ratio_x << " " << ratio_y << "\n";
 
   image_points.copyTo(this->image_points);
 
