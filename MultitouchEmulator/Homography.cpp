@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <sstream>
+#include <random>
 
 Homography::Homography(void)
 {
@@ -58,6 +59,7 @@ void Homography::setGeneratedImageSize(int x, int y)
 {
   generated_x = x;
   generated_y = y;
+  level = (int)(generated_x * 0.1) - 1;
   //generated = cv::Mat(y, x, CV_8UC1);
 }
 
@@ -65,7 +67,6 @@ void Homography::setGeneratedImageSize(cv::Size size)
 {
   setGeneratedImageSize(size.height, size.width);
   //generated = cv::Mat(y, x, CV_8UC1);
-  
   
   int level = (int)(generated_x * 0.1);
   cv::line(GUI, cv::Point(0, level), cv::Point(generated_y, level), color_line, 1);
@@ -196,17 +197,24 @@ cv::Mat & Homography::getGUIDetectScreen()
 
 void Homography::clearGUI()
 {
-  int level = (int)(generated_x * 0.1) - 1;
   cv::rectangle(GUI, cv::Rect(0,0,generated_x, level), colorGUI, CV_FILLED);
 }
 
 cv::Mat & Homography::getGUITransmission(Devices & devs)
 {
   clearGUI();
+  
+  //showing progress
   static int n = -1;
   static int n_len = devs.getMaxKeyLength();
   double tmp = static_cast<double>(++n) / static_cast<double>(n_len) * 100.0;
   tmp = tmp > 100 ? 100 : tmp;
+
+  //blinking screen randomly
+  //first version of making stupid of atacker
+  //randomBlink();
+
+  //blinking rectangles
   Devices::iterator it, end;
   end = devs.getEnd();
   for (it = devs.getBegin(); it != end; ++it)
@@ -215,6 +223,8 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
     //cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
   }
   std::stringstream ss;
+  
+  //text
   ss << "Transmission in progress: " << tmp  << "%.";
   cv::putText(GUI, ss.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
@@ -223,4 +233,33 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
 void Homography::setGUIColor(cv::Scalar & scalar)
 {
   GUI = cv::Mat(generated_x, generated_y, CV_8UC3, scalar);
+}
+
+void Homography::randomBlink()
+{
+  cv::Size size = GUI.size();
+  int level2 = level + 1;
+
+  //create random engine
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dist(0, 255);
+
+  for (int i=level2; i<size.height; ++i)
+  {
+    for (int j=0; j<size.width; ++j)
+    {
+      GUI.at<cv::Vec3b>(i,j) = cv::Vec3b(dist(gen), dist(gen), dist(gen));
+      /*
+      if (dist(gen))
+      {
+        GUI.at<uchar>(i,j) = 255;
+      }
+      else
+      {
+        GUI.at<uchar>(i,j) = 0;
+      }*/
+    }
+  }
 }

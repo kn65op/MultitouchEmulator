@@ -57,6 +57,7 @@ private:
 
   int generated_x;
   int generated_y;
+  int level;
 
   bool points_setted;
 
@@ -74,4 +75,6 @@ private:
   cv::Scalar color_line;
 
   void setGUIColor(cv::Scalar & scalar);
+
+  void randomBlink();
 };
