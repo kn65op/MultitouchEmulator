@@ -209,9 +209,10 @@ int _tmain(int argc, _TCHAR* argv[])
     
     indexImageBlack(to_show, objects, devices);
 
-   // if (number ++ > 5)
+    if (number ++ > 3)
     {
       imshow("generated", hom.getGUIDetectDevice(devices));
+      //imshow("generated", objects);
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
     }    
     if(waitKey(30) >= 0)

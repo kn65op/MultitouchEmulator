@@ -83,4 +83,7 @@ private:
 
   //height
   double ratio_x, ratio_y;
+
+  //scale
+  double scale, h, h1;
 };

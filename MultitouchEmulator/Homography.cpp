@@ -15,6 +15,9 @@ Homography::Homography(void)
   colorGUI = cv::Scalar(100,255,100);
   color_line = cv::Scalar(0,0,0);
   color_detect_screen = cv::Scalar(255,255,255);
+  h1 = 7;
+  h = 70;
+  scale = 1 - h1 / h;
 }
 
 
@@ -30,7 +33,9 @@ void Homography::runHomography(cv::Mat image_points, cv::Mat real_points)
 
 cv::Point Homography::getRealPoint(int x, int y)
 {
-  cv::Mat image_point = (cv::Mat_<double>(3,1) << x, y, 1);
+  double x1 = x;// * scale;
+  double y1 = y;// * scale;
+  cv::Mat image_point = (cv::Mat_<double>(3,1) << x1, y1, 1);
   cv::Mat real_point = H * image_point;
   real_point /= real_point.at<double>(2);
   return cv::Point((int)real_point.at<double>(0), (int)real_point.at<double>(1));
@@ -284,10 +289,12 @@ void Homography::randomBlink()
 
 double Homography::getShiftX() const
 {
-  return ratio_x;
+//  return ratio_x;
+  return scale;
 }
 
 double Homography::getShiftY() const
 {
-  return ratio_y;
+  //return ratio_y;
+  return scale;
 }
