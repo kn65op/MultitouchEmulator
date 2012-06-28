@@ -86,7 +86,7 @@ void Devices::processToTransmition(Key key, Homography & hom)
   int i = 0;
   for (it = ++(devices.begin()); it != end; ++it)
   {
-    it->second-
+    //it->second->shift(hom.getShiftX(), hom.getShiftY());
     it->second->calcRect();
     it->second->setMessage(key.getSecondaryDeviceCode(++i));
     //it->second->setMessage(std::vector<bool>(tmp.begin() + i, tmp.begin() + 10 + i)); //fake

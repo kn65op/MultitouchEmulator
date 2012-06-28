@@ -27,13 +27,14 @@ cv::Rect Device::getRect() const
   return rect;
 }
 
-void Device::shift()
+void Device::shift(double x, double y)
 {
   std::vector<cv::Point>::iterator it, end;
   end = points.end();
   for (it = points.begin(); it != end; ++it)
   {
-    it->x *= 
+    it->x = static_cast<int>(it->x * x);
+    it->y = static_cast<int>(it->y * y);
   }
 }
 

@@ -2,7 +2,7 @@
 
 #include <opencv2\opencv.hpp>
 
-#include "Devices.h"
+class Devices;
 
 class Homography
 {
@@ -44,6 +44,9 @@ public:
     * Function returns image with GUI for transmission.
     */
   cv::Mat & getGUITransmission(Devices & devs);
+
+  double getShiftX() const;
+  double getShiftY() const;
 
 private:
   cv::Mat H;

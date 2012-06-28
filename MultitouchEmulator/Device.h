@@ -37,6 +37,8 @@ public:
 
   int getMessageLength() const;
 
+  void shift(double x, double y);
+
 private:
   std::vector<int> xs;
   std::vector<int> ys;
