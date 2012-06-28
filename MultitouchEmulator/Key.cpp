@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <WinCrypt.h>
+#include <Windows.h>
 
 Key::Key(void)
 {
@@ -96,7 +97,8 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
   std::stringstream ss;
   ss << n << key;
   
-  BYTE *hash = hash_func((BYTE*)ss.str().c_str(), ss.str().size(), MD5);
+  //BYTE *hash = hash_func((BYTE*)ss.str().c_str(), ss.str().size(), MD5);
+  BYTE *hash = aes((BYTE*)ss.str().c_str(), ss.str().size());
 
 	if (hash)
 	{
@@ -116,9 +118,85 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
   return ret;
 }
 
-unsigned char * Key::aes(usigned char * input, int size)
+unsigned char * Key::aes(unsigned char * input, int size)
 {
-  
+  BYTE pass[] = "pass";
+  BYTE *data = new BYTE[128];
+  int i;
+  for (i=0; i <size; ++i)
+  {
+    data[i] = input[i];
+  }
+  for ( ; i<128; ++i)
+  {
+    data[i] = ' ';
+  }
+
+  //making provider
+  HCRYPTPROV hCryptProv = NULL; 
+  HCRYPTKEY hKey = NULL; 
+  HCRYPTKEY hXchgKey = NULL; 
+  HCRYPTHASH hHash = NULL; 
+  if (CryptAcquireContext(&hCryptProv, NULL, MS_ENH_RSA_AES_PROV, PROV_RSA_AES, CRYPT_NEWKEYSET))
+  {
+    std::cout << "Provider\n";
+  }
+  else
+  {
+    if (CryptAcquireContext(&hCryptProv, NULL, MS_ENH_RSA_AES_PROV, PROV_RSA_AES, 0))
+    {
+      std::cout << "Provider\n";
+    }
+    else
+    {
+      DWORD tmp = GetLastError();
+      return 0; //error
+    }
+  }
+
+  //key
+  if (CryptCreateHash(hCryptProv, CALG_MD5, 0, 0, &hHash))
+  {
+    std::cout << "Key\n";
+  }
+  else
+  {
+    DWORD tmp = GetLastError();
+    return 0; //error
+  }
+
+  if (CryptHashData(hHash, pass, 4,0)) //TODO change pass
+  {
+    std::cout << "Key2\n";
+  }
+  else
+  {
+    DWORD tmp = GetLastError();
+    return 0; //error
+  }
+
+  if (CryptDeriveKey(hCryptProv, CALG_AES_128, hHash, 0x00800000, &hKey))
+  {
+    std::cout << "Key3\n";
+  }
+  else
+  {
+    DWORD tmp = GetLastError();
+    return 0; //error
+  }
+
+  unsigned long data_size = 112;
+  //encrypt
+  if (CryptEncrypt(hKey, NULL, false, 0, data, &data_size, data_size))
+  {
+    std::cout << "encrypted!\n";
+  }
+  else
+  {
+    DWORD tmp = GetLastError();
+     return 0; //error
+  }
+  return data;
 }
 
 unsigned char * Key::hash_func(BYTE *input, int size, HashType type)

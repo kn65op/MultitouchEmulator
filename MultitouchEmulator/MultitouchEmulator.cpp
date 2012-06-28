@@ -218,12 +218,16 @@ int _tmain(int argc, _TCHAR* argv[])
     {
       break;
     }
+    if (number > 10) //debug only
+    {
+      break;
+    }
   }
 
   //setting transmission
   Key key;
   key.setNumberOfDevices(devices.size());
-  key.generateMainKey(128);
+  key.generateMainKey(64);
   key.setHashLength(128);
 
   devices.processToTransmition(key);
