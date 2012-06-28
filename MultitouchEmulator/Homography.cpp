@@ -24,7 +24,8 @@ Homography::~Homography(void)
 
 void Homography::runHomography(cv::Mat image_points, cv::Mat real_points)
 {
-  H = cv::findHomography(image_points, real_points);
+  //H = cv::findHomography(image_points, real_points);
+  H = cv::getPerspectiveTransform(image_points, real_points);
 }
 
 cv::Point Homography::getRealPoint(int x, int y)
@@ -32,7 +33,7 @@ cv::Point Homography::getRealPoint(int x, int y)
   cv::Mat image_point = (cv::Mat_<double>(3,1) << x, y, 1);
   cv::Mat real_point = H * image_point;
   real_point /= real_point.at<double>(2);
-  return cv::Point((int)real_point.at<double>(0), (int)real_point.at<double>(1));
+  return cv::Point((int)real_point.at<double>(0) * ratio_x, (int)real_point.at<double>(1) * ratio_y);
 }
 
 void getPointsFromImage(int event, int x, int y, int flags, void* param)
