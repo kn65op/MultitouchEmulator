@@ -242,7 +242,10 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   {
     //second version of making stupid of atacker
     //it->second->showRandomBlinkAround(GUI);
-    it->second->showNoiseAround(GUI);
+    if (tmp < 100)
+    {
+      it->second->showNoiseAround(GUI);
+    }
 
     it->second->showNextBit(GUI);
     //cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
@@ -252,6 +255,8 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   //text
   ss << "Transmission in progress: " << tmp  << "%.";
   cv::putText(GUI, ss.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
+  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.5), static_cast<int>(generated_x * 0.025), static_cast<int>(generated_y * 0.4), static_cast<int>(generated_x * 0.05)), cv::Scalar(0, 0, 0), CV_FILLED);
+  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.501), static_cast<int>(generated_x * 0.026), static_cast<int>(tmp / 100 * generated_y * 0.399), static_cast<int>(generated_x * 0.048)), cv::Scalar(255, 255, 255), CV_FILLED);
   return GUI;
 }
 
