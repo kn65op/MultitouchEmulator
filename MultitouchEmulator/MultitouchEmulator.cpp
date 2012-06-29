@@ -248,9 +248,10 @@ int _tmain(int argc, _TCHAR* argv[])
   key.setHashLength(128);
 
   devices.processToTransmition(key, hom);
+  
 
   //transmission
-    while(true)
+  while(true)
   {
     //Sleep(100); // DEBUG to see what happening
 

@@ -200,10 +200,19 @@ void Homography::setROI(cv::Mat & frame) const
 
 cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
 {
+  static int last_no_of_devices = 0;
   clearGUI();
   std::stringstream text;
-  text << devs.size();
-  text << " devices found. Press any key to start transmission";
+  if (devs.size()  == last_no_of_devices)
+  {
+    text << devs.size();
+    text << " devices found. Press any key to start transmission";
+  }
+  else
+  {
+    last_no_of_devices = devs.size();
+    text << "Waiting for still scene";
+  }
   cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
 }
