@@ -18,8 +18,8 @@ Homography::Homography(void)
   h1 = 7;
   h = 70;
   scale = 1 - h1 / h;
-  camera_pos_x = 100;
-  camera_pos_y = -100;
+  camera_pos_x = 300;
+  camera_pos_y = -200;
 }
 
 
@@ -309,4 +309,11 @@ double Homography::getCameraX() const
 double Homography::getCameraY() const
 {
   return camera_pos_y;
+}
+
+cv::Mat & Homography::getGUICameraPosition()
+{
+  setGUIColor(cv::Scalar(255,255,255));
+  makeCheck(GUI);
+  return GUI;
 }

@@ -171,6 +171,24 @@ int _tmain(int argc, _TCHAR* argv[])
   cap >> frame; // get a new frame from camera
   cvtColor(frame, gray, CV_RGB2GRAY);
 
+  //setting camera position
+  /*
+  cv::Mat & check = hom.getGUICameraPosition();
+  while (true)
+  {
+    imshow("Check", check);
+    showImageWithoutFrame(L"Check", resolution);
+        if(waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
+
+  double ttttt;
+  std::cin >> ttttt;
+
+  destroyAllWindows();*/
+
   //searching for devices
   while(true)
   {

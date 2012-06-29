@@ -44,6 +44,10 @@ public:
     * Function returns image with GUI for transmission.
     */
   cv::Mat & getGUITransmission(Devices & devs);
+  /**
+    * Function returns image with GUI for entering camera position.
+    */
+  cv::Mat & getGUICameraPosition();
 
   double getShiftX() const;
   double getShiftY() const;
