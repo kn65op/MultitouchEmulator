@@ -18,6 +18,8 @@ Homography::Homography(void)
   h1 = 7;
   h = 70;
   scale = 1 - h1 / h;
+  camera_pos_x = 100;
+  camera_pos_y = -100;
 }
 
 
@@ -297,4 +299,14 @@ double Homography::getShiftY() const
 {
   //return ratio_y;
   return scale;
+}
+
+double Homography::getCameraX() const
+{
+  return camera_pos_x;
+}
+
+double Homography::getCameraY() const
+{
+  return camera_pos_y;
 }

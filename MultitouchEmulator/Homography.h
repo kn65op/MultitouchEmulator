@@ -48,6 +48,9 @@ public:
   double getShiftX() const;
   double getShiftY() const;
 
+  double getCameraX() const;
+  double getCameraY() const;
+
 private:
   cv::Mat H;
 
@@ -86,4 +89,6 @@ private:
 
   //scale
   double scale, h, h1;
+  //camera position
+  double camera_pos_x, camera_pos_y;
 };

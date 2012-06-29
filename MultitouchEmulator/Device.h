@@ -37,7 +37,7 @@ public:
 
   int getMessageLength() const;
 
-  void shift(double x, double y);
+  void shift(double camera_pos_x, double x, double camera_pos_y, double y);
 
 private:
   std::vector<int> xs;
