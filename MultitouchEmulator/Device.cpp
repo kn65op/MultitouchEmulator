@@ -27,6 +27,17 @@ cv::Rect Device::getRect() const
   return rect;
 }
 
+void Device::shift(double camera_pos_x, double x, double camera_pos_y, double y)
+{
+  std::vector<cv::Point>::iterator it, end;
+  end = points.end();
+  for (it = points.begin(); it != end; ++it)
+  {
+    it->x = static_cast<int>(camera_pos_x + (it->x - camera_pos_x) * x);
+    it->y = static_cast<int>(camera_pos_y + (it->y - camera_pos_y) * y);
+  }
+}
+
 void Device::calcRect()
 {
   rect = cv::boundingRect(points);

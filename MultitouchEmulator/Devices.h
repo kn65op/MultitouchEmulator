@@ -4,6 +4,7 @@
 
 #include "Device.h"
 #include "Key.h"
+#include "Homography.h"
 
 class Devices
 {
@@ -42,7 +43,7 @@ public:
     */
   int size() const;
 
-  void processToTransmition(Key key);
+  void processToTransmition(Key key, Homography & hom);
 
   iterator getBegin();
   iterator getEnd();

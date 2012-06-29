@@ -171,6 +171,24 @@ int _tmain(int argc, _TCHAR* argv[])
   cap >> frame; // get a new frame from camera
   cvtColor(frame, gray, CV_RGB2GRAY);
 
+  //setting camera position
+  /*
+  cv::Mat & check = hom.getGUICameraPosition();
+  while (true)
+  {
+    imshow("Check", check);
+    showImageWithoutFrame(L"Check", resolution);
+        if(waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
+
+  double ttttt;
+  std::cin >> ttttt;
+
+  destroyAllWindows();*/
+
   //searching for devices
   while(true)
   {
@@ -209,9 +227,10 @@ int _tmain(int argc, _TCHAR* argv[])
     
     indexImageBlack(to_show, objects, devices);
 
-    if (number ++ > 5)
+    if (number ++ > 3)
     {
       imshow("generated", hom.getGUIDetectDevice(devices));
+      //imshow("generated", objects);
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
     }    
     if(waitKey(30) >= 0)
@@ -226,7 +245,7 @@ int _tmain(int argc, _TCHAR* argv[])
   key.generateMainKey(128);
   key.setHashLength(128);
 
-  devices.processToTransmition(key);
+  devices.processToTransmition(key, hom);
 
   //transmission
     while(true)

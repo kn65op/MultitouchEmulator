@@ -2,7 +2,7 @@
 
 #include <opencv2\opencv.hpp>
 
-#include "Devices.h"
+class Devices;
 
 class Homography
 {
@@ -44,6 +44,16 @@ public:
     * Function returns image with GUI for transmission.
     */
   cv::Mat & getGUITransmission(Devices & devs);
+  /**
+    * Function returns image with GUI for entering camera position.
+    */
+  cv::Mat & getGUICameraPosition();
+
+  double getShiftX() const;
+  double getShiftY() const;
+
+  double getCameraX() const;
+  double getCameraY() const;
 
 private:
   cv::Mat H;
@@ -77,4 +87,12 @@ private:
   void setGUIColor(cv::Scalar & scalar);
 
   void randomBlink();
+
+  //height
+  double ratio_x, ratio_y;
+
+  //scale
+  double scale, h, h1;
+  //camera position
+  double camera_pos_x, camera_pos_y;
 };

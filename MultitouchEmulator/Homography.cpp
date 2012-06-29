@@ -15,6 +15,11 @@ Homography::Homography(void)
   colorGUI = cv::Scalar(100,255,100);
   color_line = cv::Scalar(0,0,0);
   color_detect_screen = cv::Scalar(255,255,255);
+  h1 = 7;
+  h = 70;
+  scale = 1 - h1 / h;
+  camera_pos_x = 300;
+  camera_pos_y = -200;
 }
 
 
@@ -25,11 +30,14 @@ Homography::~Homography(void)
 void Homography::runHomography(cv::Mat image_points, cv::Mat real_points)
 {
   H = cv::findHomography(image_points, real_points);
+  //H = cv::getPerspectiveTransform(image_points, real_points);
 }
 
 cv::Point Homography::getRealPoint(int x, int y)
 {
-  cv::Mat image_point = (cv::Mat_<double>(3,1) << x, y, 1);
+  double x1 = x;// * scale;
+  double y1 = y;// * scale;
+  cv::Mat image_point = (cv::Mat_<double>(3,1) << x1, y1, 1);
   cv::Mat real_point = H * image_point;
   real_point /= real_point.at<double>(2);
   return cv::Point((int)real_point.at<double>(0), (int)real_point.at<double>(1));
@@ -167,11 +175,16 @@ void Homography::setImageSize(cv::Size size)
 
 void Homography::runHomography(cv::Mat image_points)
 {
-  //height
+  //distances
   std::cout << distance(image_points.at<cv::Point2f>(0), image_points.at<cv::Point2f>(1)) << "\n";
   std::cout << distance(image_points.at<cv::Point2f>(1), image_points.at<cv::Point2f>(2)) << "\n";
   std::cout << distance(image_points.at<cv::Point2f>(2), image_points.at<cv::Point2f>(3)) << "\n";
   std::cout << distance(image_points.at<cv::Point2f>(3), image_points.at<cv::Point2f>(0)) << "\n";
+
+  ratio_x = 1 / (distance(image_points.at<cv::Point2f>(1), image_points.at<cv::Point2f>(2)) / distance(image_points.at<cv::Point2f>(3), image_points.at<cv::Point2f>(0)));
+  ratio_y = 1 / (distance(image_points.at<cv::Point2f>(0), image_points.at<cv::Point2f>(1)) / distance(image_points.at<cv::Point2f>(2), image_points.at<cv::Point2f>(3)));
+
+  std::cout << ratio_x << " " << ratio_y << "\n";
 
   image_points.copyTo(this->image_points);
 
@@ -274,4 +287,33 @@ void Homography::randomBlink()
       }*/
     }
   }
+}
+
+double Homography::getShiftX() const
+{
+//  return ratio_x;
+  return scale;
+}
+
+double Homography::getShiftY() const
+{
+  //return ratio_y;
+  return scale;
+}
+
+double Homography::getCameraX() const
+{
+  return camera_pos_x;
+}
+
+double Homography::getCameraY() const
+{
+  return camera_pos_y;
+}
+
+cv::Mat & Homography::getGUICameraPosition()
+{
+  setGUIColor(cv::Scalar(255,255,255));
+  makeCheck(GUI);
+  return GUI;
 }
