@@ -189,8 +189,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
   destroyAllWindows();*/
 
-  cv::Mat ttmp;
-
   //searching for devices
   while(true)
   {
@@ -224,6 +222,7 @@ int _tmain(int argc, _TCHAR* argv[])
 //    imwrite("to_show1.bmp", to_show);
     cv::dilate(to_show, to_show, strel_big  );
 //    imwrite("to_show.bmp", to_show);
+
     
     if(number > 7)
     {
