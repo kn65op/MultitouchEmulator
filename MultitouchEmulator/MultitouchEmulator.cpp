@@ -204,28 +204,30 @@ int _tmain(int argc, _TCHAR* argv[])
 
     inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
 
-    imwrite("bin.bmp", binary);
+//    imwrite("bin.bmp", binary);
 
     negation(binary);
-    imwrite("bin.bmp", binary);
+//    imwrite("bin.bmp", binary);
     cv::dilate(binary, binary, strel_small);
-    imwrite("bin.bmp", binary);
+//    imwrite("bin.bmp", binary);
     cv::erode(binary, binary, strel_small);
-    imwrite("bin.bmp", binary);
+//    imwrite("bin.bmp", binary);
 
     imshow("bin", binary);
     
-    imwrite("to_show.bmp", binary);
+//    imwrite("to_show1.bmp", binary);
     generated = hom.processImage(binary);
-    imwrite("to_show.bmp", generated);
+//    imwrite("to_show1.bmp", generated);
     cv::erode(generated, to_show, strel);
-    imwrite("to_show.bmp", to_show);
+//    imwrite("to_show1.bmp", to_show);
     cv::dilate(to_show, to_show, strel_big  );
-    imwrite("to_show.bmp", to_show);
+//    imwrite("to_show.bmp", to_show);
 
-    imwrite("to_show.bmp", to_show);
     
-    indexImageBlack(to_show, objects, devices);
+    if(number > 7)
+    {
+      indexImageBlack(to_show, objects, devices);
+    }
 
     if (number ++ > 3)
     {
