@@ -225,7 +225,10 @@ int _tmain(int argc, _TCHAR* argv[])
 
     imwrite("to_show.bmp", to_show);
     
-    indexImageBlack(to_show, objects, devices);
+    if(number > 7)
+    {
+      indexImageBlack(to_show, objects, devices);
+    }
 
     if (number ++ > 3)
     {
