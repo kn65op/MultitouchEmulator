@@ -74,3 +74,8 @@ void generatePattern(cv::Mat & pat);
   * Funtions calculates distance between two points
   */  
 double distance(cv::Point2f & a, cv::Point2f & b);
+
+/**
+  * Functions add to image black check
+  */
+void makeCheck(cv::Mat & image);

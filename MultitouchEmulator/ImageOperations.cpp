@@ -258,3 +258,16 @@ double distance(cv::Point2f & a, cv::Point2f & b)
 {
   return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
 }
+
+void makeCheck(cv::Mat & image)
+{
+  cv::Size size = image.size();
+  for (int i=0; i<size.height; i = i + 100)
+  {
+    cv::line(image, cv::Point(0, i), cv::Point(size.width, i), cv::Scalar(0,0,0), 2);
+  }
+  for (int j=0; j<size.width; j = j + 100)
+  {
+    cv::line(image, cv::Point(j, 0), cv::Point(j, size.height), cv::Scalar(0,0,0), 2);
+  }
+}

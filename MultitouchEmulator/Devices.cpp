@@ -66,7 +66,7 @@ Devices::iterator Devices::getEnd()
   return devices.end();
 }
 
-void Devices::processToTransmition(Key key)
+void Devices::processToTransmition(Key key, Homography & hom)
 {
   //tmp fake
   /*
@@ -86,6 +86,7 @@ void Devices::processToTransmition(Key key)
   int i = 0;
   for (it = ++(devices.begin()); it != end; ++it)
   {
+    it->second->shift(hom.getCameraX(), hom.getShiftX(), hom.getCameraY(),  hom.getShiftY());
     it->second->calcRect();
     it->second->setMessage(key.getSecondaryDeviceCode(++i));
     //it->second->setMessage(std::vector<bool>(tmp.begin() + i, tmp.begin() + 10 + i)); //fake
