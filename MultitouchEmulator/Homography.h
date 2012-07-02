@@ -50,6 +50,12 @@ public:
     * Function returns image with GUI for entering camera position.
     */
   cv::Mat & getGUICameraPosition();
+  /**
+    * Function returns image with GUI for end.
+    */
+  cv::Mat & getGUIEnd();
+
+  bool isEnd() const;
 
   double getShiftX() const;
   double getShiftY() const;
@@ -103,4 +109,5 @@ private:
   std::mt19937 *gen_mistakes;
   std::uniform_int_distribution<> *dist_mistakes;
   double mistake_posibility;
+  bool end;
 };

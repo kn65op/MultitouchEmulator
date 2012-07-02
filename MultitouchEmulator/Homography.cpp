@@ -210,7 +210,7 @@ cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
   if (devs.size()  == last_no_of_devices)
   {
     text << devs.size();
-    text << " devices found. Press any key to start transmission";
+    text << " devices found. Press any key if number corto start transmission";
   }
   else
   {
@@ -243,6 +243,8 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   static int n_len = devs.getMaxKeyLength();
   double tmp = static_cast<double>(++n) / static_cast<double>(n_len) * 100.0;
   tmp = tmp > 100 ? 100 : tmp;
+
+  end = tmp == 100;
 
   //blinking rectangles
   Devices::iterator it, end;
@@ -339,4 +341,16 @@ cv::Mat & Homography::getGUICameraPosition()
   setGUIColor(cv::Scalar(255,255,255));
   makeCheck(GUI);
   return GUI;
+}
+
+cv::Mat & Homography::getGUIEnd()
+{
+  setGUIColor(cv::Scalar(0,0,0));
+  cv::putText(GUI, "Transmission finished", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
+  return GUI;
+}
+
+bool Homography::isEnd() const
+{
+  return end;
 }
