@@ -346,7 +346,7 @@ cv::Mat & Homography::getGUICameraPosition()
 cv::Mat & Homography::getGUIEnd()
 {
   setGUIColor(cv::Scalar(0,0,0));
-  cv::putText(GUI, "Transmission finished", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
+  cv::putText(GUI, "Transmission finished, press any key to exit.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
   return GUI;
 }
 
