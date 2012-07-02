@@ -185,7 +185,7 @@ unsigned char * Key::aes(unsigned char * input, int size)
     return 0; //error
   }
 
-  unsigned long data_size = 112;
+  unsigned long data_size = 128;
   //encrypt
   if (CryptEncrypt(hKey, NULL, false, 0, data, &data_size, data_size))
   {
