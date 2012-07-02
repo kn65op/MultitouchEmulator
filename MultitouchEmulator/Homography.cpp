@@ -3,7 +3,6 @@
 
 #include <cmath>
 #include <sstream>
-#include <random>
 
 #include "ImageOperations.h"
 
@@ -20,6 +19,11 @@ Homography::Homography(void)
   scale = 1 - h1 / h;
   camera_pos_x = 300;
   camera_pos_y = -200;
+  mistake_posibility = 0;
+
+  //random for mistakes
+  gen_mistakes = new std::mt19937(rd_mistakes());
+  dist_mistakes = mistake_posibility ?  new std::uniform_int_distribution<>(0, static_cast<int>(1 / mistake_posibility - 1)) : new std::uniform_int_distribution<>(1,1);
 }
 
 
@@ -200,10 +204,19 @@ void Homography::setROI(cv::Mat & frame) const
 
 cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
 {
+  static int last_no_of_devices = 0;
   clearGUI();
   std::stringstream text;
-  text << devs.size();
-  text << " devices found. Press any key to start transmission";
+  if (devs.size()  == last_no_of_devices)
+  {
+    text << devs.size();
+    text << " devices found. Press any key to start transmission";
+  }
+  else
+  {
+    last_no_of_devices = devs.size();
+    text << "Waiting for still scene";
+  }
   cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
 }
@@ -231,9 +244,7 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   double tmp = static_cast<double>(++n) / static_cast<double>(n_len) * 100.0;
   tmp = tmp > 100 ? 100 : tmp;
 
-  //blinking screen randomly
-  //first version of making stupid of atacker
-  //randomBlink();
+  end = tmp == 100;
 
   //blinking rectangles
   Devices::iterator it, end;
@@ -246,14 +257,23 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
     {
       it->second->showNoiseAround(GUI);
     }
-
-    it->second->showNextBit(GUI);
+    //mistakes
+    if ((*dist_mistakes)(*gen_mistakes))
+    {
+      it->second->showNextBit(GUI);
+    }
+    else
+    {
+      it->second->showWrongBit(GUI);
+    }
     //cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
   }
   std::stringstream ss;
   
   //text
   ss << "Transmission in progress: " << tmp  << "%.";
+
+  //progress bar
   cv::putText(GUI, ss.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.5), static_cast<int>(generated_x * 0.025), static_cast<int>(generated_y * 0.4), static_cast<int>(generated_x * 0.05)), cv::Scalar(0, 0, 0), CV_FILLED);
   cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.501), static_cast<int>(generated_x * 0.026), static_cast<int>(tmp / 100 * generated_y * 0.399), static_cast<int>(generated_x * 0.048)), cv::Scalar(255, 255, 255), CV_FILLED);
@@ -321,4 +341,16 @@ cv::Mat & Homography::getGUICameraPosition()
   setGUIColor(cv::Scalar(255,255,255));
   makeCheck(GUI);
   return GUI;
+}
+
+cv::Mat & Homography::getGUIEnd()
+{
+  setGUIColor(cv::Scalar(0,0,0));
+  cv::putText(GUI, "Transmission finished, press any key to exit.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
+  return GUI;
+}
+
+bool Homography::isEnd() const
+{
+  return end;
 }

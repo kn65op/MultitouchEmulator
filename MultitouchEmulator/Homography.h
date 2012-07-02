@@ -2,6 +2,8 @@
 
 #include <opencv2\opencv.hpp>
 
+#include <random>
+
 class Devices;
 
 class Homography
@@ -48,6 +50,12 @@ public:
     * Function returns image with GUI for entering camera position.
     */
   cv::Mat & getGUICameraPosition();
+  /**
+    * Function returns image with GUI for end.
+    */
+  cv::Mat & getGUIEnd();
+
+  bool isEnd() const;
 
   double getShiftX() const;
   double getShiftY() const;
@@ -95,4 +103,11 @@ private:
   double scale, h, h1;
   //camera position
   double camera_pos_x, camera_pos_y;
+
+  //random for mistakes
+  std::random_device rd_mistakes;
+  std::mt19937 *gen_mistakes;
+  std::uniform_int_distribution<> *dist_mistakes;
+  double mistake_posibility;
+  bool end;
 };

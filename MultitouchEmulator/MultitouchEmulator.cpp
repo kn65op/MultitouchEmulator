@@ -252,13 +252,26 @@ int _tmain(int argc, _TCHAR* argv[])
   key.setHashLength(128);
 
   devices.processToTransmition(key, hom);
+  
 
   //transmission
-    while(true)
+
+  while(true)
   {
     //Sleep(100); // DEBUG to see what happening
 
     imshow("generated", hom.getGUITransmission(devices));
+    showImageWithoutFrame(L"generated", resolution.width, resolution.height);
+
+    if(waitKey(30) >= 0 || hom.isEnd())
+    {
+      break;
+    }
+  }
+
+  while (true)
+  {
+    imshow("generated", hom.getGUIEnd());
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);
 
     if(waitKey(30) >= 0)

@@ -90,6 +90,15 @@ void Device::showNextBit(cv::Mat & image)
   }
 }
 
+void Device::showWrongBit(cv::Mat & image)
+{
+  if (isNextBit())
+  {
+    //cv::rectangle(image, rect, cv::Scalar(*(mit++) ? 255 : 0), CV_FILLED);
+    cv::rectangle(image, rect, *(mit++) ? cv::Scalar(0,0,0): cv::Scalar(255,255,255), CV_FILLED);
+  }
+}
+
 bool Device::isNextBit()
 {
   return mit != message.end();
