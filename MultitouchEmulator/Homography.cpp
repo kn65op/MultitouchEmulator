@@ -210,7 +210,7 @@ cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
   if (devs.size()  == last_no_of_devices)
   {
     text << devs.size();
-    text << " devices found. Press any key if number corto start transmission";
+    text << " devices found. Press any key to start transmission";
   }
   else
   {
