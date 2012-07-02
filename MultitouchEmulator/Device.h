@@ -32,6 +32,7 @@ public:
   bool getNextBit();
   bool isNextBit();
   void showNextBit(cv::Mat & image);
+  void showWrongBit(cv::Mat & image);
   void showNoiseAround(cv::Mat & image);
   void showRandomBlinkAround(cv::Mat & image);
 
