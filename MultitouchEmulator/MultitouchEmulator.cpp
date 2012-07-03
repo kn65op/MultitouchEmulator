@@ -87,7 +87,6 @@ int _tmain(int argc, _TCHAR* argv[])
   hom.setGeneratedImageSize(resolution);
 
   //Automatic selecting points
-  //*
   Mat binary;
   double thres = 140;
 

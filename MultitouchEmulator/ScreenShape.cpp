@@ -86,7 +86,7 @@ void ScreenShape::findScreenAtBinaryImage(cv::Mat & bin)
   
   corners.clear();
 
-  //looking for closest points
+  //looking for closest points to corners from image corners
 
   unsigned int n;
   n = std::min_element(dist00.begin(), dist00.end()) - dist00.begin();
