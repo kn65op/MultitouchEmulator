@@ -4,6 +4,7 @@
 
 Device::Device(void)
 {
+  //start random engine
   gen = new std::mt19937(rd());
   dist = new std::uniform_int_distribution<>(0, 255);
 }
@@ -40,6 +41,7 @@ void Device::shift(double camera_pos_x, double x, double camera_pos_y, double y)
 
 void Device::calcRect()
 {
+  //finding rectangle (not rotated)
   rect = cv::boundingRect(points);
   bigger_rect.x  = rect.x - 30;
   bigger_rect.y  = rect.y - 30;
@@ -85,7 +87,6 @@ void Device::showNextBit(cv::Mat & image)
 {
   if (isNextBit())
   {
-    //cv::rectangle(image, rect, cv::Scalar(*(mit++) ? 255 : 0), CV_FILLED);
     cv::rectangle(image, rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
   }
 }
@@ -94,7 +95,6 @@ void Device::showWrongBit(cv::Mat & image)
 {
   if (isNextBit())
   {
-    //cv::rectangle(image, rect, cv::Scalar(*(mit++) ? 255 : 0), CV_FILLED);
     cv::rectangle(image, rect, *(mit++) ? cv::Scalar(0,0,0): cv::Scalar(255,255,255), CV_FILLED);
   }
 }

@@ -8,20 +8,30 @@
 
 Homography::Homography(void)
 {
+  //starting parameters
   points_setted = false;
   min_x = min_y = 4000;
   max_x = max_y = 0;
   colorGUI = cv::Scalar(100,255,100);
   color_line = cv::Scalar(0,0,0);
   color_detect_screen = cv::Scalar(255,255,255);
+  
+  //parameters defiding the scene
+  //device height in cm (int)
   h1 = 7;
+  //camera height in cm (int)
   h = 70;
-  scale = 1 - h1 / h;
+  // camera position in x dimension in pixels (int)
   camera_pos_x = 300;
+  // camera position in y dimension in pixels (int)
   camera_pos_y = -200;
+  // probability of making mistakes during transmission (double)
   mistake_posibility = 0;
+  
+  //calculating scale
+  scale = 1 - h1 / h;
 
-  //random for mistakes
+  //random engine for mistakes
   gen_mistakes = new std::mt19937(rd_mistakes());
   dist_mistakes = mistake_posibility ?  new std::uniform_int_distribution<>(0, static_cast<int>(1 / mistake_posibility - 1)) : new std::uniform_int_distribution<>(1,1);
 }
@@ -34,7 +44,6 @@ Homography::~Homography(void)
 void Homography::runHomography(cv::Mat image_points, cv::Mat real_points)
 {
   H = cv::findHomography(image_points, real_points);
-  //H = cv::getPerspectiveTransform(image_points, real_points);
 }
 
 cv::Point Homography::getRealPoint(int x, int y)
@@ -59,7 +68,6 @@ void getPointsFromImage(int event, int x, int y, int flags, void* param)
   if (event == CV_EVENT_LBUTTONDOWN)
   {
     Homography* h = static_cast<Homography*>(param);
-    std::cout << x << " " << y << "\n";
     if (!counter)
     {
       h->image_points = cv::Mat(4,1, CV_32FC2);
@@ -74,13 +82,11 @@ void Homography::setGeneratedImageSize(int x, int y)
   generated_x = x;
   generated_y = y;
   level = (int)(generated_x * 0.1) - 1;
-  //generated = cv::Mat(y, x, CV_8UC1);
 }
 
 void Homography::setGeneratedImageSize(cv::Size size)
 {
   setGeneratedImageSize(size.height, size.width);
-  //generated = cv::Mat(y, x, CV_8UC1);
   
   int level = (int)(generated_x * 0.1);
   cv::line(GUI, cv::Point(0, level), cv::Point(generated_y, level), color_line, 1);
@@ -111,6 +117,7 @@ cv::Mat & Homography::processImage(cv::Mat & image)
   {
     for (int j=min_y - 1; j<max_y; ++j)
     {
+      //changing points from image to reality
       cv::Point tmp = LUT.at<cv::Point2f>(i,j);
       if (tmp.x > 0 && tmp.x < generated_x && tmp.y > 0 && tmp.y < generated_y)
       {
@@ -149,6 +156,7 @@ void Homography::setImageSize(int x, int y)
 
 void Homography::makeLUT()
 {
+  //This is done, beacuse of performance.
   LUT = cv::Mat(image_y, image_x, CV_32FC2);
   if (min_x > max_x)
   {
@@ -180,16 +188,6 @@ void Homography::setImageSize(cv::Size size)
 void Homography::runHomography(cv::Mat image_points)
 {
   //distances
-  std::cout << distance(image_points.at<cv::Point2f>(0), image_points.at<cv::Point2f>(1)) << "\n";
-  std::cout << distance(image_points.at<cv::Point2f>(1), image_points.at<cv::Point2f>(2)) << "\n";
-  std::cout << distance(image_points.at<cv::Point2f>(2), image_points.at<cv::Point2f>(3)) << "\n";
-  std::cout << distance(image_points.at<cv::Point2f>(3), image_points.at<cv::Point2f>(0)) << "\n";
-
-  ratio_x = 1 / (distance(image_points.at<cv::Point2f>(1), image_points.at<cv::Point2f>(2)) / distance(image_points.at<cv::Point2f>(3), image_points.at<cv::Point2f>(0)));
-  ratio_y = 1 / (distance(image_points.at<cv::Point2f>(0), image_points.at<cv::Point2f>(1)) / distance(image_points.at<cv::Point2f>(2), image_points.at<cv::Point2f>(3)));
-
-  std::cout << ratio_x << " " << ratio_y << "\n";
-
   image_points.copyTo(this->image_points);
 
   runHomography();
@@ -253,6 +251,7 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   {
     //second version of making stupid of atacker
     //it->second->showRandomBlinkAround(GUI);
+    
     if (tmp < 100)
     {
       it->second->showNoiseAround(GUI);
@@ -266,7 +265,6 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
     {
       it->second->showWrongBit(GUI);
     }
-    //cv::rectangle(GUI, it->second->getRect(), cv::Scalar(0), CV_FILLED);
   }
   std::stringstream ss;
   
@@ -291,7 +289,6 @@ void Homography::randomBlink()
   int level2 = level + 1;
 
   //create random engine
-
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> dist(0, 255);
@@ -301,28 +298,17 @@ void Homography::randomBlink()
     for (int j=0; j<size.width; ++j)
     {
       GUI.at<cv::Vec3b>(i,j) = cv::Vec3b(dist(gen), dist(gen), dist(gen));
-      /*
-      if (dist(gen))
-      {
-        GUI.at<uchar>(i,j) = 255;
-      }
-      else
-      {
-        GUI.at<uchar>(i,j) = 0;
-      }*/
     }
   }
 }
 
 double Homography::getShiftX() const
 {
-//  return ratio_x;
   return scale;
 }
 
 double Homography::getShiftY() const
 {
-  //return ratio_y;
   return scale;
 }
 

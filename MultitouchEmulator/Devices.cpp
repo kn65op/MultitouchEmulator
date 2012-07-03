@@ -29,6 +29,7 @@ void Devices::processNewScene()
   end = devices.end();
   for (it = devices.begin(); it!=end;)
   {
+    //check if devices can be found as real device
     if (it->second->isRealDevice())
     {
       ++it;
@@ -67,20 +68,13 @@ Devices::iterator Devices::getEnd()
 }
 
 void Devices::processToTransmition(Key key, Homography & hom)
-{
-  //tmp fake
-  /*
-  int s = devices.size();
-  std::vector<bool> tmp;
-  for (int i =0; i < 10 + s; ++i)
-  {
-    tmp.push_back( i % 3 == 0);
-  }
-  //tmp fake*/
-  
+{  
+  //calculate rectangle and set message for coordinator
+  devices.begin()->second->shift(hom.getCameraX(), hom.getShiftX(), hom.getCameraY(),  hom.getShiftY());
   devices.begin()->second->calcRect();
   devices.begin()->second->setMessage(key.getMasterDeviceCode());
 
+  //calculate rectangle and set message for other devices
   iterator it, end;
   end = devices.end();
   int i = 0;
@@ -89,8 +83,6 @@ void Devices::processToTransmition(Key key, Homography & hom)
     it->second->shift(hom.getCameraX(), hom.getShiftX(), hom.getCameraY(),  hom.getShiftY());
     it->second->calcRect();
     it->second->setMessage(key.getSecondaryDeviceCode(++i));
-    //it->second->setMessage(std::vector<bool>(tmp.begin() + i, tmp.begin() + 10 + i)); //fake
-    //i++; //fake
   }
 
   key_max_length = getLongestMessage();
