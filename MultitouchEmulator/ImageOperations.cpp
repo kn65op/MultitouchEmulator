@@ -14,6 +14,7 @@ void subtractAbs(cv::Mat & s1, cv::Mat & s2, cv::Mat & dest)
   {
     for (int j=0; j<size.height; ++j)
     {
+      //calculating absolute value of substraction of two pixels, multiply by 2 to get values from 0 to 254 (not from 0 to 127)
       dest.at<uchar>(j,i) = abs(s1.at<uchar>(j,i) - s2.at<uchar>(j,i)) * 2;
     }
   }
@@ -46,19 +47,12 @@ void createStripesImage(cv::Mat & dest, cv::Size size, int stripe_size, int numb
 }
 
 cv::Size getScreenResolution()
-{/*
- LPRECT desktop = 0;
- const HWND hDesktop = GetDesktopWindow();
-
- if (GetWindowRect(hDesktop, desktop))
- {
- return cv::Size(desktop->right, desktop->bottom);
- }*/
-  
+{
+  //getting screen resolution
   RECT rc;
   GetWindowRect(GetDesktopWindow(), &rc);
 
-  //return cv::Size(GetSystemMetrics(SM_CXFULLSCREEN),GetSystemMetrics(SM_CYFULLSCREEN));
+  //change it to cv::Size
   return cv::Size(rc.right - rc.left, rc.bottom - rc.top);
 }
 
@@ -83,9 +77,9 @@ void negation(cv::Mat & im)
 
 void indexImageBlack(cv::Mat & source, cv::Mat & index, Devices & devs)
 {
+  //This funtion implements image indexing using classical connected component labelling algorithm
   // 0 - object
   // 255 - background
-
   
   cv::imwrite("tmp.bmp", source);
 
@@ -145,8 +139,6 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index, Devices & devs)
     }
   }
 
-  cv::imwrite("tmp.bmp", index);
-
   //fix paste tab
   for (auto i=0; i < last_number; ++i)
   {
@@ -174,10 +166,8 @@ void indexImageBlack(cv::Mat & source, cv::Mat & index, Devices & devs)
     }
   }
 
+  //check found devices
   devs.processNewScene();
-  
-  cv::imwrite("raw.bmp", index);
-
 }
 
 void createWhiteImage(cv::Mat & image, int x, int y)
@@ -200,6 +190,7 @@ void createWhiteImage(cv::Mat & image, cv::Size & size)
 void showImageWithoutFrame(LPCWSTR name, int x, int y, int width, int height)
 {
   HWND win_handle = FindWindow(0, name);
+  //Check if window exists
   if (!win_handle)
   {
     return;
@@ -228,6 +219,7 @@ void showImageWithoutFrame(LPCWSTR name, cv::Size size)
 
 bool isSameImage(cv::Mat & one, cv::Mat & two)
 {
+  //unused
   if (one.type() != two.type())
   {
     return false;
@@ -250,8 +242,6 @@ bool isSameImage(cv::Mat & one, cv::Mat & two)
 void generatePattern(cv::Mat & pat)
 {
 	pat = cv::Mat(200, 200, CV_8UC3, cv::Scalar(83,201,166));
-	/*pat = cv::Mat(200, 200, CV_8UC3, cv::Scalar(30,255,255));
-	cv::cvtColor(pat, pat, CV_HSV2BGR);//*/
 }
 
 double distance(cv::Point2f & a, cv::Point2f & b)

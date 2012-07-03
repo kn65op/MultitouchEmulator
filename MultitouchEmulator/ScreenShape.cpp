@@ -7,7 +7,6 @@
 
 ScreenShape::ScreenShape(void)
 {
-  thres = 127;
 }
 
 
@@ -40,8 +39,6 @@ bool ScreenShape::detectScreen(cv::Mat & image)
 
 void ScreenShape::printScreen(cv::Mat & image)
 {
-  //cv::Point2f points[4];
-  //screen.points(points);
   int size = screen.size();
   for (int i=0; i<size; ++i)
   {
@@ -89,7 +86,7 @@ void ScreenShape::findScreenAtBinaryImage(cv::Mat & bin)
   
   corners.clear();
 
-  //looking for closest points
+  //looking for closest points to corners from image corners
 
   unsigned int n;
   n = std::min_element(dist00.begin(), dist00.end()) - dist00.begin();
@@ -115,76 +112,6 @@ void ScreenShape::findScreenAtBinaryImage(cv::Mat & bin)
   {
     corners.push_back(cv::Point(screen[n].x, screen[n].y));
   }
-
-  /*
-  int size = screen.size();
-  std::vector<double> angles(size);
-  std::vector<double> diffs(size);
-
-  //calculating angles of lines
-  for (int i=0; i<size; ++i)
-  {
-    if (screen[i].y - screen[(i + 1) % size].y)
-    {
-      angles[i] = fabs((double)(screen[i].x - screen[(i + 1) % size].x ) / (double)(screen[i].y - screen[(i + 1) % size].y));
-    }
-    else
-    {
-      angles[i] = 300;
-    }
-  }
-  
-  //calculating differences between angles
-  for (int i=1; i<size + 1; ++i)
-  {
-    diffs[i - 1] = fabs(angles[i%size] - angles[i-1]);
-  }
-
-  corners.clear();
-  for (int i=0; i < 4; ++i)
-  {
-    std::vector<double>::iterator it = std::max_element(diffs.begin(), diffs.end());
-    int maxit = it - diffs.begin();
-    corners.push_back(cv::Point(screen[maxit].x, screen[maxit].y));
-    *it = 0;
-  }*/
-
-
-  /*
-  detectScreen(bin);
-
-  int size = screen.size();
-
-  for (int i=0; i<size; ++i)
-  {
-    if (screen[i].x > max_xx)
-    {
-      max_xx = screen[i].x;
-      max_xy = screen[i].y;
-    }
-    if (screen[i].y > max_yy)
-    {
-      max_yx = screen[i].x;
-      max_yy = screen[i].y;
-    }
-    if (screen[i].x < min_xx)
-    {
-      min_xx = screen[i].x;
-      min_xy = screen[i].y;
-    }
-    if (screen[i].x < min_yy)
-    {
-      min_yx = screen[i].x;
-      min_yy = screen[i].y;
-    }
-  }
-
-  corners.clear();
-  corners.push_back(cv::Point(max_xx, max_xy));
-  corners.push_back(cv::Point(max_yx, max_yy));
-  corners.push_back(cv::Point(min_xx, min_xy));
-  corners.push_back(cv::Point(min_yx, min_yy));
-  */
 }
 
 std::vector<cv::Point> ScreenShape::getCorners() const

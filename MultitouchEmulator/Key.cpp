@@ -9,7 +9,7 @@
 
 Key::Key(void)
 {
-  //generating alphabet
+  //generating alphabet, from this characters key is generated
   //alphabet = "qwertyuiopasdfghjklzxcvbnm1234567890!@#$%^&*()QWERTYUIOPLKJHGFDSAZXCVBNM-=_+[];',./<>?:\"{}|\\";
   alphabet = "10";
 }
@@ -29,6 +29,7 @@ void Key::generateMainKey(int n)
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> dist(0, alphabet.length() - 1);
   
+  //generating key from alphabet
   for (int i=0; i<n; i++)
   {
     key += alphabet[dist(gen)];
@@ -49,7 +50,7 @@ std::vector<bool> Key::getMasterDeviceCode()
 {
   std::vector<bool> ret(8);
 
-  //zapisanie liczy urz¹dzeñ
+  //store number of devices in binary
   int tmp = number_of_devices;
   int i = 7;
   do
@@ -67,13 +68,7 @@ std::vector<bool> Key::getMasterDeviceCode()
     ret[i--] = false;
   }
 
-  /*for (int i =0; i < ret.size(); ++i)
-  {
-    std::cout << ret[i];
-  }
-  std::cout << "\n";//*/
-
-  //skopiowanie klucza do kodu
+  //copy key (from std::string cointains only '1' or '0') to binary. If alphabet changes it should be also changed
   std::string::iterator sit, send;
   send = key.end();
   for (sit = key.begin(); sit != send; ++sit)
@@ -93,7 +88,7 @@ std::vector<bool> Key::getMasterDeviceCode()
 std::vector<bool> Key::getSecondaryDeviceCode(int n)
 {
   std::vector<bool> ret;
-  //generating md5
+  //generating hash 
   std::stringstream ss;
   ss << n << key;
   
@@ -102,8 +97,10 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
 
 	if (hash)
 	{
+    //debug: showing generated key for secondary devices
 		std::cout << "hash: 0x";
 
+    //change hash into binary code
 		for (int i = 0; i < 16; i ++)
     {
 			std::cout << std::hex << (int)hash[i];
@@ -208,6 +205,7 @@ unsigned char * Key::hash_func(BYTE *input, int size, HashType type)
 	DWORD dwLength;
 	DWORD dwHashType = (DWORD)type;
 
+  //calculating md5
 	if (CryptAcquireContext(&hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))
 	{
 		if(CryptCreateHash(hCryptProv, dwHashType, 0, 0, &hHash))
