@@ -82,6 +82,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ApplicationController.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Devices.h" />
     <ClInclude Include="Homography.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ApplicationController.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Devices.cpp" />
     <ClCompile Include="Homography.cpp" />
