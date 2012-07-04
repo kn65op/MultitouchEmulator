@@ -101,7 +101,7 @@ void ApplicationController::detectScreen()
   hom.runHomography(image_points);
 }
 
-void ApplicationController::searchingForDevices() throw(ApplicationController::Exception)
+void ApplicationController::searchingForDevices()
 {
   //setting searching
   cv::Mat frame, gray, hsv_all, generated, to_show, objects, binary;
@@ -188,4 +188,21 @@ void ApplicationController::end()
       break;
     }
   }
+}
+
+void ApplicationController::showCheck()
+{
+  //setting camera position
+  cv::Mat & check = hom.getGUICameraPosition();
+  while (true)
+  {
+    cv::imshow("Check", check);
+    showImageWithoutFrame(L"Check", resolution);
+    if(cv::waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
+
+  cv::destroyAllWindows();
 }

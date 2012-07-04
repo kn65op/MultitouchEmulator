@@ -69,7 +69,7 @@ public:
   /**
    * Function which take care about searching for devices.
    */
-  void searchingForDevices() throw(Exception);
+  void searchingForDevices();
 
   /**
    * Function which take care about transmission.
@@ -77,6 +77,8 @@ public:
   void transmission();
 
   void end();
+
+  void showCheck();
 
 private:
   //Homography
