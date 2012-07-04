@@ -59,6 +59,9 @@ public:
    */
   ~ApplicationController(void);
 
+  /**
+   * Function which take care about detecting screen.
+   */
   void detectScreen();
 
 private:

@@ -71,6 +71,8 @@ int _tmain(int argc, _TCHAR* argv[])
 #ifdef HOMOGRAPHY
   ApplicationController ac;
 
+  ac.detectScreen();
+
   VideoCapture cap(0);
 
   Homography hom;
@@ -85,65 +87,13 @@ int _tmain(int argc, _TCHAR* argv[])
 
   //Automatic selecting points
   Mat binary;
-  double thres = 140;
 
   Mat strel;
   
 
   int number = 1;
   
-  //searching for screen
-  while (true)
-  {
-    cap >> frame;
-    cvtColor(frame, gray, CV_RGB2GRAY);
-    threshold(gray, binary, thres, 255, CV_THRESH_OTSU);
-    
-    erode(binary, binary, strel);
-    dilate(binary, binary, strel);
-
-    dilate(binary, binary, strel);
-    erode(binary, binary, strel);
-
-    ss.findScreenAtBinaryImage(binary);
-    std::vector<cv::Point> cor = ss.getCorners();
-
-    std::vector<cv::Point>::iterator begin, end;
-    
-    end = cor.end();
-    int qwe = 5;
-    for (begin = cor.begin(); begin != end; ++begin)
-    {
-      circle(gray, *begin, 10, cv::Scalar(255,0,0), qwe);
-      qwe += 5;
-    }
-
-    imshow("gray",gray);
-    showImageWithoutFrame(L"gray", resolution.width / 3, resolution.height / 3, gray.cols, gray.rows);
-
-    if(waitKey(30) >= 0)
-    {
-      break;
-    }
-  }
-
-  destroyAllWindows();
-
-  //set corners as points on image to transformation
-  cv::Mat image_points(4,1, CV_32FC2);
-  std::vector<cv::Point> cor = ss.getCorners();
-
-  std::vector<cv::Point>::iterator begin, end;
-  end = cor.end();
-  int i = 0;
-  for (begin = cor.begin(); begin != end; ++begin)
-  {
-    image_points.at<cv::Point2f>(i++,0) = cv::Point2f((float)(begin->y), (float)(begin->x));
-  }
-
-  //run Homography
-  hom.runHomography(image_points);
-
+  
   cv::Mat generated, to_show;
   cv::Mat objects = cv::Mat::zeros(frame.size(), CV_8UC1);
 
