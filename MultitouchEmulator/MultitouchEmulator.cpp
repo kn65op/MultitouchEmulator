@@ -76,8 +76,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
   cv::Size resolution = getScreenResolution();
 
-  std::cout << resolution.width << " " << resolution.height << "\n";
-
   Mat frame, gray;
 
   //setting the Homography
@@ -116,11 +114,9 @@ int _tmain(int argc, _TCHAR* argv[])
     std::vector<cv::Point>::iterator begin, end;
     
     end = cor.end();
-    int qwe = 5;
     for (begin = cor.begin(); begin != end; ++begin)
     {
-      circle(gray, *begin, 10, cv::Scalar(255,0,0), qwe);
-      qwe += 5;
+      circle(gray, *begin, 10, cv::Scalar(255,0,0), 7);
     }
 
     imshow("gray",gray);
@@ -157,18 +153,9 @@ int _tmain(int argc, _TCHAR* argv[])
   cv::Mat strel_small = cv::getStructuringElement(MORPH_ELLIPSE, cv::Size(3,3));
 
   cv::Mat hsv_all, bin1, bin2;
-  cv::Mat hsv[3];
 
   Devices devices;
-
-  cv::Mat last_gray;
-
-	cv::Mat pattern;
-	generatePattern(pattern);
-
-  cap >> frame; // get a new frame from camera
-  cvtColor(frame, gray, CV_RGB2GRAY);
-
+	
   //setting camera position
   /*
   cv::Mat & check = hom.getGUICameraPosition();
@@ -182,32 +169,21 @@ int _tmain(int argc, _TCHAR* argv[])
     }
   }
 
-  double ttttt;
-  std::cin >> ttttt;
-
   destroyAllWindows();*/
 
   //searching for devices
   while(true)
   {
-    std::cout << number << "\n";
-    gray.copyTo(last_gray);
-
+  
     cap >> frame; // get a new frame from camera
-    cvtColor(frame, gray, CV_RGB2GRAY);
     cvtColor(frame, hsv_all, CV_BGR2HSV);
-    split(hsv_all, hsv);
-
-    imshow("gray", gray);
-
+  
     inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
 
     negation(binary);
     cv::dilate(binary, binary, strel_small);
     cv::erode(binary, binary, strel_small);
 
-    imshow("bin", binary);
-    
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strel);
     cv::dilate(to_show, to_show, strel_big  );
