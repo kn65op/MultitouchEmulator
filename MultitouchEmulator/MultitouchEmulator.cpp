@@ -10,6 +10,8 @@
 #include "Devices.h"
 #include "Key.h"
 
+#include "ApplicationController.h"
+
 using namespace cv;
 
 #define HOMOGRAPHY
@@ -67,33 +69,26 @@ int _tmain(int argc, _TCHAR* argv[])
 #endif
 
 #ifdef HOMOGRAPHY
-  VideoCapture cap(0); // open the default camera
-  if(!cap.isOpened())  // check if we succeeded
-    return -1;
+  ApplicationController ac;
+
+  VideoCapture cap(0);
 
   Homography hom;
   ScreenShape ss;
 
-  cv::Size resolution = getScreenResolution();
-
-  std::cout << resolution.width << " " << resolution.height << "\n";
+  cv::Size resolution;
 
   Mat frame, gray;
 
   //setting the Homography
-  cap >> frame;
-  cvtColor(frame, gray, CV_RGB2GRAY);
-  hom.setImageSize(gray.size());
-  hom.setGeneratedImageSize(resolution);
+  
 
   //Automatic selecting points
   Mat binary;
   double thres = 140;
 
-  Mat strel = getStructuringElement(MORPH_ELLIPSE, Size(9,9));
+  Mat strel;
   
-  imshow("white", hom.getGUIDetectScreen());
-  showImageWithoutFrame(L"white", resolution.width, resolution.height);
 
   int number = 1;
   
