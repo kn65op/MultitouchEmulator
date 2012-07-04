@@ -53,7 +53,7 @@ void ApplicationController::detectScreen()
   {
     cap >> frame;
     cv::cvtColor(frame, gray, CV_RGB2GRAY);
-    cv::threshold(gray, binary, 0, 255, CV_THRESH_OTSU);
+    cv::threshold(gray, binary, 0/*doesn't matter*/, 255, CV_THRESH_OTSU);
     
     cv::erode(binary, binary, strele9x9);
     cv::dilate(binary, binary, strele9x9);
@@ -67,11 +67,9 @@ void ApplicationController::detectScreen()
     std::vector<cv::Point>::iterator begin, end;
     
     end = cor.end();
-    int qwe = 5;
     for (begin = cor.begin(); begin != end; ++begin)
     {
-      cv::circle(gray, *begin, 10, cv::Scalar(255,0,0), qwe);
-      qwe += 5;
+      cv::circle(gray, *begin, 10, cv::Scalar(255,0,0), 7);
     }
 
     imshow("gray",gray);
