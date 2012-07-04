@@ -53,18 +53,30 @@ public:
   /** 
    * Constructor makes all needed initialization.
    */
-  ApplicationController(void) throw(Exception);
+  ApplicationController(void);
   /**
    * Default destructor.
    */
   ~ApplicationController(void);
+
+  void init();
 
   /**
    * Function which take care about detecting screen.
    */
   void detectScreen();
 
+  /**
+   * Function which take care about searching for devices.
+   */
   void searchingForDevices() throw(Exception);
+
+  /**
+   * Function which take care about transmission.
+   */
+  void transmission();
+
+  void end();
 
 private:
   //Homography

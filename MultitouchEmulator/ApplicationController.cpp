@@ -6,7 +6,13 @@
 #include "ImageOperations.h"
 
 
-ApplicationController::ApplicationController(void) throw (ApplicationController::Exception) : cap(0)
+ApplicationController::ApplicationController(void) : cap(0)
+{
+
+
+}
+
+void ApplicationController::init()
 {
   if (!cap.isOpened())
   {
@@ -26,7 +32,6 @@ ApplicationController::ApplicationController(void) throw (ApplicationController:
   strele9x9 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9,9));
   strele11x11 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(11,11));
   strele13x13 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(13,13));
-
 }
 
 
@@ -36,6 +41,7 @@ ApplicationController::~ApplicationController(void)
 
 void ApplicationController::detectScreen()
 {
+  //setting detecting
   cv::Mat frame, binary, gray;
 
   //showing white screen to find screen
@@ -97,16 +103,18 @@ void ApplicationController::detectScreen()
 
 void ApplicationController::searchingForDevices() throw(ApplicationController::Exception)
 {
+  //setting searching
   cv::Mat frame, gray, hsv_all, generated, to_show, objects, binary;
   int number = 1;
 
+  //searching
   while(true)
   {
     cap >> frame; // get a new frame from camera
     cv::cvtColor(frame, gray, CV_RGB2GRAY);
     cv::cvtColor(frame, hsv_all, CV_BGR2HSV);
 
-    imshow("gray", gray);
+    //imshow("gray", gray);
 
     cv::inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
 
@@ -114,7 +122,7 @@ void ApplicationController::searchingForDevices() throw(ApplicationController::E
     cv::dilate(binary, binary, strele3x3);
     cv::erode(binary, binary, strele3x3);
 
-    cv::imshow("bin", binary);
+    //cv::imshow("bin", binary);
     
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strele11x11);
@@ -140,5 +148,44 @@ void ApplicationController::searchingForDevices() throw(ApplicationController::E
   if (!devices.size())
   {
     throw Exception("No devices found", false);
+  }
+}
+
+void ApplicationController::transmission()
+{
+  //settig transmission
+  key.setNumberOfDevices(devices.size());
+  key.generateMainKey(128);
+  key.setHashLength(128);
+
+  devices.processToTransmition(key, hom);
+
+  //transmission
+
+  while(true)
+  {
+    //Sleep(100); // DEBUG to see what happening
+
+    cv::imshow("generated", hom.getGUITransmission(devices));
+    showImageWithoutFrame(L"generated", resolution.width, resolution.height);
+
+    if(cv::waitKey(30) >= 0 || hom.isEnd())
+    {
+      break;
+    }
+  }
+}
+
+void ApplicationController::end()
+{
+   while (true)
+  {
+    cv::imshow("generated", hom.getGUIEnd());
+    showImageWithoutFrame(L"generated", resolution.width, resolution.height);
+
+    if(cv::waitKey(30) >= 0)
+    {
+      break;
+    }
   }
 }
