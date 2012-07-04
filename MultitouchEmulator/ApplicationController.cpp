@@ -102,14 +102,13 @@ void ApplicationController::detectScreen()
 void ApplicationController::searchingForDevices()
 {
   //setting searching
-  cv::Mat frame, gray, hsv_all, generated, to_show, objects, binary;
+  cv::Mat frame, hsv_all, generated, to_show, objects, binary;
   int number = 1;
 
   //searching
   while(true)
   {
     cap >> frame; // get a new frame from camera
-    cv::cvtColor(frame, gray, CV_RGB2GRAY);
     cv::cvtColor(frame, hsv_all, CV_BGR2HSV);
 
     //imshow("gray", gray);

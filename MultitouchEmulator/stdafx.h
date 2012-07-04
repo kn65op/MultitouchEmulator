@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
-#include <gtkmm.h>
+//#include <gtkmm.h>
 
 
 // TODO: reference additional headers your program requires here
