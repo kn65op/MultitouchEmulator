@@ -69,9 +69,29 @@ int _tmain(int argc, _TCHAR* argv[])
 #endif
 
 #ifdef HOMOGRAPHY
-  ApplicationController ac;
+  while(true)
+  {
+    try
+    {
+      ApplicationController ac;
 
-  ac.detectScreen();
+      ac.detectScreen();
+
+      ac.searchingForDevices();
+    }
+    catch(ApplicationController::Exception e)
+    {
+      std::cout << "Error: " << e() << "\n";
+      if (e.isCritical())
+      {
+        std::cout << "Error is critical, exiting\n";
+        return -1;
+      }
+    }
+  }
+
+
+  
 
   VideoCapture cap(0);
 
@@ -107,12 +127,7 @@ int _tmain(int argc, _TCHAR* argv[])
   Devices devices;
 
   cv::Mat last_gray;
-
-	cv::Mat pattern;
-	generatePattern(pattern);
-
-  cap >> frame; // get a new frame from camera
-  cvtColor(frame, gray, CV_RGB2GRAY);
+  
 
   //setting camera position
   /*
@@ -133,46 +148,7 @@ int _tmain(int argc, _TCHAR* argv[])
   destroyAllWindows();*/
 
   //searching for devices
-  while(true)
-  {
-    std::cout << number << "\n";
-    gray.copyTo(last_gray);
-
-    cap >> frame; // get a new frame from camera
-    cvtColor(frame, gray, CV_RGB2GRAY);
-    cvtColor(frame, hsv_all, CV_BGR2HSV);
-    split(hsv_all, hsv);
-
-    imshow("gray", gray);
-
-    inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
-
-    negation(binary);
-    cv::dilate(binary, binary, strel_small);
-    cv::erode(binary, binary, strel_small);
-
-    imshow("bin", binary);
-    
-    generated = hom.processImage(binary);
-    cv::erode(generated, to_show, strel);
-    cv::dilate(to_show, to_show, strel_big  );
-
-    
-    if(number > 7)
-    {
-      indexImageBlack(to_show, objects, devices);
-    }
-
-    if (number ++ > 3)
-    {
-      imshow("generated", hom.getGUIDetectDevice(devices));
-      showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
-    }    
-    if(waitKey(30) >= 0)
-    {
-      break;
-    }
-  }
+  
 
   if (!devices.size())
   {

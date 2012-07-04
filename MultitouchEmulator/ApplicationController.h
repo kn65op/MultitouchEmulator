@@ -64,6 +64,8 @@ public:
    */
   void detectScreen();
 
+  void searchingForDevices() throw(Exception);
+
 private:
   //Homography
   Homography hom;
@@ -71,13 +73,22 @@ private:
   ScreenShape ss;
   //Key
   Key key;
+  //Camera
   cv::VideoCapture cap;
+  //Devices
+  Devices devices;
   //screen resolution
   cv::Size resolution;
 
   //structuring elements to use
   //structuring element ellipse 9x9
   cv::Mat strele9x9;
+  //structuring element ellipse 11x11
+  cv::Mat strele11x11;
+  //structuring element ellipse 13x13
+  cv::Mat strele13x13;
+  //structuring element ellipse 3x3
+  cv::Mat strele3x3;
   
 };
 

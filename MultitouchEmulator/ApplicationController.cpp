@@ -22,7 +22,10 @@ ApplicationController::ApplicationController(void) throw (ApplicationController:
   hom.setGeneratedImageSize(resolution);
 
   //generating structuring elements
+  strele3x3 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3,3));
   strele9x9 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9,9));
+  strele11x11 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(11,11));
+  strele13x13 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(13,13));
 
 }
 
@@ -90,4 +93,52 @@ void ApplicationController::detectScreen()
 
   //run Homography
   hom.runHomography(image_points);
+}
+
+void ApplicationController::searchingForDevices() throw(ApplicationController::Exception)
+{
+  cv::Mat frame, gray, hsv_all, generated, to_show, objects, binary;
+  int number = 1;
+
+  while(true)
+  {
+    cap >> frame; // get a new frame from camera
+    cv::cvtColor(frame, gray, CV_RGB2GRAY);
+    cv::cvtColor(frame, hsv_all, CV_BGR2HSV);
+
+    imshow("gray", gray);
+
+    cv::inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
+
+    negation(binary);
+    cv::dilate(binary, binary, strele3x3);
+    cv::erode(binary, binary, strele3x3);
+
+    cv::imshow("bin", binary);
+    
+    generated = hom.processImage(binary);
+    cv::erode(generated, to_show, strele11x11);
+    cv::dilate(to_show, to_show, strele13x13);
+
+    
+    if(number > 7)
+    {
+      indexImageBlack(to_show, objects, devices);
+    }
+
+    if (number ++ > 3)
+    {
+      cv::imshow("generated", hom.getGUIDetectDevice(devices));
+      showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+    }    
+    if(cv::waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
+
+  if (!devices.size())
+  {
+    throw Exception("No devices found", false);
+  }
 }
