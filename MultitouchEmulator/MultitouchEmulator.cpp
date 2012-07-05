@@ -119,10 +119,10 @@ int _tmain(int argc, char* argv[])
     dialog.run();
   }
 
-  ac.end();
+  ac.endingScreen();
 
   EndWindow ew;
-  ew.run();
+  ac.processEndingDialog(ew.run());
  
 #endif
   return 0;

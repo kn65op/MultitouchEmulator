@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "ImageOperations.h"
+#include "EndWindow.h"
 
 
 ApplicationController::ApplicationController(void) : cap(0)
@@ -173,7 +174,7 @@ void ApplicationController::transmission()
   }
 }
 
-void ApplicationController::end()
+void ApplicationController::endingScreen()
 {
    while (true)
   {
@@ -202,4 +203,28 @@ void ApplicationController::showCheck()
   }
 
   cv::destroyAllWindows();
+}
+
+void ApplicationController::processEndingDialog(int response)
+{
+  switch (response)
+  {
+  case EndWindow::response::DEVICE:
+    show_detect_screen = show_starting_dialog = end = false;
+    break;
+  case EndWindow::response::END:
+    end = true;
+    break;
+  case EndWindow::response::SCREEN:
+    show_detect_screen = true;
+    show_starting_dialog = end = false;
+    break;
+  case EndWindow::response::START:
+    show_detect_screen = show_starting_dialog = true;
+    end = false;
+    break;
+  case Gtk::RESPONSE_DELETE_EVENT:
+    end = true;
+    break;
+  }
 }

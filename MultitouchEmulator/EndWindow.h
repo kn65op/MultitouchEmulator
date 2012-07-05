@@ -7,12 +7,16 @@ class EndWindow :
 public:
   EndWindow(void);
   ~EndWindow(void);
+
+  //enums
+  enum response
+  {
+    START,
+    SCREEN,
+    DEVICE,
+    END
+  };
 private:
-  //Buttons
-  Gtk::Button from_device;
-  Gtk::Button from_screen;
-  Gtk::Button from_start;
-  Gtk::Button end;
   //Label
   Gtk::Label question;
 
