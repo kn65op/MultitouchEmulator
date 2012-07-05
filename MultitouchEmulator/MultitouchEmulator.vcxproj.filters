@@ -45,6 +45,9 @@
     <ClInclude Include="ApplicationController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StartWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ApplicationController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StartWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
