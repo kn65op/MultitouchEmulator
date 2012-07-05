@@ -18,9 +18,9 @@ Homography::Homography(void)
   
   //parameters defiding the scene
   //device height in cm (int)
-  h1 = 7;
+  h1 = 4;
   //camera height in cm (int)
-  h = 70;
+  h = 72;
   // camera position in x dimension in pixels (int)
   camera_pos_x = 300;
   // camera position in y dimension in pixels (int)
@@ -339,4 +339,12 @@ cv::Mat & Homography::getGUIEnd()
 bool Homography::isEnd() const
 {
   return end;
+}
+
+cv::Mat & Homography::getGUIBlackScreen()
+{
+  setGUIColor(cv::Scalar(0,0,0));
+  cv::putText(GUI, "Init transmission, please wait.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
+  return GUI;
+
 }

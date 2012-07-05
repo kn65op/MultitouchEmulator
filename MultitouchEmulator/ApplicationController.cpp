@@ -119,7 +119,7 @@ void ApplicationController::searchingForDevices()
     cv::dilate(binary, binary, strele3x3);
     cv::erode(binary, binary, strele3x3);
 
-    //cv::imshow("bin", binary);
+    cv::imshow("bin", binary);
     
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strele11x11);
@@ -146,13 +146,23 @@ void ApplicationController::searchingForDevices()
   {
     throw Exception("No devices found", false);
   }
+
+  while(true)
+  {
+    cv::imshow("generated", hom.getGUIBlackScreen());
+    showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+    if(cv::waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
 }
 
 void ApplicationController::transmission()
 {
   //settig transmission
   key.setNumberOfDevices(devices.size());
-  key.generateMainKey(128);
+  key.generateMainKey(50);
   key.setHashLength(128);
 
   devices.processToTransmition(key, hom);
@@ -161,7 +171,7 @@ void ApplicationController::transmission()
 
   while(true)
   {
-    //Sleep(100); // DEBUG to see what happening
+    Sleep(50); // TODO: change this
 
     cv::imshow("generated", hom.getGUITransmission(devices));
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);
