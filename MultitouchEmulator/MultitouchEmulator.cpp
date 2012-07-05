@@ -97,32 +97,35 @@ int _tmain(int argc, char* argv[])
   }
 
   //procesing
-  try
+  while (ac.isRun())
   {
-    ac.detectScreen();
-
-    ac.searchingForDevices();
-
-    ac.transmission();
-  }
-  catch(ApplicationController::Exception e)
-  {
-    std::string mes = "Error during processing: " + e() + "\n";
-    if (e.isCritical())
+    try
     {
-      mes += "Error is critical, exiting\n";
+      ac.detectScreen();
+
+      ac.searchingForDevices();
+
+      ac.transmission();
+    }
+    catch(ApplicationController::Exception e)
+    {
+      std::string mes = "Error during processing: " + e() + "\n";
+      if (e.isCritical())
+      {
+        mes += "Error is critical, exiting\n";
+        Gtk::MessageDialog dialog(mes);
+        dialog.run();
+        return -1;
+      }
       Gtk::MessageDialog dialog(mes);
       dialog.run();
-      return -1;
     }
-    Gtk::MessageDialog dialog(mes);
-    dialog.run();
+
+    ac.endingScreen();
+
+    EndWindow ew;
+    ac.processEndingDialog(ew.run());
   }
-
-  ac.endingScreen();
-
-  EndWindow ew;
-  ac.processEndingDialog(ew.run());
  
 #endif
   return 0;

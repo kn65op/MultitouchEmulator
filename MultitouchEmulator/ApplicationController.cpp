@@ -9,8 +9,8 @@
 
 ApplicationController::ApplicationController(void) : cap(0)
 {
-
-
+  end = false;
+  show_detect_screen = show_starting_dialog = true; 
 }
 
 void ApplicationController::init()
@@ -42,6 +42,10 @@ ApplicationController::~ApplicationController(void)
 
 void ApplicationController::detectScreen()
 {
+  if (!show_detect_screen)
+  {
+    return;
+  }
   //setting detecting
   cv::Mat frame, binary, gray;
 
@@ -227,4 +231,14 @@ void ApplicationController::processEndingDialog(int response)
     end = true;
     break;
   }
+}
+
+bool ApplicationController::isRun() const
+{
+  return !end;
+}
+  
+bool ApplicationController::isShowStartingDialog() const
+{
+  return show_starting_dialog;
 }

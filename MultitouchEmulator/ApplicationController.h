@@ -93,6 +93,9 @@ public:
    */
   void processEndingDialog(int response);
 
+  bool isRun() const;
+  bool isShowStartingDialog() const;
+
 private:
   //Homography
   Homography hom;
