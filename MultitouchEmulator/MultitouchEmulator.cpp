@@ -12,6 +12,8 @@
 
 #include "ApplicationController.h"
 
+#include "EndWindow.h"
+
 using namespace cv;
 
 #define HOMOGRAPHY
@@ -35,7 +37,7 @@ void onMouse(int event, int x, int y, int flags, void* param)
 
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int _tmain(int argc, char* argv[])
 {
 
 #ifdef JUST_PHOTO
@@ -70,6 +72,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 #ifdef HOMOGRAPHY
 
+  Gtk::Main kit(&argc, &argv);
+
   ApplicationController ac;
 
   //initialization
@@ -79,12 +83,17 @@ int _tmain(int argc, _TCHAR* argv[])
   }
   catch(ApplicationController::Exception e)
   {
-    std::cout << "Error during initialization: " << e() << "\n";
+    Glib::ustring mes = "Error during initialization: ";
+    mes += e();
     if (e.isCritical())
     {
-      std::cout << "Error is critical, exiting\n";
+      mes += "\nError is critical, exiting\n";
+      Gtk::MessageDialog dialog(mes);
+      dialog.run();
       return -1;
     }
+    Gtk::MessageDialog dialog(mes);
+    dialog.run();
   }
 
   //procesing
@@ -98,17 +107,22 @@ int _tmain(int argc, _TCHAR* argv[])
   }
   catch(ApplicationController::Exception e)
   {
-    std::cout << "Error during processing: " << e() << "\n";
+    std::string mes = "Error during processing: " + e() + "\n";
     if (e.isCritical())
     {
-      std::cout << "Error is critical, exiting\n";
+      mes += "Error is critical, exiting\n";
+      Gtk::MessageDialog dialog(mes);
+      dialog.run();
       return -1;
     }
+    Gtk::MessageDialog dialog(mes);
+    dialog.run();
   }
 
   ac.end();
 
-
+  EndWindow ew;
+  ew.run();
  
 #endif
   return 0;

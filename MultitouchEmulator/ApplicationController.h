@@ -28,6 +28,7 @@ public:
     Exception(std::string message, bool critical)
     {
       mes = message;
+      this->critical = critical;
     }
     /**
      * Operator with allow to read message.

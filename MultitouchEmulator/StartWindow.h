@@ -9,6 +9,5 @@ public:
   ~StartWindow(void);
 private:
   //choose field
-  Gtk::
 };
 

@@ -85,6 +85,7 @@
     <ClInclude Include="ApplicationController.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Devices.h" />
+    <ClInclude Include="EndWindow.h" />
     <ClInclude Include="Homography.h" />
     <ClInclude Include="ImageOperations.h" />
     <ClInclude Include="Key.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="ApplicationController.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Devices.cpp" />
+    <ClCompile Include="EndWindow.cpp" />
     <ClCompile Include="Homography.cpp" />
     <ClCompile Include="ImageOperations.cpp" />
     <ClCompile Include="Key.cpp" />
