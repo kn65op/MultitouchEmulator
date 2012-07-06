@@ -111,6 +111,10 @@ public:
     */
   cv::Mat & getGUICameraPosition();
   /**
+    * Function returns image with GUI for entering camera position.
+    */
+  cv::Mat & getGUIBlackScreen();
+  /**
     * Function returns image with GUI for end.
     */
   cv::Mat & getGUIEnd();
