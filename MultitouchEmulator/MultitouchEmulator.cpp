@@ -4,11 +4,6 @@
 #include "stdafx.h"
 #include <opencv2\opencv.hpp>
 
-#include "ImageOperations.h"
-#include "Homography.h"
-#include "ScreenShape.h"
-#include "Devices.h"
-#include "Key.h"
 
 #include "ApplicationController.h"
 
