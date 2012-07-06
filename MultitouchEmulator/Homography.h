@@ -45,7 +45,7 @@ public:
 
   /**
    * Function use to manualy slecting points on image.
-   * int event Event.
+   * @param event Event.
    * @param x Value of point in OX.
    * @param y Value of point in OY.
    * @param flags Flags.
@@ -161,6 +161,10 @@ public:
    * Function prepares screen to transmission.
    */
   void prepareTransmission(Devices & devs);
+  /**
+   * Function which set parameters of scene (camera height etc.)
+   * @param par Object Parameters with parameters to set.
+   */
   void setParameters(Parameters & par);
 
 private:

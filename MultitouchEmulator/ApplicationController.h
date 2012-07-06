@@ -53,7 +53,7 @@ public:
   };
 
   /** 
-   * Constructor makes all needed initialization.
+   * Constructor doesn't make all needed initialization. After creating object should be evaluated 'init' function.
    */
   ApplicationController(void);
   /**
@@ -61,6 +61,9 @@ public:
    */
   ~ApplicationController(void);
 
+  /**
+   * Function initializes object.
+   */
   void init();
 
   /**
@@ -99,9 +102,22 @@ public:
    */
   void processEndingDialog(int response);
 
+  /**
+   * Function test if program should run now.
+   * @return true if program should run another time, else otherwise.
+   */
   bool isRun() const;
+  
+  /**
+   * Function return information if starting dialog should show.
+   * @return true if starting dialog should show, else otherwise.
+   */
   bool isShowStartingDialog() const;
 
+  /**
+   * Function which sets parameters.
+   * @param par Object Parameters with parameters to set.
+   */
   void setParameters(Parameters & par);
 
 private:

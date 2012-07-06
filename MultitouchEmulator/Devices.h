@@ -18,7 +18,9 @@ private:
   // pair for container
   typedef std::pair<int, Device*> pair_type;
 public:
-  //iterator for devices
+  /**
+   * iterator for devices
+   */
   typedef std::map<int, Device*>::iterator iterator;
 
   //members
