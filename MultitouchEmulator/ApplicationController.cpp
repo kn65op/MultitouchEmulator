@@ -168,7 +168,7 @@ void ApplicationController::transmission()
   //transmission
   while(true)
   {
-    Sleep(50); // TODO: change this
+    Sleep(30); // TODO: change this
 
     cv::imshow("generated", hom.getGUITransmission(devices));
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);
@@ -262,7 +262,7 @@ void ApplicationController::prepareTransmission()
 
   //settig transmission
   key.setNumberOfDevices(devices.size());
-  key.generateMainKey(50);
+  key.generateMainKey(100);
   key.setHashLength(128);
 
   devices.processToTransmition(key, hom);

@@ -172,3 +172,4 @@ pip-log.txt
 *.jpg
 *.bmp
 Debug/*.exe
+doc/*
