@@ -262,7 +262,7 @@ void ApplicationController::prepareTransmission()
 
   //settig transmission
   key.setNumberOfDevices(devices.size());
-  key.generateMainKey(50);
+  key.generateMainKey(100);
   key.setHashLength(128);
 
   devices.processToTransmition(key, hom);
