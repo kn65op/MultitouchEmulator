@@ -168,7 +168,7 @@ void ApplicationController::transmission()
   //transmission
   while(true)
   {
-    Sleep(50); // TODO: change this
+    Sleep(30); // TODO: change this
 
     cv::imshow("generated", hom.getGUITransmission(devices));
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);
