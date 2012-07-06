@@ -127,5 +127,7 @@ private:
   bool show_detect_screen;
   //if show starting dialog
   bool show_starting_dialog;
+  //if show device recognition
+  bool show_device_recognition;
 };
 

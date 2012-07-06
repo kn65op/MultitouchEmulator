@@ -10,7 +10,7 @@
 ApplicationController::ApplicationController(void) : cap(0)
 {
   end = false;
-  show_detect_screen = show_starting_dialog = true; 
+  show_detect_screen = show_starting_dialog = show_device_recognition = true; 
 }
 
 void ApplicationController::init()
@@ -106,6 +106,11 @@ void ApplicationController::detectScreen()
 
 void ApplicationController::searchingForDevices()
 {
+  if (!show_device_recognition)
+  {
+    return;
+  }
+
   //setting searching
   cv::Mat frame, hsv_all, generated, to_show, objects, binary;
   int number = 1;
@@ -215,21 +220,24 @@ void ApplicationController::processEndingDialog(int response)
   {
   case EndWindow::response::DEVICE:
     show_detect_screen = show_starting_dialog = end = false;
+    show_device_recognition = true;
     break;
   case EndWindow::response::END:
     end = true;
     break;
   case EndWindow::response::SCREEN:
-    show_detect_screen = true;
+    show_detect_screen = show_device_recognition = true;
     show_starting_dialog = end = false;
     break;
   case EndWindow::response::START:
-    show_detect_screen = show_starting_dialog = true;
+    show_detect_screen = show_starting_dialog = show_device_recognition = true;
     end = false;
     break;
   case Gtk::RESPONSE_DELETE_EVENT:
     end = true;
     break;
+  case EndWindow::response::TRANSMISSION:
+    show_detect_screen = show_device_recognition = show_starting_dialog = end = false;
   }
 }
 

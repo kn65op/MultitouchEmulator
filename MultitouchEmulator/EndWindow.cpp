@@ -6,6 +6,7 @@ EndWindow::EndWindow(void)
 {
   //setting components
   question.set_label("What do you want to do next?");
+  add_button("Start transmission again", TRANSMISSION);
   add_button("Start again from device recognition part", DEVICE);
   add_button("Start again from screen recognition part", SCREEN);
   add_button("Start again from begining", START);

@@ -14,7 +14,8 @@ public:
     START,
     SCREEN,
     DEVICE,
-    END
+    END,
+    TRANSMISSION
   };
 private:
   //Label
