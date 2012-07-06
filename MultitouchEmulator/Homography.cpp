@@ -209,7 +209,7 @@ cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
   
   //text
   std::stringstream text;
-  if (devs.size()  == last_no_of_devices)
+  if (devs.size() == last_no_of_devices)
   {
     text << devs.size();
     text << " devices found. Press any key to initialize transmission";
@@ -252,8 +252,6 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   clearGUI();
   
   //showing progress
-  transmission_progress = -1;
-  transmission_length = devs.getMaxKeyLength();
   double tmp = static_cast<double>(++transmission_progress) / static_cast<double>(transmission_length) * 100.0;
   tmp = tmp > 100 ? 100 : tmp;
 
@@ -361,9 +359,11 @@ void Homography::prepareDeviceRecognition()
   setGUIColor(colorGUI);
 }
 
-void Homography::prepareTransmission()
+void Homography::prepareTransmission(Devices & devs)
 {
   setGUIColor(colorGUI);
+  transmission_progress = -1;
+  transmission_length = devs.getMaxKeyLength();
 }
 
 cv::Mat & Homography::getGUIBlackScreen()

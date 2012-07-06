@@ -165,15 +165,6 @@ void ApplicationController::searchingForDevices()
 
 void ApplicationController::transmission()
 {
-  //settig transmission
-  key.setNumberOfDevices(devices.size());
-  key.generateMainKey(50);
-  key.setHashLength(128);
-
-  devices.processToTransmition(key, hom);
-
-  hom.prepareTransmission();
-
   //transmission
   while(true)
   {
@@ -268,4 +259,13 @@ void ApplicationController::prepareTransmission()
       break;
     }
   }
+
+  //settig transmission
+  key.setNumberOfDevices(devices.size());
+  key.generateMainKey(50);
+  key.setHashLength(128);
+
+  devices.processToTransmition(key, hom);
+
+  hom.prepareTransmission(devices);
 }

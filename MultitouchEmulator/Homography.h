@@ -158,7 +158,7 @@ public:
   /**
    * Function prepares screen to transmission.
    */
-  void prepareTransmission();
+  void prepareTransmission(Devices & devs);
 
 private:
   /**
