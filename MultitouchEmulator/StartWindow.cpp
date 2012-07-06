@@ -2,8 +2,10 @@
 #include "StartWindow.h"
 
 
-StartWindow::StartWindow(void)
+StartWindow::StartWindow(Parameters * par)
 {
+  add_button(Gtk::Stock::OK, response::OK);
+  parameters = par;
 }
 
 

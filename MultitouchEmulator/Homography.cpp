@@ -378,3 +378,8 @@ void Homography::reset()
   min_x = min_y = 4000;
   max_x = max_y = 0;
 }
+
+void Homography::setParameters(Parameters & par)
+{
+  //TODO: dopisaæ
+}

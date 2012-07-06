@@ -7,6 +7,7 @@
 #include "ScreenShape.h"
 #include "Devices.h"
 #include "Key.h"
+#include "Parameters.h"
 
 /**
  * Class responsible for controlling application flow.
@@ -100,6 +101,8 @@ public:
 
   bool isRun() const;
   bool isShowStartingDialog() const;
+
+  void setParameters(Parameters & par);
 
 private:
   //Homography

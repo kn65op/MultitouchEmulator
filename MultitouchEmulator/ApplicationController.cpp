@@ -269,3 +269,8 @@ void ApplicationController::prepareTransmission()
 
   hom.prepareTransmission(devices);
 }
+
+void ApplicationController::setParameters(Parameters & par)
+{
+  hom.setParameters(par);
+}

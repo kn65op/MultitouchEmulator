@@ -4,6 +4,8 @@
 
 #include <random>
 
+#include "Parameters.h"
+
 class Devices;
 
 /**
@@ -159,6 +161,7 @@ public:
    * Function prepares screen to transmission.
    */
   void prepareTransmission(Devices & devs);
+  void setParameters(Parameters & par);
 
 private:
   /**

@@ -4,10 +4,11 @@
 #include "stdafx.h"
 #include <opencv2\opencv.hpp>
 
-
 #include "ApplicationController.h"
 
 #include "EndWindow.h"
+#include "StartWindow.h"
+#include "Parameters.h"
 
 using namespace cv;
 
@@ -70,6 +71,7 @@ int _tmain(int argc, char* argv[])
   Gtk::Main kit(&argc, &argv);
 
   ApplicationController ac;
+  Parameters parameters("parameters.xml");
 
   //initialization
   try
@@ -96,6 +98,19 @@ int _tmain(int argc, char* argv[])
   {
     try
     {
+      if(ac.isShowStartingDialog())
+      {
+        StartWindow sw(&parameters);
+        switch(sw.run())
+        {
+        case Gtk::RESPONSE_DELETE_EVENT:
+          return 0;
+        case Gtk::RESPONSE_OK:
+          ac.setParameters(parameters);
+          break;
+        }
+      }
+
       ac.detectScreen();
 
       ac.searchingForDevices();
