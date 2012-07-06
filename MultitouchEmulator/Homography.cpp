@@ -16,6 +16,7 @@ Homography::Homography(void)
   color_line = cv::Scalar(0,0,0);
   color_detect_screen = cv::Scalar(255,255,255);
   color_black = cv::Scalar(0,0,0);
+  color_white = cv::Scalar(255,255,255);
   
   //parameters defiding the scene
   //device height in cm (double)
@@ -274,8 +275,8 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
 
   //progress bar
   cv::putText(GUI, ss.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
-  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.5), static_cast<int>(generated_x * 0.025), static_cast<int>(generated_y * 0.4), static_cast<int>(generated_x * 0.05)), cv::Scalar(0, 0, 0), CV_FILLED);
-  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.501), static_cast<int>(generated_x * 0.026), static_cast<int>(tmp / 100 * generated_y * 0.399), static_cast<int>(generated_x * 0.048)), cv::Scalar(255, 255, 255), CV_FILLED);
+  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.5), static_cast<int>(generated_x * 0.025), static_cast<int>(generated_y * 0.4), static_cast<int>(generated_x * 0.05)), color_black, CV_FILLED);
+  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.501), static_cast<int>(generated_x * 0.026), static_cast<int>(tmp / 100 * generated_y * 0.399), static_cast<int>(generated_x * 0.048)), color_white, CV_FILLED);
   return GUI;
 }
 
@@ -333,7 +334,7 @@ cv::Mat & Homography::getGUICameraPosition()
 cv::Mat & Homography::getGUIEnd()
 {
   setGUIColor(color_black);
-  cv::putText(GUI, "Transmission finished, press any key to exit.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
+  cv::putText(GUI, "Transmission finished, press any key to exit.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_white);
   return GUI;
 }
 
@@ -342,7 +343,6 @@ bool Homography::isEnd() const
   return end;
 }
 
-<<<<<<< HEAD
 void Homography::prepareDeviceRecognition()
 {
   setGUIColor(colorGUI);
@@ -351,10 +351,11 @@ void Homography::prepareDeviceRecognition()
 void Homography::prepareTransmission()
 {
   setGUIColor(colorGUI);
+}
 
 cv::Mat & Homography::getGUIBlackScreen()
 {
-  setGUIColor(cv::Scalar(0,0,0));
-  cv::putText(GUI, "Prepare devices and press any key to start transmission.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
+  setGUIColor(color_black);
+  cv::putText(GUI, "Prepare devices and press any key to start transmission.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_white);
   return GUI;
 }

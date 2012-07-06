@@ -214,6 +214,7 @@ private:
   cv::Scalar color_detect_screen;
   cv::Scalar color_line;
   cv::Scalar color_black;
+  cv::Scalar color_white;
 
   /**
    * Function sets actual GUI color.
