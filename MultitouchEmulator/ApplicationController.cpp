@@ -124,7 +124,7 @@ void ApplicationController::searchingForDevices()
     cv::cvtColor(frame, hsv_all, CV_BGR2HSV);
 
     //imshow("gray", gray);
-
+    
     cv::inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
 
     negation(binary);
@@ -159,6 +159,8 @@ void ApplicationController::searchingForDevices()
   {
     throw Exception("No devices found", false);
   }
+
+  devices.shiftDevices(hom);
 }
 
 void ApplicationController::transmission()

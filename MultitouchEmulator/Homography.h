@@ -211,7 +211,7 @@ private:
   /**
    * Function clear GUI (only above line) with actual color.
    */
-  void clearGUI();
+  void clearGUI(cv::Scalar & scalar);
   /**
    * Function resets homography
    */

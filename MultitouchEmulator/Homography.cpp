@@ -205,7 +205,7 @@ void Homography::setROI(cv::Mat & frame) const
 cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
 {
   static int last_no_of_devices = 0;
-  clearGUI();
+  clearGUI(colorGUI);
   
   //text
   std::stringstream text;
@@ -225,7 +225,7 @@ cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
 
 cv::Mat & Homography::getGUIStillScreen()
 {
-  clearGUI();
+  clearGUI(colorGUI);
 
   //text
   std::stringstream text;
@@ -236,20 +236,20 @@ cv::Mat & Homography::getGUIStillScreen()
 
 cv::Mat & Homography::getGUIDetectScreen()
 {
-  clearGUI();
+  clearGUI(color_white);
   setGUIColor(color_detect_screen);
   cv::putText(GUI, "Press any key when circles points to screen corners", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
 }
 
-void Homography::clearGUI()
+void Homography::clearGUI(cv::Scalar & scalar)
 {
   cv::rectangle(GUI, cv::Rect(0,0,generated_x, level), colorGUI, CV_FILLED);
 }
 
 cv::Mat & Homography::getGUITransmission(Devices & devs)
 {
-  clearGUI();
+  clearGUI(color_black);
   
   //showing progress
   double tmp = static_cast<double>(++transmission_progress) / static_cast<double>(transmission_length) * 100.0;
@@ -361,7 +361,7 @@ void Homography::prepareDeviceRecognition()
 
 void Homography::prepareTransmission(Devices & devs)
 {
-  setGUIColor(colorGUI);
+  setGUIColor(color_black);
   transmission_progress = -1;
   transmission_length = devs.getMaxKeyLength();
 }
