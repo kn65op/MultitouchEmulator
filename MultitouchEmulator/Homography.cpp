@@ -17,13 +17,13 @@ Homography::Homography(void)
   color_detect_screen = cv::Scalar(255,255,255);
   
   //parameters defiding the scene
-  //device height in cm (int)
+  //device height in cm (double)
   h1 = 4;
-  //camera height in cm (int)
+  //camera height in cm (double)
   h = 72;
-  // camera position in x dimension in pixels (int)
+  // camera position in x dimension in pixels (double)
   camera_pos_x = 300;
-  // camera position in y dimension in pixels (int)
+  // camera position in y dimension in pixels (double)
   camera_pos_y = -200;
   // probability of making mistakes during transmission (double)
   mistake_posibility = 0;
@@ -204,11 +204,13 @@ cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
 {
   static int last_no_of_devices = 0;
   clearGUI();
+  
+  //text
   std::stringstream text;
   if (devs.size()  == last_no_of_devices)
   {
     text << devs.size();
-    text << " devices found. Press any key to start transmission";
+    text << " devices found. Press any key to initialize transmission";
   }
   else
   {
@@ -344,7 +346,7 @@ bool Homography::isEnd() const
 cv::Mat & Homography::getGUIBlackScreen()
 {
   setGUIColor(cv::Scalar(0,0,0));
-  cv::putText(GUI, "Init transmission, please wait.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
+  cv::putText(GUI, "Prepare devices and press any key to start transmission.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
   return GUI;
 
 }

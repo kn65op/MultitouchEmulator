@@ -80,7 +80,7 @@ void Device::setMessage(Device::message_type mes)
   mit = message.begin();
   
   std::cout << "Manchester code: " ;
-  for (int i =0 ; i <message.size(); ++i)
+  for (unsigned int i =0 ; i <message.size(); ++i)
   {
     std::cout << message[i];
   }
