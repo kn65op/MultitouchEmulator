@@ -223,6 +223,7 @@ private:
   cv::Scalar color_line;
   cv::Scalar color_black;
   cv::Scalar color_white;
+  cv::Scalar color_gray;
 
   /**
    * Function sets actual GUI color.

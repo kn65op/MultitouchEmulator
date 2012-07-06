@@ -15,6 +15,7 @@ Homography::Homography(void)
   color_detect_screen = cv::Scalar(255,255,255);
   color_black = cv::Scalar(0,0,0);
   color_white = cv::Scalar(255,255,255);
+  color_gray = cv::Scalar(127,127,127);
   
   //parameters defiding the scene
   //device height in cm (double)
@@ -244,7 +245,7 @@ cv::Mat & Homography::getGUIDetectScreen()
 
 void Homography::clearGUI(cv::Scalar & scalar)
 {
-  cv::rectangle(GUI, cv::Rect(0,0,generated_x, level), colorGUI, CV_FILLED);
+  cv::rectangle(GUI, cv::Rect(0,0,generated_x, level), scalar, CV_FILLED);
 }
 
 cv::Mat & Homography::getGUITransmission(Devices & devs)
@@ -285,8 +286,8 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   ss << "Transmission in progress: " << tmp  << "%.";
 
   //progress bar
-  cv::putText(GUI, ss.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
-  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.5), static_cast<int>(generated_x * 0.025), static_cast<int>(generated_y * 0.4), static_cast<int>(generated_x * 0.05)), color_black, CV_FILLED);
+  cv::putText(GUI, ss.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_white);
+  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.5), static_cast<int>(generated_x * 0.025), static_cast<int>(generated_y * 0.4), static_cast<int>(generated_x * 0.05)), color_gray, CV_FILLED);
   cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.501), static_cast<int>(generated_x * 0.026), static_cast<int>(tmp / 100 * generated_y * 0.399), static_cast<int>(generated_x * 0.048)), color_white, CV_FILLED);
   return GUI;
 }
