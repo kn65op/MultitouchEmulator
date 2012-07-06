@@ -15,6 +15,7 @@ Homography::Homography(void)
   colorGUI = cv::Scalar(100,255,100);
   color_line = cv::Scalar(0,0,0);
   color_detect_screen = cv::Scalar(255,255,255);
+  color_black = cv::Scalar(0,0,0);
   
   //parameters defiding the scene
   //device height in cm (int)
@@ -329,7 +330,7 @@ cv::Mat & Homography::getGUICameraPosition()
 
 cv::Mat & Homography::getGUIEnd()
 {
-  setGUIColor(cv::Scalar(0,0,0));
+  setGUIColor(color_black);
   cv::putText(GUI, "Transmission finished, press any key to exit.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
   return GUI;
 }
@@ -340,6 +341,11 @@ bool Homography::isEnd() const
 }
 
 void Homography::prepareDeviceRecognition()
+{
+  setGUIColor(colorGUI);
+}
+
+void Homography::prepareTransmission()
 {
   setGUIColor(colorGUI);
 }

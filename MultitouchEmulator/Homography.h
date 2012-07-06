@@ -147,6 +147,10 @@ public:
    * Function prepares screen to recognize devices.
    */
   void prepareDeviceRecognition();
+  /**
+   * Function prepares screen to transmission.
+   */
+  void prepareTransmission();
 
 private:
   /**
@@ -205,6 +209,7 @@ private:
   cv::Scalar colorGUI;
   cv::Scalar color_detect_screen;
   cv::Scalar color_line;
+  cv::Scalar color_black;
 
   /**
    * Function sets actual GUI color.

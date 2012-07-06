@@ -123,3 +123,8 @@ std::vector<cv::Point> ScreenShape::getScreen() const
 {
   return screen;
 }
+
+void ScreenShape::prepare()
+{
+  corners.clear();
+}

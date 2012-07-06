@@ -57,6 +57,10 @@ public:
    * @return std::vector<cv::Point> with all points corresponds to screen.
    */
   std::vector<cv::Point> getScreen() const;
+  /**
+   * Function prepares to another screen recognition
+   */
+  void prepare();
 
 private:
   //screen points

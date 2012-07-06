@@ -169,8 +169,9 @@ void ApplicationController::transmission()
 
   devices.processToTransmition(key, hom);
 
-  //transmission
+  hom.prepareTransmission();
 
+  //transmission
   while(true)
   {
     //Sleep(100); // DEBUG to see what happening
