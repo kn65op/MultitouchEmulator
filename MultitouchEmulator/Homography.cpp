@@ -191,8 +191,6 @@ void Homography::runHomography(cv::Mat image_points)
   image_points.copyTo(this->image_points);
 
   runHomography();
-
-  setGUIColor(colorGUI);
 }
 
 void Homography::setROI(cv::Mat & frame) const
@@ -339,4 +337,9 @@ cv::Mat & Homography::getGUIEnd()
 bool Homography::isEnd() const
 {
   return end;
+}
+
+void Homography::prepareDeviceRecognition()
+{
+  setGUIColor(colorGUI);
 }

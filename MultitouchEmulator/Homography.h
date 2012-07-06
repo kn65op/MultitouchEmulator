@@ -143,6 +143,11 @@ public:
    */
   double getCameraY() const;
 
+  /**
+   * Function prepares screen to recognize devices.
+   */
+  void prepareDeviceRecognition();
+
 private:
   /**
    * Function creates transformation to convert image points to real_points.

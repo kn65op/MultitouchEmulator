@@ -111,6 +111,8 @@ void ApplicationController::searchingForDevices()
     return;
   }
 
+  hom.prepareDeviceRecognition();
+
   //setting searching
   cv::Mat frame, hsv_all, generated, to_show, objects, binary;
   int number = 1;
