@@ -4,12 +4,13 @@
 #include <vector>
 
 #include "ImageOperations.h"
+#include "EndWindow.h"
 
 
 ApplicationController::ApplicationController(void) : cap(0)
 {
-
-
+  end = false;
+  show_detect_screen = show_starting_dialog = show_device_recognition = true; 
 }
 
 void ApplicationController::init()
@@ -41,6 +42,10 @@ ApplicationController::~ApplicationController(void)
 
 void ApplicationController::detectScreen()
 {
+  if (!show_detect_screen)
+  {
+    return;
+  }
   //setting detecting
   cv::Mat frame, binary, gray;
 
@@ -101,6 +106,13 @@ void ApplicationController::detectScreen()
 
 void ApplicationController::searchingForDevices()
 {
+  if (!show_device_recognition)
+  {
+    return;
+  }
+
+  hom.prepareDeviceRecognition();
+
   //setting searching
   cv::Mat frame, hsv_all, generated, to_show, objects, binary;
   int number = 1;
@@ -119,23 +131,26 @@ void ApplicationController::searchingForDevices()
     cv::dilate(binary, binary, strele3x3);
     cv::erode(binary, binary, strele3x3);
 
-    //cv::imshow("bin", binary);
+  //  cv::imshow("bin", binary);
     
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strele11x11);
     cv::dilate(to_show, to_show, strele13x13);
 
     
-    if(number > 7)
+    if(number++ > 5)
     {
       indexImageBlack(to_show, objects, devices);
-    }
-
-    if (number ++ > 3)
-    {
       cv::imshow("generated", hom.getGUIDetectDevice(devices));
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
-    }    
+    }
+    else
+    {
+      
+      cv::imshow("generated", hom.getGUIStillScreen());
+      showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+    }
+
     if(cv::waitKey(30) >= 0)
     {
       break;
@@ -150,18 +165,10 @@ void ApplicationController::searchingForDevices()
 
 void ApplicationController::transmission()
 {
-  //settig transmission
-  key.setNumberOfDevices(devices.size());
-  key.generateMainKey(128);
-  key.setHashLength(128);
-
-  devices.processToTransmition(key, hom);
-
   //transmission
-
   while(true)
   {
-    //Sleep(100); // DEBUG to see what happening
+    Sleep(50); // TODO: change this
 
     cv::imshow("generated", hom.getGUITransmission(devices));
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);
@@ -173,7 +180,7 @@ void ApplicationController::transmission()
   }
 }
 
-void ApplicationController::end()
+void ApplicationController::endingScreen()
 {
    while (true)
   {
@@ -202,4 +209,63 @@ void ApplicationController::showCheck()
   }
 
   cv::destroyAllWindows();
+}
+
+void ApplicationController::processEndingDialog(int response)
+{
+  switch (response)
+  {
+  case EndWindow::response::DEVICE:
+    show_detect_screen = show_starting_dialog = end = false;
+    show_device_recognition = true;
+    break;
+  case EndWindow::response::END:
+    end = true;
+    break;
+  case EndWindow::response::SCREEN:
+    show_detect_screen = show_device_recognition = true;
+    show_starting_dialog = end = false;
+    break;
+  case EndWindow::response::START:
+    show_detect_screen = show_starting_dialog = show_device_recognition = true;
+    end = false;
+    break;
+  case Gtk::RESPONSE_DELETE_EVENT:
+    end = true;
+    break;
+  case EndWindow::response::TRANSMISSION:
+    show_detect_screen = show_device_recognition = show_starting_dialog = end = false;
+  }
+}
+
+bool ApplicationController::isRun() const
+{
+  return !end;
+}
+  
+bool ApplicationController::isShowStartingDialog() const
+{
+  return show_starting_dialog;
+}
+
+void ApplicationController::prepareTransmission()
+{
+  while(true)
+  {
+    cv::imshow("generated", hom.getGUIBlackScreen());
+    showImageWithoutFrame(L"generated", resolution.width, resolution.height);
+    if(cv::waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
+
+  //settig transmission
+  key.setNumberOfDevices(devices.size());
+  key.generateMainKey(50);
+  key.setHashLength(128);
+
+  devices.processToTransmition(key, hom);
+
+  hom.prepareTransmission(devices);
 }

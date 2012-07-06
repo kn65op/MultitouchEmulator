@@ -99,6 +99,10 @@ public:
     */
   cv::Mat & getGUIDetectDevice(Devices & devs);
   /**
+    * Function returns image with GUI with still screen text to wait when camera can see green screen.
+    */
+  cv::Mat & getGUIStillScreen();
+  /**
     * Function returns image with GUI for detecting screen.
     */
   cv::Mat & getGUIDetectScreen();
@@ -110,6 +114,10 @@ public:
     * Function returns image with GUI for entering camera position.
     */
   cv::Mat & getGUICameraPosition();
+  /**
+    * Function returns image with GUI for entering camera position.
+    */
+  cv::Mat & getGUIBlackScreen();
   /**
     * Function returns image with GUI for end.
     */
@@ -142,6 +150,15 @@ public:
    * @return camera position in Y dimension as double.
    */
   double getCameraY() const;
+
+  /**
+   * Function prepares screen to recognize devices.
+   */
+  void prepareDeviceRecognition();
+  /**
+   * Function prepares screen to transmission.
+   */
+  void prepareTransmission(Devices & devs);
 
 private:
   /**
@@ -195,11 +212,17 @@ private:
    * Function clear GUI (only above line) with actual color.
    */
   void clearGUI();
+  /**
+   * Function resets homography
+   */
+  void reset();
 
   //colors of GUI
   cv::Scalar colorGUI;
   cv::Scalar color_detect_screen;
   cv::Scalar color_line;
+  cv::Scalar color_black;
+  cv::Scalar color_white;
 
   /**
    * Function sets actual GUI color.
@@ -230,4 +253,8 @@ private:
   
   //tell about end
   bool end;
+
+  //for transmission
+  int transmission_progress;
+  int transmission_length;
 };

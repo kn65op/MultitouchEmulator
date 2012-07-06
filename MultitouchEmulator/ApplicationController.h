@@ -28,6 +28,7 @@ public:
     Exception(std::string message, bool critical)
     {
       mes = message;
+      this->critical = critical;
     }
     /**
      * Operator with allow to read message.
@@ -76,9 +77,29 @@ public:
    */
   void transmission();
 
-  void end();
+  /**
+   * Function shows ending screen. (maybe unused in future).
+   */
+  void endingScreen();
 
+  /**
+   * Function shows preparing transmission screen.
+   */
+  void prepareTransmission();
+
+  /**
+   * Function show check on screen to adjust camera position.
+   */
   void showCheck();
+
+  /**
+   * Function process ending dialog response.
+   * @param response Ending dialog response.
+   */
+  void processEndingDialog(int response);
+
+  bool isRun() const;
+  bool isShowStartingDialog() const;
 
 private:
   //Homography
@@ -104,5 +125,14 @@ private:
   //structuring element ellipse 3x3
   cv::Mat strele3x3;
   
+  //control variables
+  //if program should end
+  bool end;
+  //if show detecting screen part
+  bool show_detect_screen;
+  //if show starting dialog
+  bool show_starting_dialog;
+  //if show device recognition
+  bool show_device_recognition;
 };
 

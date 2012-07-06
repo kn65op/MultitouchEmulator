@@ -32,6 +32,7 @@ void Key::generateMainKey(int n)
   {
     key += alphabet[dist(gen)];
   }
+  std::cout << "Key: " << key << "\n";
 }
 
 void Key::setHashLength(int length)
@@ -46,10 +47,10 @@ void Key::setNumberOfDevices(int  nod)
 
 std::vector<bool> Key::getMasterDeviceCode()
 {
-  std::vector<bool> ret(8);
+  std::vector<bool> ret;//(8); //TODO: space for number_of_devices
 
   //store number of devices in binary
-  int tmp = number_of_devices;
+ /* int tmp = number_of_devices;
   int i = 7;
   do
   {
@@ -64,14 +65,14 @@ std::vector<bool> Key::getMasterDeviceCode()
   while (i > -1)
   {
     ret[i--] = false;
-  }
+  }*/ //TODO: depends of the transmision protocol
 
   //copy key (from std::string cointains only '1' or '0') to binary. If alphabet changes it should be also changed
   std::string::iterator sit, send;
   send = key.end();
   for (sit = key.begin(); sit != send; ++sit)
   {
-    if (*sit == 1)
+    if (*sit == '1')
     {
       ret.push_back(true);
     }

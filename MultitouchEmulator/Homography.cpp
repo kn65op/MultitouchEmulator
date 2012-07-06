@@ -10,20 +10,20 @@ Homography::Homography(void)
 {
   //starting parameters
   points_setted = false;
-  min_x = min_y = 4000;
-  max_x = max_y = 0;
   colorGUI = cv::Scalar(100,255,100);
   color_line = cv::Scalar(0,0,0);
   color_detect_screen = cv::Scalar(255,255,255);
+  color_black = cv::Scalar(0,0,0);
+  color_white = cv::Scalar(255,255,255);
   
   //parameters defiding the scene
-  //device height in cm (int)
-  h1 = 7;
-  //camera height in cm (int)
-  h = 70;
-  // camera position in x dimension in pixels (int)
+  //device height in cm (double)
+  h1 = 4;
+  //camera height in cm (double)
+  h = 72;
+  // camera position in x dimension in pixels (double)
   camera_pos_x = 300;
-  // camera position in y dimension in pixels (int)
+  // camera position in y dimension in pixels (double)
   camera_pos_y = -200;
   // probability of making mistakes during transmission (double)
   mistake_posibility = 0;
@@ -34,6 +34,9 @@ Homography::Homography(void)
   //random engine for mistakes
   gen_mistakes = new std::mt19937(rd_mistakes());
   dist_mistakes = mistake_posibility ?  new std::uniform_int_distribution<>(0, static_cast<int>(1 / mistake_posibility - 1)) : new std::uniform_int_distribution<>(1,1);
+
+  //reset
+  reset();
 }
 
 
@@ -187,12 +190,11 @@ void Homography::setImageSize(cv::Size size)
 
 void Homography::runHomography(cv::Mat image_points)
 {
-  //distances
+  reset();
+
   image_points.copyTo(this->image_points);
 
   runHomography();
-
-  setGUIColor(colorGUI);
 }
 
 void Homography::setROI(cv::Mat & frame) const
@@ -204,17 +206,30 @@ cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
 {
   static int last_no_of_devices = 0;
   clearGUI();
+  
+  //text
   std::stringstream text;
-  if (devs.size()  == last_no_of_devices)
+  if (devs.size() == last_no_of_devices)
   {
     text << devs.size();
-    text << " devices found. Press any key to start transmission";
+    text << " devices found. Press any key to initialize transmission";
   }
   else
   {
     last_no_of_devices = devs.size();
     text << "Waiting for still scene";
   }
+  cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
+  return GUI;
+}
+
+cv::Mat & Homography::getGUIStillScreen()
+{
+  clearGUI();
+
+  //text
+  std::stringstream text;
+  text << "Waiting for still scene";
   cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
 }
@@ -237,9 +252,7 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   clearGUI();
   
   //showing progress
-  static int n = -1;
-  static int n_len = devs.getMaxKeyLength();
-  double tmp = static_cast<double>(++n) / static_cast<double>(n_len) * 100.0;
+  double tmp = static_cast<double>(++transmission_progress) / static_cast<double>(transmission_length) * 100.0;
   tmp = tmp > 100 ? 100 : tmp;
 
   end = tmp == 100;
@@ -273,8 +286,8 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
 
   //progress bar
   cv::putText(GUI, ss.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
-  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.5), static_cast<int>(generated_x * 0.025), static_cast<int>(generated_y * 0.4), static_cast<int>(generated_x * 0.05)), cv::Scalar(0, 0, 0), CV_FILLED);
-  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.501), static_cast<int>(generated_x * 0.026), static_cast<int>(tmp / 100 * generated_y * 0.399), static_cast<int>(generated_x * 0.048)), cv::Scalar(255, 255, 255), CV_FILLED);
+  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.5), static_cast<int>(generated_x * 0.025), static_cast<int>(generated_y * 0.4), static_cast<int>(generated_x * 0.05)), color_black, CV_FILLED);
+  cv::rectangle(GUI, cv::Rect(static_cast<int>(generated_y * 0.501), static_cast<int>(generated_x * 0.026), static_cast<int>(tmp / 100 * generated_y * 0.399), static_cast<int>(generated_x * 0.048)), color_white, CV_FILLED);
   return GUI;
 }
 
@@ -331,12 +344,37 @@ cv::Mat & Homography::getGUICameraPosition()
 
 cv::Mat & Homography::getGUIEnd()
 {
-  setGUIColor(cv::Scalar(0,0,0));
-  cv::putText(GUI, "Transmission finished, press any key to exit.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255,255,255));
+  setGUIColor(color_black);
+  cv::putText(GUI, "Transmission finished, press any key to exit.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_white);
   return GUI;
 }
 
 bool Homography::isEnd() const
 {
   return end;
+}
+
+void Homography::prepareDeviceRecognition()
+{
+  setGUIColor(colorGUI);
+}
+
+void Homography::prepareTransmission(Devices & devs)
+{
+  setGUIColor(colorGUI);
+  transmission_progress = -1;
+  transmission_length = devs.getMaxKeyLength();
+}
+
+cv::Mat & Homography::getGUIBlackScreen()
+{
+  setGUIColor(color_black);
+  cv::putText(GUI, "Prepare devices and press any key to start transmission.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_white);
+  return GUI;
+}
+
+void Homography::reset()
+{
+  min_x = min_y = 4000;
+  max_x = max_y = 0;
 }

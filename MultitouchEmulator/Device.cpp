@@ -55,6 +55,13 @@ void Device::setMessage(Device::message_type mes)
   it = mes.begin();
   end = mes.end();
 
+  //initialization: 1 1 1
+
+  for (int i=0; i<1; ++i)
+  {
+    message.push_back(true);
+  }
+
   //Manchester Code
   for (; it != end; ++it)
   {
@@ -71,6 +78,13 @@ void Device::setMessage(Device::message_type mes)
   }
 
   mit = message.begin();
+  
+  std::cout << "Manchester code: " ;
+  for (unsigned int i =0 ; i <message.size(); ++i)
+  {
+    std::cout << message[i];
+  }
+  std::cout << "\n";
 }
 
 void Device::showNoiseAround(cv::Mat & image)
@@ -87,7 +101,9 @@ void Device::showNextBit(cv::Mat & image)
 {
   if (isNextBit())
   {
-    cv::rectangle(image, rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
+    //cv::rectangle(image, rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
+    cv::rectangle(image, bigger_rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
+    //TODO: smaller ret
   }
 }
 
@@ -95,7 +111,8 @@ void Device::showWrongBit(cv::Mat & image)
 {
   if (isNextBit())
   {
-    cv::rectangle(image, rect, *(mit++) ? cv::Scalar(0,0,0): cv::Scalar(255,255,255), CV_FILLED);
+    //cv::rectangle(image, rect, *(mit++) ? cv::Scalar(0,0,0): cv::Scalar(255,255,255), CV_FILLED);
+    //TODO: add wrong bit
   }
 }
 
