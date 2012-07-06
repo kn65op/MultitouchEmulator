@@ -83,6 +83,11 @@ public:
   void endingScreen();
 
   /**
+   * Function shows preparing transmission screen.
+   */
+  void prepareTransmission();
+
+  /**
    * Function show check on screen to adjust camera position.
    */
   void showCheck();

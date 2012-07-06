@@ -99,6 +99,10 @@ public:
     */
   cv::Mat & getGUIDetectDevice(Devices & devs);
   /**
+    * Function returns image with GUI with still screen text to wait when camera can see green screen.
+    */
+  cv::Mat & getGUIStillScreen();
+  /**
     * Function returns image with GUI for detecting screen.
     */
   cv::Mat & getGUIDetectScreen();
@@ -208,6 +212,10 @@ private:
    * Function clear GUI (only above line) with actual color.
    */
   void clearGUI();
+  /**
+   * Function resets homography
+   */
+  void reset();
 
   //colors of GUI
   cv::Scalar colorGUI;
@@ -245,4 +253,8 @@ private:
   
   //tell about end
   bool end;
+
+  //for transmission
+  int transmission_progress;
+  int transmission_length;
 };

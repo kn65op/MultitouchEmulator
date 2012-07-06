@@ -10,8 +10,6 @@ Homography::Homography(void)
 {
   //starting parameters
   points_setted = false;
-  min_x = min_y = 4000;
-  max_x = max_y = 0;
   colorGUI = cv::Scalar(100,255,100);
   color_line = cv::Scalar(0,0,0);
   color_detect_screen = cv::Scalar(255,255,255);
@@ -36,6 +34,9 @@ Homography::Homography(void)
   //random engine for mistakes
   gen_mistakes = new std::mt19937(rd_mistakes());
   dist_mistakes = mistake_posibility ?  new std::uniform_int_distribution<>(0, static_cast<int>(1 / mistake_posibility - 1)) : new std::uniform_int_distribution<>(1,1);
+
+  //reset
+  reset();
 }
 
 
@@ -189,7 +190,8 @@ void Homography::setImageSize(cv::Size size)
 
 void Homography::runHomography(cv::Mat image_points)
 {
-  //distances
+  reset();
+
   image_points.copyTo(this->image_points);
 
   runHomography();
@@ -221,6 +223,17 @@ cv::Mat & Homography::getGUIDetectDevice(Devices & devs)
   return GUI;
 }
 
+cv::Mat & Homography::getGUIStillScreen()
+{
+  clearGUI();
+
+  //text
+  std::stringstream text;
+  text << "Waiting for still scene";
+  cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
+  return GUI;
+}
+
 cv::Mat & Homography::getGUIDetectScreen()
 {
   clearGUI();
@@ -239,9 +252,9 @@ cv::Mat & Homography::getGUITransmission(Devices & devs)
   clearGUI();
   
   //showing progress
-  static int n = -1;
-  static int n_len = devs.getMaxKeyLength();
-  double tmp = static_cast<double>(++n) / static_cast<double>(n_len) * 100.0;
+  transmission_progress = -1;
+  transmission_length = devs.getMaxKeyLength();
+  double tmp = static_cast<double>(++transmission_progress) / static_cast<double>(transmission_length) * 100.0;
   tmp = tmp > 100 ? 100 : tmp;
 
   end = tmp == 100;
@@ -358,4 +371,10 @@ cv::Mat & Homography::getGUIBlackScreen()
   setGUIColor(color_black);
   cv::putText(GUI, "Prepare devices and press any key to start transmission.", cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_white);
   return GUI;
+}
+
+void Homography::reset()
+{
+  min_x = min_y = 4000;
+  max_x = max_y = 0;
 }

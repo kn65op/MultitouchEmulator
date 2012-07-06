@@ -131,23 +131,26 @@ void ApplicationController::searchingForDevices()
     cv::dilate(binary, binary, strele3x3);
     cv::erode(binary, binary, strele3x3);
 
-    cv::imshow("bin", binary);
+  //  cv::imshow("bin", binary);
     
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strele11x11);
     cv::dilate(to_show, to_show, strele13x13);
 
     
-    if(number > 7)
+    if(number++ > 5)
     {
       indexImageBlack(to_show, objects, devices);
-    }
-
-    if (number ++ > 3)
-    {
       cv::imshow("generated", hom.getGUIDetectDevice(devices));
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
-    }    
+    }
+    else
+    {
+      
+      cv::imshow("generated", hom.getGUIStillScreen());
+      showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+    }
+
     if(cv::waitKey(30) >= 0)
     {
       break;
@@ -157,16 +160,6 @@ void ApplicationController::searchingForDevices()
   if (!devices.size())
   {
     throw Exception("No devices found", false);
-  }
-
-  while(true)
-  {
-    cv::imshow("generated", hom.getGUIBlackScreen());
-    showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
-    if(cv::waitKey(30) >= 0)
-    {
-      break;
-    }
   }
 }
 
@@ -262,4 +255,17 @@ bool ApplicationController::isRun() const
 bool ApplicationController::isShowStartingDialog() const
 {
   return show_starting_dialog;
+}
+
+void ApplicationController::prepareTransmission()
+{
+  while(true)
+  {
+    cv::imshow("generated", hom.getGUIBlackScreen());
+    showImageWithoutFrame(L"generated", resolution.width, resolution.height);
+    if(cv::waitKey(30) >= 0)
+    {
+      break;
+    }
+  }
 }

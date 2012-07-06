@@ -105,6 +105,8 @@ int _tmain(int argc, char* argv[])
 
       ac.searchingForDevices();
 
+      ac.prepareTransmission();
+
       ac.transmission();
     }
     catch(ApplicationController::Exception e)
