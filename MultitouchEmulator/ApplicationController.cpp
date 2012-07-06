@@ -131,12 +131,11 @@ void ApplicationController::searchingForDevices()
     cv::dilate(binary, binary, strele3x3);
     cv::erode(binary, binary, strele3x3);
 
-  //  cv::imshow("bin", binary);
+    //cv::imshow("bin", binary);
     
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strele11x11);
     cv::dilate(to_show, to_show, strele13x13);
-
     
     if(number++ > 5)
     {
@@ -146,7 +145,6 @@ void ApplicationController::searchingForDevices()
     }
     else
     {
-      
       cv::imshow("generated", hom.getGUIStillScreen());
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
     }
