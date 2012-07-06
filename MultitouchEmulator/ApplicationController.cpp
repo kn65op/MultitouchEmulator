@@ -124,19 +124,18 @@ void ApplicationController::searchingForDevices()
     cv::cvtColor(frame, hsv_all, CV_BGR2HSV);
 
     //imshow("gray", gray);
-
+    
     cv::inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
 
     negation(binary);
     cv::dilate(binary, binary, strele3x3);
     cv::erode(binary, binary, strele3x3);
 
-  //  cv::imshow("bin", binary);
+    //cv::imshow("bin", binary);
     
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strele11x11);
     cv::dilate(to_show, to_show, strele13x13);
-
     
     if(number++ > 5)
     {
@@ -146,7 +145,6 @@ void ApplicationController::searchingForDevices()
     }
     else
     {
-      
       cv::imshow("generated", hom.getGUIStillScreen());
       showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
     }
@@ -161,6 +159,8 @@ void ApplicationController::searchingForDevices()
   {
     throw Exception("No devices found", false);
   }
+
+  devices.shiftDevices(hom);
 }
 
 void ApplicationController::transmission()
@@ -168,7 +168,7 @@ void ApplicationController::transmission()
   //transmission
   while(true)
   {
-    Sleep(30); // TODO: change this
+    Sleep(10); // TODO: change this
 
     cv::imshow("generated", hom.getGUITransmission(devices));
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);

@@ -62,6 +62,8 @@ public:
    */
   void processToTransmition(Key key, Homography & hom);
 
+  void shiftDevices(Homography & hom);
+
   /**
    * Function returs iteraor to first device.
    * @return Devices::iterator to first device.

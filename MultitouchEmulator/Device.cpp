@@ -51,6 +51,8 @@ void Device::calcRect()
 
 void Device::setMessage(Device::message_type mes)
 {
+  message.clear();
+
   Device::message_iterator it, end;
   it = mes.begin();
   end = mes.end();

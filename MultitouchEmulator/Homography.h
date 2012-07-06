@@ -218,7 +218,7 @@ private:
   /**
    * Function clear GUI (only above line) with actual color.
    */
-  void clearGUI();
+  void clearGUI(cv::Scalar & scalar);
   /**
    * Function resets homography
    */
@@ -230,6 +230,7 @@ private:
   cv::Scalar color_line;
   cv::Scalar color_black;
   cv::Scalar color_white;
+  cv::Scalar color_gray;
 
   /**
    * Function sets actual GUI color.
