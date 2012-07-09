@@ -63,5 +63,8 @@ private:
   Gtk::HBox name_box, camera_height_box, device_height_box, cam_pos_x_box, cam_pos_y_box, mistakes_box, time_box, buttons_box;
 
   void insertParametersNames();
+
+  //string with name of previous 
+  std::string old_choosen;
 };
 

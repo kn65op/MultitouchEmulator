@@ -5,6 +5,8 @@
 
 #include <algorithm>
 
+#include "Parameters.h"
+
 StartWindow::StartWindow(ParametersManager * par)
 {
   add_button(Gtk::Stock::OK, OK);
@@ -91,7 +93,36 @@ void StartWindow::insertParametersNames()
 
 void StartWindow::on_choose_combo_box_changed()
 {
+  //saving last
+  if (old_choosen != "")
+  {
+    Parameters & p = parameters->getParameters(old_choosen);
+    p.SetCamera_height(atof(camera_height_field.get_text().c_str()));
+    p.SetCamera_pos_x(atof(cam_pos_x_field.get_text().c_str()));
+    p.SetCamera_pos_y(atof(cam_pos_y_field.get_text().c_str()));
+    p.SetDevice_height(atof(device_height_field.get_text().c_str()));
+    p.SetMistake_posibility(atof(mistakes_field.get_text().c_str()));
+    p.SetTime(atoi(time_field.get_text().c_str()));
+    p.SetName(name_field.get_text());
+  }
   
+  //reading from parameters
+  old_choosen = choose_combo_box.get_active_text();
+  Parameters & p = parameters->getParameters(old_choosen);
+  std::stringstream ch,cx, cy, dh, m, t;
+  ch << p.GetCamera_height();
+  camera_height_field.set_text(ch.str());
+  cx << p.GetCamera_pos_x();
+  cam_pos_x_field.set_text(cx.str());
+  cy << p.GetCamera_pos_y();
+  cam_pos_y_field.set_text(cy.str());
+  dh << p.GetDevice_height();
+  device_height_field.set_text(dh.str());
+  m << p.GetMistake_posibility();
+  mistakes_field.set_text(m.str());
+  t << p.GetTime();
+  time_field.set_text(t.str());
+  name_field.set_text(p.GetName());
 }
 
 void StartWindow::on_new_button_pressed()
