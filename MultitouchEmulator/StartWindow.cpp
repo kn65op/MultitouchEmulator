@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "StartWindow.h"
 
+#include <algorithm>
 
 StartWindow::StartWindow(ParametersManager * par)
 {
@@ -51,6 +52,9 @@ StartWindow::StartWindow(ParametersManager * par)
   cam_pos_y_label.set_label("Camera position in y dimension (in pixels)");
   mistakes_label.set_label("Mistake probability");
   time_label.set_label("Time of showing one bit");
+
+  //setting list of parameters
+  insertParametersNames();
 }
 
 
@@ -61,4 +65,17 @@ StartWindow::~StartWindow(void)
 std::string StartWindow::getSelectedName() const
 {
   return "";
+}
+
+void StartWindow::insertParametersNames()
+{
+  choose_combo_box.clear();
+
+  std::list<std::string> names = parameters->getParametersNames();
+
+  std::for_each(names.begin(), names.end(), [this](std::string & name)
+  {
+    this->choose_combo_box.append_text(name);
+  });
+  
 }

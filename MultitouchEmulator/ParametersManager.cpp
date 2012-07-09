@@ -68,5 +68,19 @@ void ParametersManager::save(void)
   }
 
   doc.write_to_file(filename);
-
 }
+
+std::list<std::string> ParametersManager::getParametersNames() 
+{
+  std::list<std::string> ret;
+
+  iterator it, end;
+  end = parameters.end();
+  for (it = parameters.begin(); it != end; ++it)
+  {
+    ret.push_back(it->second->GetName());
+  }
+
+  return ret;
+}
+

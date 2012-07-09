@@ -41,7 +41,7 @@ private:
   //parameters
   ParametersManager * parameters;
   //choose field
-  Gtk::ComboBox choose_combo_box;
+  Gtk::ComboBoxText choose_combo_box;
   //buttons
   Gtk::Button new_button, delete_button;
   //labels
@@ -53,5 +53,6 @@ private:
   //boxes
   Gtk::HBox name_box, camera_height_box, device_height_box, cam_pos_x_box, cam_pos_y_box, mistakes_box, time_box, buttons_box;
 
+  void insertParametersNames();
 };
 

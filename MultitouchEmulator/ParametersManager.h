@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <list>
 
 #include "Parameters.h"
 
@@ -50,6 +51,8 @@ public:
    * Function save parameters to XML.
    */
   void save(void);
+
+  std::list<std::string> getParametersNames();
 
 private:
 
