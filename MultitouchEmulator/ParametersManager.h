@@ -37,7 +37,15 @@ public:
   Parameters & getParameters(std::string name);
 
 private:
+  /**
+   * Function save parameters to XML.
+   */
+  void save(void);
+
   //container for Parameters
   std::map<std::string, Parameters*> parameters;
+
+  //filename
+  std::string filename;
 };
 

@@ -57,7 +57,7 @@
     <ClInclude Include="ParametersManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParmetersXML.h">
+    <ClInclude Include="ParametersXML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,7 +101,7 @@
     <ClCompile Include="ParametersManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ParmetersXML.cpp">
+    <ClCompile Include="ParametersXML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
