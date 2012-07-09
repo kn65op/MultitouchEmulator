@@ -47,6 +47,11 @@ private:
   //labels
   Gtk::Label name_label, camera_height_label, device_height_label, cam_pos_x_label, cam_pos_y_label, mistakes_label, time_label;
   //fields
-  Gtk::Label name_field, camera_height_field, device_height_field, cam_pos_x_field, cam_pos_y_field, mistakes_field, time_field;
+  Gtk::Entry name_field, camera_height_field, device_height_field, cam_pos_x_field, cam_pos_y_field, mistakes_field, time_field;
+
+  //view part
+  //boxes
+  Gtk::HBox name_box, camera_height_box, device_height_box, cam_pos_x_box, cam_pos_y_box, mistakes_box, time_box, buttons_box;
+
 };
 
