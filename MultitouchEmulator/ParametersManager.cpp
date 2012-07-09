@@ -84,3 +84,12 @@ std::list<std::string> ParametersManager::getParametersNames()
   return ret;
 }
 
+void ParametersManager::addNew()
+{
+  std::string new_name = "new";
+  while (parameters.find(new_name) != parameters.end())
+  {
+    new_name += "1";
+  }
+  parameters[new_name] = new ParametersXML(new_name);
+}

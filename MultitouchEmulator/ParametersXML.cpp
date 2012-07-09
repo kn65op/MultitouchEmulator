@@ -32,19 +32,28 @@ void ParametersXML::saveToXML(xmlpp::Node * parent_node)
   m << mistake_posibility;
   t << time;
 
-  xmlpp::Element * child;
-  child = parent_node->add_child("name");
+  xmlpp::Element *child, *params;
+  params = parent_node->add_child("parameters");
+
+  child = params->add_child("name");
   child->add_child_text(name);
-  child = parent_node->add_child("cameraHeight");
+  child = params->add_child("cameraHeight");
   child->add_child_text(ch.str());
-  child = parent_node->add_child("deviceHeight");
+  child = params->add_child("deviceHeight");
   child->add_child_text(dh.str());
-  child = parent_node->add_child("cameraPositionX");
+  child = params->add_child("cameraPositionX");
   child->add_child_text(cx.str());
-  child = parent_node->add_child("cameraPositionY");
+  child = params->add_child("cameraPositionY");
   child->add_child_text(cx.str());
-  child = parent_node->add_child("mistakes");
+  child = params->add_child("mistakes");
   child->add_child_text(m.str());
-  child = parent_node->add_child("time");
+  child = params->add_child("time");
   child->add_child_text(t.str());
+}
+
+ParametersXML::ParametersXML(std::string name)
+{
+  this->name = name;
+  camera_height = camera_pos_x = camera_pos_y = device_height = mistake_posibility = 0.0;
+  time = 0;
 }

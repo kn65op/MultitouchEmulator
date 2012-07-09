@@ -16,6 +16,11 @@ public:
    */
   ParametersXML(xmlpp::Node & parameter_node);
   /**
+   * Default constructor to create from application
+   * @param name Name of Parameters as std::string
+   */
+  ParametersXML(std::string name);
+  /**
    * Default destructor.
    */
   ~ParametersXML(void);

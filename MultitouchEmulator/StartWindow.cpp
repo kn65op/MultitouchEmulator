@@ -96,7 +96,8 @@ void StartWindow::on_choose_combo_box_changed()
 
 void StartWindow::on_new_button_pressed()
 {
-  
+  parameters->addNew();
+  insertParametersNames();
 }
 
 void StartWindow::on_delte_buton_pressed()
