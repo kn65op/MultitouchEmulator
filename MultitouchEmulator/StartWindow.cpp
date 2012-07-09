@@ -12,3 +12,8 @@ StartWindow::StartWindow(ParametersManager * par)
 StartWindow::~StartWindow(void)
 {
 }
+
+std::string StartWindow::getSelectedName() const
+{
+  return "";
+}

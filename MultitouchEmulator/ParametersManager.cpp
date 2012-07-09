@@ -8,10 +8,18 @@
 
 ParametersManager::ParametersManager(std::string filename)
 {
+  this->filename = filename;
   //reading parameters from file
   xmlpp::DomParser parser;
   parser.set_substitute_entities();
-  parser.parse_file(filename);
+  try
+  {
+    parser.parse_file(filename);
+  }
+  catch (std::exception ex)
+  {
+    return;
+  }
   if (parser)
   {
     const xmlpp::Node* root = parser.get_document()->get_root_node();
@@ -22,7 +30,6 @@ ParametersManager::ParametersManager(std::string filename)
       //this->parameters[(*it)->get_children("name").front()->get_name()] = new ParametersXML(**it);
     });
   }
-  this->filename = filename;
 }
 
 
