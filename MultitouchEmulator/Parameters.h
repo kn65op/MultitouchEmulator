@@ -142,7 +142,7 @@ public:
   }
 
 
-private:
+protected:
   //name
   std::string name;
   //camera height in cm
