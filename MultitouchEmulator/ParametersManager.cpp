@@ -99,3 +99,8 @@ void ParametersManager::addNew()
   }
   parameters[new_name] = new ParametersXML(new_name);
 }
+
+void ParametersManager::remove(std::string name)
+{
+  parameters.erase(name);
+}

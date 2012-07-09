@@ -7,7 +7,7 @@
 
 StartWindow::StartWindow(ParametersManager * par)
 {
-  add_button(Gtk::Stock::OK, response::OK);
+  add_button(Gtk::Stock::OK, OK);
   parameters = par;
 
   //getting main box
@@ -102,5 +102,10 @@ void StartWindow::on_new_button_pressed()
 
 void StartWindow::on_delte_buton_pressed()
 {
-  
+  std::string tmp = choose_combo_box.get_active_text();
+  if (tmp != "")
+  {
+    parameters->remove(tmp);
+    insertParametersNames();
+  }
 }
