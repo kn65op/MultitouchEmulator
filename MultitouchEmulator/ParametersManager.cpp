@@ -61,4 +61,6 @@ void ParametersManager::save(void)
     dynamic_cast<ParametersXML*>(it->second)->saveToXML(root);
   }
 
+  doc.write_to_file(filename);
+
 }
