@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Parameters.h"
+#include "ParametersManager.h"
 
 /**
  * Class which show starting dialog to choose parameters
@@ -12,7 +12,7 @@ public:
    * Constructor which sets parameters.
    * @param par Pointer to parameters object.
    */
-  StartWindow(Parameters * par);
+  StartWindow(ParametersManager * par);
   /**
    * Default destructor.
    */
@@ -27,7 +27,7 @@ public:
   };
 private:
   //parameters
-  Parameters * parameters;
+  ParametersManager * parameters;
   //choose field
 };
 

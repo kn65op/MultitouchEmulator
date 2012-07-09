@@ -62,6 +62,10 @@ public:
    */
   void processToTransmition(Key key, Homography & hom);
 
+  /**
+   * Function shifts devices to proper position.
+   * @param hom Homgraphy with parameters to shift.
+   */
   void shiftDevices(Homography & hom);
 
   /**

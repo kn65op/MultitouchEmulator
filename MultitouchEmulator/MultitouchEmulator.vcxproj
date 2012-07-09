@@ -90,6 +90,7 @@
     <ClInclude Include="ImageOperations.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Parameters.h" />
+    <ClInclude Include="ParametersManager.h" />
     <ClInclude Include="ScreenShape.h" />
     <ClInclude Include="StartWindow.h" />
     <ClInclude Include="stdafx.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="MultitouchEmulator.cpp" />
     <ClCompile Include="Parameters.cpp" />
+    <ClCompile Include="ParametersManager.cpp" />
     <ClCompile Include="ScreenShape.cpp" />
     <ClCompile Include="StartWindow.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -8,7 +8,7 @@
 
 #include "EndWindow.h"
 #include "StartWindow.h"
-#include "Parameters.h"
+#include "ParametersManager.h"
 
 using namespace cv;
 
@@ -71,7 +71,7 @@ int _tmain(int argc, char* argv[])
   Gtk::Main kit(&argc, &argv);
 
   ApplicationController ac;
-  Parameters parameters("parameters.xml");
+  ParametersManager parameters("parameters.xml");
 
   //initialization
   try

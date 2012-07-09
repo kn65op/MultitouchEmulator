@@ -7,12 +7,11 @@ class Parameters
 {
 public:
   /**
-   * Constructor which takes filename to read parameters from.
-   * @param filename std::string with filename to read parameters from.
+   * Default constructor.
    */
-  Parameters(std::string filename);
+  Parameters(void);
   /**
-   * Default destructor
+   * Default destructor.
    */
   ~Parameters(void);
 private:
