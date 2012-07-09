@@ -6,14 +6,23 @@
 ParametersXML::ParametersXML(xmlpp::Node & parameter_node)
 {
   //reading xml
-  std::string tmp;
-  name = parameter_node.get_children("name").front()->get_name();
-  camera_height = atof(parameter_node.get_children("cameraHeight").front()->get_name().c_str());
-  device_height = atof(parameter_node.get_children("deviceHeight").front()->get_name().c_str());
-  camera_pos_x = atof(parameter_node.get_children("cameraPositionX").front()->get_name().c_str());
-  camera_pos_y= atof(parameter_node.get_children("cameraPositionY").front()->get_name().c_str());
-  mistake_posibility = atof(parameter_node.get_children("mistakes").front()->get_name().c_str());
-  time = atoi(parameter_node.get_children("time").front()->get_name().c_str());
+  xmlpp::TextNode *tn;
+
+  tn = dynamic_cast<xmlpp::TextNode*>(parameter_node.get_children("name").front()->get_children().front());
+  if (tn)
+  {
+    name = tn->get_content();
+  }
+  else
+  {
+    name = "@#@!#!@#@!$!@$!@$";
+  }
+  camera_height = getDoubleFromTextNode(dynamic_cast<xmlpp::TextNode*>(parameter_node.get_children("cameraHeight").front()->get_children().front()));
+  device_height = getDoubleFromTextNode(dynamic_cast<xmlpp::TextNode*>(parameter_node.get_children("deviceHeight").front()->get_children().front()));
+  camera_pos_x = getDoubleFromTextNode(dynamic_cast<xmlpp::TextNode*>(parameter_node.get_children("cameraPositionX").front()->get_children().front()));
+  camera_pos_y= getDoubleFromTextNode(dynamic_cast<xmlpp::TextNode*>(parameter_node.get_children("cameraPositionY").front()->get_children().front()));
+  mistake_posibility = getDoubleFromTextNode(dynamic_cast<xmlpp::TextNode*>(parameter_node.get_children("mistakes").front()->get_children().front()));
+  time = getIntFromTextNode(dynamic_cast<xmlpp::TextNode*>(parameter_node.get_children("time").front()->get_children().front()));
 }
 
 
@@ -57,3 +66,4 @@ ParametersXML::ParametersXML(std::string name)
   camera_height = camera_pos_x = camera_pos_y = device_height = mistake_posibility = 0.0;
   time = 0;
 }
+

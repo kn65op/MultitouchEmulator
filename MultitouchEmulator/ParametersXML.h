@@ -30,5 +30,30 @@ public:
    * @param parent_node xmlpp::Node which will be parent of created node.
    */
   void saveToXML(xmlpp::Node * parent_node);
+  
+private:
+  double getDoubleFromTextNode(xmlpp::TextNode * tn)
+  {
+    if (tn)
+    {
+      return atof(tn->get_content().c_str());
+    }
+    else
+    {
+      return 0;
+    }
+  }
+  
+  int getIntFromTextNode(xmlpp::TextNode * tn)
+  {
+        if (tn)
+    {
+      return atoi(tn->get_content().c_str());
+    }
+    else
+    {
+      return 0;
+    }
+  }
 };
 

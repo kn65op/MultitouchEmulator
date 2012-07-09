@@ -9,6 +9,7 @@
 ParametersManager::ParametersManager(std::string filename)
 {
   this->filename = filename;
+
   //reading parameters from file
   xmlpp::DomParser parser;
   parser.set_substitute_entities();
@@ -26,7 +27,12 @@ ParametersManager::ParametersManager(std::string filename)
     xmlpp::Node::NodeList params = root->get_children("parameters");
     std::for_each(params.begin(), params.end(), [this](xmlpp::Node* & it)
     {
-      this->parameters[it->get_children("name").front()->get_name()] = new ParametersXML(*it);
+      xmlpp::TextNode *tn;
+      tn = dynamic_cast<xmlpp::TextNode*>(it->get_children("name").front()->get_children().front());
+      if (tn)
+      {
+        this->parameters[tn->get_content()] = new ParametersXML(*it);
+      }
     });
   }
 }
