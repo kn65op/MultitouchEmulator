@@ -34,8 +34,8 @@ public:
 
 protected:
   void on_choose_combo_box_changed();
-  void on_add_button_pressed();
-  void on_remove_buton_pressed();
+  void on_new_button_pressed();
+  void on_delte_buton_pressed();
 
 private:
   //parameters

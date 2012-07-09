@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "StartWindow.h"
 
+#include <iostream>
+
 #include <algorithm>
 
 StartWindow::StartWindow(ParametersManager * par)
@@ -41,6 +43,7 @@ StartWindow::StartWindow(ParametersManager * par)
   main_vbox->pack_start(cam_pos_y_box);
   main_vbox->pack_start(mistakes_box);
   main_vbox->pack_start(time_box);
+  main_vbox->pack_start(buttons_box);
 
   main_vbox->show_all_children(true);
 
@@ -52,9 +55,16 @@ StartWindow::StartWindow(ParametersManager * par)
   cam_pos_y_label.set_label("Camera position in y dimension (in pixels)");
   mistakes_label.set_label("Mistake probability");
   time_label.set_label("Time of showing one bit");
+  new_button.set_label("New");
+  delete_button.set_label("Delete");
 
   //setting list of parameters
   insertParametersNames();
+
+  //signals
+  new_button.signal_clicked().connect(sigc::mem_fun(*this, &StartWindow::on_new_button_pressed));
+  delete_button.signal_clicked().connect(sigc::mem_fun(*this, &StartWindow::on_delte_buton_pressed));
+  choose_combo_box.signal_changed().connect(sigc::mem_fun(*this, &StartWindow::on_choose_combo_box_changed));
 }
 
 
@@ -77,5 +87,19 @@ void StartWindow::insertParametersNames()
   {
     this->choose_combo_box.append_text(name);
   });
+}
+
+void StartWindow::on_choose_combo_box_changed()
+{
+  
+}
+
+void StartWindow::on_new_button_pressed()
+{
+  
+}
+
+void StartWindow::on_delte_buton_pressed()
+{
   
 }
