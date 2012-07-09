@@ -9,6 +9,17 @@
  */
 class ParametersManager
 {
+private:
+  //first element of pair
+  typedef std::string first;
+  //second element of pair
+  typedef Parameters* second;
+  //container type
+  typedef std::map<first, second> container;
+  //pair type
+  typedef std::pair<first, second*> pair;
+  //iterator type
+  typedef std::map<first, second>::iterator iterator;
 public:
 
   /**
@@ -43,9 +54,10 @@ private:
   void save(void);
 
   //container for Parameters
-  std::map<std::string, Parameters*> parameters;
+  container parameters;
 
   //filename
   std::string filename;
+
 };
 

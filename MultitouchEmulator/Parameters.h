@@ -13,7 +13,7 @@ public:
     /**
      * Default destructor.
      */
-    ~Parameters(void);
+    virtual ~Parameters(void);
 
     /**
      * Get camera height.

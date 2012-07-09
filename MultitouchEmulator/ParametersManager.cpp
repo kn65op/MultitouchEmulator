@@ -22,6 +22,7 @@ ParametersManager::ParametersManager(std::string filename)
       //this->parameters[(*it)->get_children("name").front()->get_name()] = new ParametersXML(**it);
     });
   }
+  this->filename = filename;
 }
 
 
@@ -31,6 +32,10 @@ ParametersManager::~ParametersManager(void)
 
 Parameters & ParametersManager::getParameters(std::string name)
 {
+  //saving parameters
+  save();
+
+  //accesing wanted parameters
   try
   {
     return *(parameters.at(name));
@@ -39,4 +44,21 @@ Parameters & ParametersManager::getParameters(std::string name)
   {
     throw NoParametersException();
   }
+}
+
+void ParametersManager::save(void)
+{
+  //make root 
+  xmlpp::Document doc;
+  doc.create_root_node("all");
+  xmlpp::Node * root = doc.get_root_node();
+
+  //add parameters
+  iterator it, end;
+  end = parameters.end();
+  for (it = parameters.begin(); it != end; ++it)
+  {
+    dynamic_cast<ParametersXML*>(it->second)->saveToXML(root);
+  }
+
 }
