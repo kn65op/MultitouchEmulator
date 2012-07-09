@@ -26,6 +26,10 @@ public:
     OK
   };
 
+  /**
+   * Function returns selected element on the list.
+   * @return std::string with name of parameters.
+   */
   std::string getSelectedName() const;
 private:
   //parameters

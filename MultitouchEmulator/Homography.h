@@ -247,7 +247,11 @@ private:
   double ratio_x, ratio_y;
 
   //scale
-  double scale, h, h1;
+  double scale;
+  //camera height
+  double h;
+  //device height
+  double h1;
   //camera position
   double camera_pos_x, camera_pos_y;
 

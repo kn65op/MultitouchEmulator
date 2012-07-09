@@ -1,10 +1,12 @@
 #include "StdAfx.h"
 #include "ParametersManager.h"
 
+#include <libxml++\libxml++.h>
 
 ParametersManager::ParametersManager(std::string filename)
 {
   //reading parameters from file
+
 }
 
 

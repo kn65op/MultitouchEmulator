@@ -383,4 +383,7 @@ void Homography::reset()
 void Homography::setParameters(Parameters & par)
 {
   //TODO: dopisaæ
+  
+  //calculating scale
+  scale = 1 - h1 / h;
 }

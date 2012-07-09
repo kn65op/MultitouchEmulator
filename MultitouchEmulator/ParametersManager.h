@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 #include "Parameters.h"
 
 /**
@@ -33,5 +35,9 @@ public:
    * @return Parameters with given name.
    */
   Parameters & getParameters(std::string name);
+
+private:
+  //container for Parameters
+  std::map<std::string, Parameters*> parameters;
 };
 
