@@ -27,6 +27,11 @@ public:
    */
   ~ParametersManager(void);
 
+  /**
+   * Function returs parameters with given name. If not found NoParametersException is thrown.
+   * @param name std::string wih name of parameters.
+   * @return Parameters with given name.
+   */
   Parameters & getParameters(std::string name);
 };
 

@@ -106,7 +106,17 @@ int _tmain(int argc, char* argv[])
         case Gtk::RESPONSE_DELETE_EVENT:
           return 0;
         case Gtk::RESPONSE_OK:
-          ac.setParameters(parameters);
+          try
+          {
+            ac.setParameters(parameters.getParameters(sw.getSelectedName()));
+          }
+          catch (ParametersManager::NoParametersException ex)
+          {
+            std::string mes = "Parameters with name is not found. Exiting";
+            Gtk::MessageDialog dialog(mes);
+            dialog.run();
+            return 0;
+          }
           break;
         }
       }

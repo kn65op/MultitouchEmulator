@@ -25,6 +25,8 @@ public:
   {
     OK
   };
+
+  std::string getSelectedName() const;
 private:
   //parameters
   ParametersManager * parameters;
