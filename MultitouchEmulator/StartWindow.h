@@ -3,7 +3,7 @@
 #include "ParametersManager.h"
 
 /**
- * Class which show starting dialog to choose parameters
+ * Class which show starting dialog to choose parameters. Parameters changed cannot be undone.
  */
 class StartWindow : public Gtk::Dialog
 {
@@ -31,9 +31,22 @@ public:
    * @return std::string with name of parameters.
    */
   std::string getSelectedName() const;
+
+protected:
+  void on_choose_combo_box_changed();
+  void on_add_button_pressed();
+  void on_remove_buton_pressed();
+
 private:
   //parameters
   ParametersManager * parameters;
   //choose field
+  Gtk::ComboBox choose_combo_box;
+  //buttons
+  Gtk::Button new_button, delete_button;
+  //labels
+  Gtk::Label name_label, camera_height_label, device_height_label, cam_pos_x_label, cam_pos_y_label, mistakes_label, time_label;
+  //fields
+  Gtk::Label name_field, camera_height_field, device_height_field, cam_pos_x_field, cam_pos_y_field, mistakes_field, time_field;
 };
 

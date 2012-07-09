@@ -27,7 +27,6 @@ ParametersManager::ParametersManager(std::string filename)
     std::for_each(params.begin(), params.end(), [this](xmlpp::Node* & it)
     {
       this->parameters[it->get_children("name").front()->get_name()] = new ParametersXML(*it);
-      //this->parameters[(*it)->get_children("name").front()->get_name()] = new ParametersXML(**it);
     });
   }
 }
