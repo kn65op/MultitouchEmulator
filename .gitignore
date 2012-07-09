@@ -173,3 +173,4 @@ pip-log.txt
 *.bmp
 Debug/*.exe
 doc/*
+MultitouchEmulator/parameters.xml
