@@ -52,7 +52,22 @@ public:
    */
   void save(void);
 
+  /**
+   * Function returns all names of available parameters.
+   * @return std::list<std::string> with all names of parameters.
+   */
   std::list<std::string> getParametersNames();
+
+  /**
+   * Function add new Parameters.
+   */
+  void addNew();
+
+  /**
+   * Function remove Parameters by name.
+   * @param name std::string with name of Parameters to remove.
+   */
+  void remove(std::string name);
 
 private:
 

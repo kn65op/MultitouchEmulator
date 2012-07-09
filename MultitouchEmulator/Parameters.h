@@ -143,18 +143,26 @@ public:
 
 
 protected:
-  //name
+  /** Name of parameters.
+   */
   std::string name;
-  //camera height in cm
+  /** Camera height in cm.
+   */
   double camera_height;
-  //device height in cm
+  /** Device height in cm.
+   */
   double device_height;
-  //camera position in x and y dimensions calculated in pixels of screen
+  /** Camera position in x dimension calculated in pixels of screen, begining is form left side of screen.
+   */
   double camera_pos_x;
+  /** Camera position in y dimension calculated in pixels of screen, begining is form top side of screen.
+   */
   double camera_pos_y;
-  //probability of make mistake during transmission
+  /** Probability of make mistake during transmission.
+   */
   double mistake_posibility;
-  //time between two bits
+  /** Time between two bits
+   */
   int time;
 };
 

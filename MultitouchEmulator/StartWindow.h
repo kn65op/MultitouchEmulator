@@ -33,8 +33,17 @@ public:
   std::string getSelectedName() const;
 
 protected:
+  /**
+   * Function to react when combo box is changed.
+   */
   void on_choose_combo_box_changed();
+  /**
+   * Function to react when new button is pressed.
+   */
   void on_new_button_pressed();
+  /**
+   * Function to react when delete button is pressed.
+   */
   void on_delte_buton_pressed();
 
 private:
