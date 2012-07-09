@@ -104,6 +104,7 @@ int _tmain(int argc, char* argv[])
         switch(sw.run())
         {
         case Gtk::RESPONSE_DELETE_EVENT:
+          parameters.save();
           return 0;
         case Gtk::RESPONSE_OK:
           try

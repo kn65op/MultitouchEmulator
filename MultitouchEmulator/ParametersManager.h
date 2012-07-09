@@ -46,12 +46,12 @@ public:
    * @return Parameters with given name.
    */
   Parameters & getParameters(std::string name);
-
-private:
   /**
    * Function save parameters to XML.
    */
   void save(void);
+
+private:
 
   //container for Parameters
   container parameters;
