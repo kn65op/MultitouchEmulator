@@ -110,16 +110,7 @@ void StartWindow::on_choose_combo_box_changed()
   }
 
   //saving last
-  if (old_choosen != "")
-  {
-    try
-    {
-      save_actual_parameters();
-    }
-    catch (ParametersManager::NoParametersException ex)
-    {
-    }
-  }
+  save_actual_parameters();
 
   old_choosen = choose_combo_box.get_active_text();
   insertParametersNames();
@@ -178,6 +169,15 @@ void StartWindow::on_delte_buton_pressed()
 
 void StartWindow::save_actual_parameters()
 {
-  parameters->setParameters(old_choosen, name_field.get_text(), atof(camera_height_field.get_text().c_str()), atof(device_height_field.get_text().c_str()), atof(cam_pos_x_field.get_text().c_str()), atof(cam_pos_y_field.get_text().c_str()),
+  if (old_choosen != "")
+  {
+    try
+    {
+      parameters->setParameters(old_choosen, name_field.get_text(), atof(camera_height_field.get_text().c_str()), atof(device_height_field.get_text().c_str()), atof(cam_pos_x_field.get_text().c_str()), atof(cam_pos_y_field.get_text().c_str()),
         atof(mistakes_field.get_text().c_str()), atoi(time_field.get_text().c_str()));
+    }
+    catch (ParametersManager::NoParametersException ex)
+    {
+    }
+  }
 }
