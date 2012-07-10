@@ -1,8 +1,6 @@
 #include "StdAfx.h"
 #include "StartWindow.h"
 
-#include <iostream>
-
 #include <algorithm>
 
 #include "Parameters.h"
