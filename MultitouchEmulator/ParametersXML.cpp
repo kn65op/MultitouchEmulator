@@ -53,7 +53,7 @@ void ParametersXML::saveToXML(xmlpp::Node * parent_node)
   child = params->add_child("cameraPositionX");
   child->add_child_text(cx.str());
   child = params->add_child("cameraPositionY");
-  child->add_child_text(cx.str());
+  child->add_child_text(cy.str());
   child = params->add_child("mistakes");
   child->add_child_text(m.str());
   child = params->add_child("time");
