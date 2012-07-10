@@ -102,5 +102,7 @@ void ParametersManager::addNew()
 
 void ParametersManager::remove(std::string name)
 {
+  Parameters *p = parameters[name];
   parameters.erase(name);
+  delete p;
 }

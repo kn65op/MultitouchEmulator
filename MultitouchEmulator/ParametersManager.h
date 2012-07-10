@@ -5,6 +5,8 @@
 
 #include "Parameters.h"
 
+#include <iostream>
+
 /**
  * Class with manage Parameters.
  */
@@ -28,7 +30,11 @@ public:
    */
   class NoParametersException
   {
-
+  public:
+    NoParametersException()
+    {
+      std::cout << "Thrown\n";
+    }
   };
 
   /**
