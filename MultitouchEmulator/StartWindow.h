@@ -72,6 +72,8 @@ private:
   //if user selected
   bool user;
 
+  void clearFields();
+
   
 };
 

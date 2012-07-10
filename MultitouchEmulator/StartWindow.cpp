@@ -136,13 +136,7 @@ void StartWindow::on_choose_combo_box_changed()
   }
   catch (ParametersManager::NoParametersException ex)
   {
-    camera_height_field.set_text("");
-    cam_pos_x_field.set_text("");
-    cam_pos_y_field.set_text("");
-    device_height_field.set_text("");
-    mistakes_field.set_text("");
-    time_field.set_text("");
-    name_field.set_text("");
+    clearFields();
   }
     
   user = false;
@@ -152,12 +146,18 @@ void StartWindow::on_choose_combo_box_changed()
 
 void StartWindow::on_new_button_pressed()
 {
+  user = false;
+  save_actual_parameters();
   parameters->addNew();
   insertParametersNames();
+  clearFields();
+  old_choosen = "";
+  user = true;
 }
 
 void StartWindow::on_delte_buton_pressed()
 {
+  user = false;
   std::string tmp = choose_combo_box.get_active_text();
   if (tmp != "")
   {
@@ -165,6 +165,8 @@ void StartWindow::on_delte_buton_pressed()
     insertParametersNames();
     old_choosen = "";
   }
+  clearFields();
+  user = true;
 }
 
 void StartWindow::save_actual_parameters()
@@ -180,4 +182,15 @@ void StartWindow::save_actual_parameters()
     {
     }
   }
+}
+
+void StartWindow::clearFields()
+{
+  camera_height_field.set_text("");
+  cam_pos_x_field.set_text("");
+  cam_pos_y_field.set_text("");
+  device_height_field.set_text("");
+  mistakes_field.set_text("");
+  time_field.set_text("");
+  name_field.set_text("");
 }
