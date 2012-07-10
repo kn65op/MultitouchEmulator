@@ -161,10 +161,6 @@ void ApplicationController::searchingForDevices()
 
 void ApplicationController::transmission()
 {
-  if (!devices.size())
-  {
-    throw Exception("No devices found", false);
-  }
 
   //transmission
   while(true)
@@ -250,7 +246,11 @@ bool ApplicationController::isShowStartingDialog() const
 }
 
 void ApplicationController::prepareTransmission()
-{
+{  
+  if (!devices.size())
+  {
+    throw Exception("No devices found", false);
+  }
   while(true)
   {
     cv::imshow("generated", hom.getGUIBlackScreen());
