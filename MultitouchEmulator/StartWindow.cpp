@@ -62,8 +62,8 @@ StartWindow::StartWindow(ParametersManager * par)
   device_height_label.set_label("Device height (in cm)");
   cam_pos_x_label.set_label("Camera position in x dimension (in pixels)");
   cam_pos_y_label.set_label("Camera position in y dimension (in pixels)");
-  mistakes_label.set_label("Mistake probability");
-  time_label.set_label("Time of showing one bit");
+  mistakes_label.set_label("Mistake probability (0-1)");
+  time_label.set_label("Time of showing one bit (ms)");
   new_button.set_label("New");
   delete_button.set_label("Delete");
 
