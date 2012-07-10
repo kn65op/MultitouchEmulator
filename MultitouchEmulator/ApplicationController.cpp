@@ -156,11 +156,6 @@ void ApplicationController::searchingForDevices()
     }
   }
 
-  if (!devices.size())
-  {
-    throw Exception("No devices found", false);
-  }
-
   devices.shiftDevices(hom);
 }
 
@@ -174,7 +169,7 @@ void ApplicationController::transmission()
   //transmission
   while(true)
   {
-    Sleep(10); // TODO: change this
+    Sleep(time);
 
     cv::imshow("generated", hom.getGUITransmission(devices));
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);

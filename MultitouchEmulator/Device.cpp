@@ -43,6 +43,10 @@ void Device::calcRect()
 {
   //finding rectangle (not rotated)
   rect = cv::boundingRect(points);
+  rect.x  = rect.x - 30;
+  rect.y  = rect.y - 30;
+  rect.width  = rect.width + 60;
+  rect.height = rect.height + 60;
   bigger_rect.x  = rect.x - 30;
   bigger_rect.y  = rect.y - 30;
   bigger_rect.width  = rect.width + 60;
@@ -103,9 +107,8 @@ void Device::showNextBit(cv::Mat & image)
 {
   if (isNextBit())
   {
-    //cv::rectangle(image, rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
-    cv::rectangle(image, bigger_rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
-    //TODO: smaller ret
+    cv::rectangle(image, rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
+    
   }
 }
 
@@ -113,8 +116,7 @@ void Device::showWrongBit(cv::Mat & image)
 {
   if (isNextBit())
   {
-    //cv::rectangle(image, rect, *(mit++) ? cv::Scalar(0,0,0): cv::Scalar(255,255,255), CV_FILLED);
-    //TODO: add wrong bit
+    cv::rectangle(image, rect, *(mit++) ? cv::Scalar(0,0,0): cv::Scalar(255,255,255), CV_FILLED);
   }
 }
 

@@ -10,7 +10,7 @@ Homography::Homography(void)
 {
   //starting parameters
   points_setted = false;
-  colorGUI = cv::Scalar(100,255,100);
+  colorGUI = cv::Scalar(70,255,70);
   color_line = cv::Scalar(0,0,0);
   color_detect_screen = cv::Scalar(255,255,255);
   color_black = cv::Scalar(0,0,0);

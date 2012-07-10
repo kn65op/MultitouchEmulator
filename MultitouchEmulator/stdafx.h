@@ -14,6 +14,4 @@
 #include <gtkmm.h>
 
 
-// TODO: reference additional headers your program requires here
-
 #endif MULTITOUCH_EMULATOR_STDAFX_H
