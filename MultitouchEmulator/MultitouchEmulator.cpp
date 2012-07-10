@@ -104,11 +104,13 @@ int _tmain(int argc, char* argv[])
         switch(sw.run())
         {
         case Gtk::RESPONSE_DELETE_EVENT:
+          sw.save_actual_parameters();
           parameters.save();
           return 0;
-        case Gtk::RESPONSE_OK:
+        case StartWindow::response::OK:
           try
           {
+            sw.save_actual_parameters();
             ac.setParameters(parameters.getParameters(sw.getSelectedName()));
           }
           catch (ParametersManager::NoParametersException ex)

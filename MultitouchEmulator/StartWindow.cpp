@@ -9,6 +9,10 @@
 
 StartWindow::StartWindow(ParametersManager * par)
 {
+  //initialize variables
+  user = true;
+
+  //button ok
   add_button(Gtk::Stock::OK, OK);
   parameters = par;
 
@@ -81,6 +85,7 @@ std::string StartWindow::getSelectedName() const
 
 void StartWindow::insertParametersNames()
 {
+  user = false;
   choose_combo_box.clear();
 
   std::list<std::string> names = parameters->getParametersNames();
@@ -89,32 +94,33 @@ void StartWindow::insertParametersNames()
   {
     this->choose_combo_box.append_text(name);
   });
+  user = true;
 }
 
 void StartWindow::on_choose_combo_box_changed()
 {
+  //if it is not user action then return
+  if (!user)
+  {
+    return;
+  }
+
   //saving last
   if (old_choosen != "")
   {
     try
     {
-      Parameters & p = parameters->getParameters(old_choosen);
-      p.SetCamera_height(atof(camera_height_field.get_text().c_str()));
-      p.SetCamera_pos_x(atof(cam_pos_x_field.get_text().c_str()));
-      p.SetCamera_pos_y(atof(cam_pos_y_field.get_text().c_str()));
-      p.SetDevice_height(atof(device_height_field.get_text().c_str()));
-      p.SetMistake_posibility(atof(mistakes_field.get_text().c_str()));
-      p.SetTime(atoi(time_field.get_text().c_str()));
-      p.SetName(name_field.get_text());
+      save_actual_parameters();
     }
     catch (ParametersManager::NoParametersException ex)
     {
-
     }
   }
-  
-  //reading from parameters
+
   old_choosen = choose_combo_box.get_active_text();
+  insertParametersNames();
+
+  //reading from parameters
   try
   {
     Parameters & p = parameters->getParameters(old_choosen);
@@ -143,6 +149,10 @@ void StartWindow::on_choose_combo_box_changed()
     time_field.set_text("");
     name_field.set_text("");
   }
+
+  user = false;
+  choose_combo_box.set_active_text(old_choosen);
+  user = true;
 }
 
 void StartWindow::on_new_button_pressed()
@@ -159,4 +169,10 @@ void StartWindow::on_delte_buton_pressed()
     parameters->remove(tmp);
     insertParametersNames();
   }
+}
+
+void StartWindow::save_actual_parameters()
+{
+  parameters->setParameters(old_choosen, name_field.get_text(), atof(camera_height_field.get_text().c_str()), atof(device_height_field.get_text().c_str()), atof(cam_pos_x_field.get_text().c_str()), atof(cam_pos_y_field.get_text().c_str()),
+        atof(mistakes_field.get_text().c_str()), atoi(time_field.get_text().c_str()));
 }

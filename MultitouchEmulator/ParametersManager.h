@@ -75,6 +75,19 @@ public:
    */
   void remove(std::string name);
 
+  /**
+   * Change parameters of Parameters.
+   * @param name Name of Parameters to change.
+   * @param new_name New name of parameters.
+   * @param camera_height Camera height.
+   * @param device_height Device height.
+   * @param cam_pos_x Camera position in x dimension.
+   * @param cam_pos_y Camera position in y dimension.
+   * @param mistake Mistakes probability.
+   * @param time Time between showing two bits.
+   */
+  void setParameters(std::string name, std::string new_name, double camera_height, double device_height, double cam_pos_x, double cam_pos_y, double mistake, int time);
+
 private:
 
   //container for Parameters

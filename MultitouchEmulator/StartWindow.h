@@ -32,6 +32,8 @@ public:
    */
   std::string getSelectedName() const;
 
+  void save_actual_parameters();
+
 protected:
   /**
    * Function to react when combo box is changed.
@@ -66,5 +68,9 @@ private:
 
   //string with name of previous 
   std::string old_choosen;
+  //if user selected
+  bool user;
+
+  
 };
 

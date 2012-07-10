@@ -106,3 +106,22 @@ void ParametersManager::remove(std::string name)
   parameters.erase(name);
   delete p;
 }
+
+void ParametersManager::setParameters(std::string name, std::string new_name, double camera_height, double device_height, double cam_pos_x, double cam_pos_y, double mistake, int time)
+{
+  //set parameters
+  Parameters *p = parameters[name];
+  p->SetCamera_height(camera_height);
+  p->SetCamera_pos_x(cam_pos_x);
+  p->SetCamera_pos_y(cam_pos_y);
+  p->SetDevice_height(device_height);
+  p->SetMistake_posibility(mistake);
+  p->SetTime(time);
+  p->SetName(new_name);
+  
+  if (name != new_name) //change name
+  {
+    parameters[new_name] = p;
+    parameters.erase(name);
+  }
+}
