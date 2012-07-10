@@ -101,26 +101,32 @@ int _tmain(int argc, char* argv[])
       if(ac.isShowStartingDialog())
       {
         StartWindow sw(&parameters);
-        switch(sw.run())
+        while(sw.isNeed())
         {
-        case Gtk::RESPONSE_DELETE_EVENT:
-          sw.save_actual_parameters();
-          parameters.save();
-          return 0;
-        case StartWindow::OK:
-          try
+          switch(sw.run())
           {
+          case Gtk::RESPONSE_DELETE_EVENT:
             sw.save_actual_parameters();
-            ac.setParameters(parameters.getParameters(sw.getSelectedName()));
-          }
-          catch (ParametersManager::NoParametersException ex)
-          {
-            std::string mes = "Parameters with name is not found. Exiting";
-            Gtk::MessageDialog dialog(mes);
-            dialog.run();
+            parameters.save();
             return 0;
+          case StartWindow::OK:
+            try
+            {
+              sw.save_actual_parameters();
+              ac.setParameters(parameters.getParameters(sw.getSelectedName()));
+            }
+            catch (ParametersManager::NoParametersException ex)
+            {
+              std::string mes = "Parameters with name is not found. Exiting";
+              Gtk::MessageDialog dialog(mes);
+              dialog.run();
+              return 0;
+            }
+            break;
+          case StartWindow::CHECK_IMAGE:
+            sw.save_actual_parameters();
+            ac.showCheck();
           }
-          break;
         }
       }
 

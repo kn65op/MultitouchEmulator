@@ -23,16 +23,26 @@ public:
    */
   enum response
   {
-    OK
+    OK,
+    CHECK_IMAGE
   };
 
   /**
    * Function returns selected element on the list.
    * @return std::string with name of parameters.
    */
-  std::string getSelectedName() const;
+  std::string getSelectedName();
 
+  /**
+   * Saving actual written parameters.
+   */
   void save_actual_parameters();
+
+  /**
+   * Returns information if this dialog is still need to be shown.
+   * @return true if dialog should be shown, false otherwise.
+   */
+  bool isNeed();
 
 protected:
   /**
@@ -74,6 +84,8 @@ private:
 
   void clearFields();
 
+  //if is needed
+  bool need;
   
 };
 

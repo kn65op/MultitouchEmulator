@@ -11,6 +11,10 @@ StartWindow::StartWindow(ParametersManager * par)
 {
   //initialize variables
   user = true;
+  need = true;
+  
+  //button to check image
+  add_button("Show check image", CHECK_IMAGE);
 
   //button ok
   ok = add_button(Gtk::Stock::OK, OK);
@@ -79,8 +83,9 @@ StartWindow::~StartWindow(void)
 {
 }
 
-std::string StartWindow::getSelectedName() const
+std::string StartWindow::getSelectedName()
 {
+  need = false;
   return choose_combo_box.get_active_text();
 }
 
@@ -193,4 +198,9 @@ void StartWindow::clearFields()
   mistakes_field.set_text("");
   time_field.set_text("");
   name_field.set_text("");
+}
+
+bool StartWindow::isNeed()
+{
+  return need;
 }
