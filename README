@@ -1,0 +1,3 @@
+In order to work you have to add two files in MultitouchEmulator:
+* openCV.props - with OpenCV configuration to release version,
+* openCVd.props - with OpenCV configuration to debug version.
