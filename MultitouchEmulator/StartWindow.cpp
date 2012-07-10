@@ -13,8 +13,9 @@ StartWindow::StartWindow(ParametersManager * par)
   user = true;
 
   //button ok
-  add_button(Gtk::Stock::OK, OK);
+  ok = add_button(Gtk::Stock::OK, OK);
   parameters = par;
+  ok->set_sensitive(false);
 
   //getting main box
   Gtk::VBox * main_vbox = get_vbox();
@@ -80,7 +81,7 @@ StartWindow::~StartWindow(void)
 
 std::string StartWindow::getSelectedName() const
 {
-  return "";
+  return choose_combo_box.get_active_text();
 }
 
 void StartWindow::insertParametersNames()
@@ -99,6 +100,9 @@ void StartWindow::insertParametersNames()
 
 void StartWindow::on_choose_combo_box_changed()
 {
+  //setting button ok
+  ok->set_sensitive(choose_combo_box.get_active_text() != "");
+
   //if it is not user action then return
   if (!user)
   {
@@ -149,7 +153,7 @@ void StartWindow::on_choose_combo_box_changed()
     time_field.set_text("");
     name_field.set_text("");
   }
-
+    
   user = false;
   choose_combo_box.set_active_text(old_choosen);
   user = true;
@@ -168,6 +172,7 @@ void StartWindow::on_delte_buton_pressed()
   {
     parameters->remove(tmp);
     insertParametersNames();
+    old_choosen = "";
   }
 }
 

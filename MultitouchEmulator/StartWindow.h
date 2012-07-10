@@ -55,6 +55,7 @@ private:
   Gtk::ComboBoxText choose_combo_box;
   //buttons
   Gtk::Button new_button, delete_button;
+  Gtk::Button *ok;
   //labels
   Gtk::Label name_label, camera_height_label, device_height_label, cam_pos_x_label, cam_pos_y_label, mistakes_label, time_label;
   //fields

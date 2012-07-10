@@ -107,7 +107,7 @@ int _tmain(int argc, char* argv[])
           sw.save_actual_parameters();
           parameters.save();
           return 0;
-        case StartWindow::response::OK:
+        case StartWindow::OK:
           try
           {
             sw.save_actual_parameters();
