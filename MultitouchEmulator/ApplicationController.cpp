@@ -166,6 +166,11 @@ void ApplicationController::searchingForDevices()
 
 void ApplicationController::transmission()
 {
+  if (!devices.size())
+  {
+    throw Exception("No devices found", false);
+  }
+
   //transmission
   while(true)
   {

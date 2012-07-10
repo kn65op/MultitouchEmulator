@@ -234,7 +234,7 @@ cv::Mat & Homography::getGUIStillScreen()
 
   //text
   std::stringstream text;
-  text << "Waiting for still scene";
+  text << "Please wait";
   cv::putText(GUI, text.str(), cv::Point((int)(generated_y * 0.05), (int)(generated_x * 0.05)), CV_FONT_HERSHEY_SIMPLEX, 1, color_line);
   return GUI;
 }
