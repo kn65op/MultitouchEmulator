@@ -153,5 +153,8 @@ private:
   bool show_starting_dialog;
   //if show device recognition
   bool show_device_recognition;
+  
+  //time to sleep
+  int time;
 };
 

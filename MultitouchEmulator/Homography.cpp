@@ -19,13 +19,17 @@ Homography::Homography(void)
   
   //parameters defiding the scene
   //device height in cm (double)
-  h1 = 4;
+  //h1 = 4;
+  h1 = 0;
   //camera height in cm (double)
-  h = 72;
+  //h = 72;
+  h = 1;
   // camera position in x dimension in pixels (double)
-  camera_pos_x = 300;
+  camera_pos_x = 0;
+//  camera_pos_x = 300;
   // camera position in y dimension in pixels (double)
-  camera_pos_y = -200;
+//  camera_pos_y = -200;
+  camera_pos_y = 0;
   // probability of making mistakes during transmission (double)
   mistake_posibility = 0;
   
@@ -382,8 +386,19 @@ void Homography::reset()
 
 void Homography::setParameters(Parameters & par)
 {
-  //TODO: dopisaæ
+  h = par.GetCamera_height();
+  h1 = par.GetDevice_height();
+  camera_pos_x = par.GetCamera_pos_x();
+  camera_pos_y = par.GetCamera_pos_y();
+  mistake_posibility = par.GetMistake_posibility();
   
-  //calculating scale
-  scale = 1 - h1 / h;
+  //calculate scale
+  if (h)
+  {
+    scale = 1 - h1 / h;
+  }
+  else
+  {
+    scale = 0;
+  }
 }
