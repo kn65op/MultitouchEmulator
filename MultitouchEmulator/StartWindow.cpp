@@ -17,7 +17,7 @@ StartWindow::StartWindow(ParametersManager * par)
   //button ok
   ok = add_button(Gtk::Stock::OK, OK);
   parameters = par;
-  ok->set_sensitive(false);
+  setSensitives(false);
 
   //getting main box
   Gtk::VBox * main_vbox = get_vbox();
@@ -104,7 +104,7 @@ void StartWindow::insertParametersNames()
 void StartWindow::on_choose_combo_box_changed()
 {
   //setting button ok
-  ok->set_sensitive(choose_combo_box.get_active_text() != "");
+  setSensitives(choose_combo_box.get_active_text() != "");
 
   //if it is not user action then return
   if (!user)
@@ -201,4 +201,16 @@ void StartWindow::clearFields()
 bool StartWindow::isNeed()
 {
   return need;
+}
+
+void StartWindow::setSensitives(bool s)
+{
+  ok->set_sensitive(s);
+  name_field.set_sensitive(s);
+  camera_height_field.set_sensitive(s);
+  device_height_field.set_sensitive(s);
+  cam_pos_x_field.set_sensitive(s);
+  cam_pos_y_field.set_sensitive(s);
+  mistakes_field.set_sensitive(s);
+  time_field.set_sensitive(s);
 }
