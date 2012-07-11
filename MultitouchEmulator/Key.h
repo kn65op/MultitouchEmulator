@@ -98,5 +98,7 @@ private:
 
   std::vector<bool> changeIntToBinary(int n);
 
+  void addIntToBinary(int n, std::vector<bool> & v);
+
 };
 

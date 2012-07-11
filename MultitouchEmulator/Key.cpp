@@ -51,8 +51,11 @@ std::vector<bool> Key::getMasterDeviceCode()
 {
   std::vector<bool> ret;
 
+  //store id (= 0)
+  ret = changeIntToBinary(0);
   //store number of devices in binary
-  //ret = changeIntToBinary(number_of_devices);
+  addIntToBinary(number_of_devices, ret);
+
 
   //TODO: depends of the transmision protocol
 
@@ -245,21 +248,26 @@ int Key::getLongestLength() const
 std::vector<bool> Key::changeIntToBinary(int n)
 {
   std::vector<bool> ret;
-  int i = 7;
+  addIntToBinary(n, ret);
+  return ret;
+}
+
+void Key::addIntToBinary(int n, std::vector<bool> & v)
+{
+   int i = 7;
   do
   {
     if ( (n & 1) == 0 )
-      ret[i--] = false;
+      v.push_back(false);
     else
-      ret[i--] = true;
+      v.push_back(true);
 
     n >>= 1;
+    --i;
   } while ( n ); 
   
-  while (i > -1)
+  while (i-- > -1)
   {
-    ret[i--] = false;
+    v.push_back(false);
   }
-
-  return ret;
 }
