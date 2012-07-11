@@ -17,7 +17,7 @@ public:
   void generateMainKey(int n);
 
   /**
-   * Setting hash length. It actually does nothing.
+   * Setting hash length.
    * @param length Demaned main key length.
    */
   void setHashLength(int length);
@@ -95,5 +95,7 @@ private:
    * @param key Vector where binary value is stored.
    */
   void storeHexIntoKey(BYTE hex, std::vector<bool> & key);
+  
+
 };
 

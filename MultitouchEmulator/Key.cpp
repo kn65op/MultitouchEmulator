@@ -98,11 +98,14 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
 
 	if (hash)
 	{
+    //length of message
+    int len = hash_length / 8;
+
     //debug: showing generated key for secondary devices
 		std::cout << "hash: 0x";
 
     //change hash into binary code
-		for (int i = 0; i < 20; i ++) //it should be changed due to change of encryption.
+		for (int i = 0; i < len; i ++) //it should be changed due to change of encryption.
     {
 			std::cout << std::hex << (int)hash[i];
       storeHexIntoKey(hash[i], ret);
