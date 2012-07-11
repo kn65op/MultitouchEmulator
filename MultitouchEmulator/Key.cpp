@@ -93,8 +93,8 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
   std::stringstream ss;
   ss << n << key;
   
-  //BYTE *hash = hash_func((BYTE*)ss.str().c_str(), ss.str().size(), MD5);
-  BYTE *hash = aes((BYTE*)ss.str().c_str(), ss.str().size());
+  BYTE *hash = hash_func((BYTE*)ss.str().c_str(), ss.str().size(), SHA);
+  //BYTE *hash = aes((BYTE*)ss.str().c_str(), ss.str().size());
 
 	if (hash)
 	{
