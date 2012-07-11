@@ -14,9 +14,10 @@ using namespace cv;
 
 #define HOMOGRAPHY
 //#define JUST_PHOTO
-//#define CAM
 
 #ifdef JUST_PHOTO
+
+#include "ImageOperations.h"
 
 void onMouse(int event, int x, int y, int flags, void* param)
 {

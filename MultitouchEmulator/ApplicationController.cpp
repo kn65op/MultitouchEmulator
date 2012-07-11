@@ -126,13 +126,13 @@ void ApplicationController::searchingForDevices()
 
     //imshow("gray", gray);
     
-    cv::inRange(hsv_all, cv::Scalar(15, 0, 0), cv::Scalar(40,255,255), binary);
+    cv::inRange(hsv_all, cv::Scalar(15, 0, 30), cv::Scalar(40,255,255), binary);
 
     negation(binary);
     cv::dilate(binary, binary, strele3x3);
     cv::erode(binary, binary, strele3x3);
 
-    //cv::imshow("bin", binary);
+    cv::imshow("bin", binary);
     
     generated = hom.processImage(binary);
     cv::erode(generated, to_show, strele11x11);
@@ -146,8 +146,8 @@ void ApplicationController::searchingForDevices()
     }
     else
     {
-      cv::imshow("generated", hom.getGUIStillScreen());
-      showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
+     // cv::imshow("generated", hom.getGUIStillScreen());
+      //showImageWithoutFrame(L"generated", to_show.cols, to_show.rows);
     }
 
     if(cv::waitKey(30) >= 0)
