@@ -34,6 +34,7 @@ void Key::generateMainKey(int n)
   {
     key += alphabet[dist(gen)];
   }
+  std::cout << "Key: " << key << "\n";
 }
 
 void Key::setHashLength(int length)
@@ -48,10 +49,10 @@ void Key::setNumberOfDevices(int  nod)
 
 std::vector<bool> Key::getMasterDeviceCode()
 {
-  std::vector<bool> ret(8);
+  std::vector<bool> ret;//(8); //TODO: space for number_of_devices
 
   //store number of devices in binary
-  int tmp = number_of_devices;
+ /* int tmp = number_of_devices;
   int i = 7;
   do
   {
@@ -66,14 +67,14 @@ std::vector<bool> Key::getMasterDeviceCode()
   while (i > -1)
   {
     ret[i--] = false;
-  }
+  }*/ //TODO: depends of the transmision protocol
 
   //copy key (from std::string cointains only '1' or '0') to binary. If alphabet changes it should be also changed
   std::string::iterator sit, send;
   send = key.end();
   for (sit = key.begin(); sit != send; ++sit)
   {
-    if (*sit == 1)
+    if (*sit == '1')
     {
       ret.push_back(true);
     }
@@ -117,7 +118,7 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
 
 unsigned char * Key::aes(unsigned char * input, int size)
 {
-  BYTE pass[] = "pass";
+  BYTE pass[] = "pass"; //key for AES
   BYTE *data = new BYTE[128];
   int i;
   for (i=0; i <size; ++i)
@@ -162,7 +163,7 @@ unsigned char * Key::aes(unsigned char * input, int size)
     return 0; //error
   }
 
-  if (CryptHashData(hHash, pass, 4,0)) //TODO change pass
+  if (CryptHashData(hHash, pass, 4,0))
   {
     std::cout << "Key2\n";
   }

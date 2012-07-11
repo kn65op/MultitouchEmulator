@@ -18,7 +18,9 @@ private:
   // pair for container
   typedef std::pair<int, Device*> pair_type;
 public:
-  //iterator for devices
+  /**
+   * iterator for devices
+   */
   typedef std::map<int, Device*>::iterator iterator;
 
   //members
@@ -59,6 +61,12 @@ public:
    * @param hom Homography used to recognize devices.
    */
   void processToTransmition(Key key, Homography & hom);
+
+  /**
+   * Function shifts devices to proper position.
+   * @param hom Homgraphy with parameters to shift.
+   */
+  void shiftDevices(Homography & hom);
 
   /**
    * Function returs iteraor to first device.

@@ -4,6 +4,8 @@
 
 #include <random>
 
+#include "Parameters.h"
+
 class Devices;
 
 /**
@@ -43,7 +45,7 @@ public:
 
   /**
    * Function use to manualy slecting points on image.
-   * int event Event.
+   * @param event Event.
    * @param x Value of point in OX.
    * @param y Value of point in OY.
    * @param flags Flags.
@@ -99,6 +101,10 @@ public:
     */
   cv::Mat & getGUIDetectDevice(Devices & devs);
   /**
+    * Function returns image with GUI with still screen text to wait when camera can see green screen.
+    */
+  cv::Mat & getGUIStillScreen();
+  /**
     * Function returns image with GUI for detecting screen.
     */
   cv::Mat & getGUIDetectScreen();
@@ -110,6 +116,10 @@ public:
     * Function returns image with GUI for entering camera position.
     */
   cv::Mat & getGUICameraPosition();
+  /**
+    * Function returns image with GUI for entering camera position.
+    */
+  cv::Mat & getGUIBlackScreen();
   /**
     * Function returns image with GUI for end.
     */
@@ -142,6 +152,20 @@ public:
    * @return camera position in Y dimension as double.
    */
   double getCameraY() const;
+
+  /**
+   * Function prepares screen to recognize devices.
+   */
+  void prepareDeviceRecognition();
+  /**
+   * Function prepares screen to transmission.
+   */
+  void prepareTransmission(Devices & devs);
+  /**
+   * Function which set parameters of scene (camera height etc.)
+   * @param par Object Parameters with parameters to set.
+   */
+  void setParameters(Parameters & par);
 
 private:
   /**
@@ -194,12 +218,19 @@ private:
   /**
    * Function clear GUI (only above line) with actual color.
    */
-  void clearGUI();
+  void clearGUI(cv::Scalar & scalar);
+  /**
+   * Function resets homography
+   */
+  void reset();
 
   //colors of GUI
   cv::Scalar colorGUI;
   cv::Scalar color_detect_screen;
   cv::Scalar color_line;
+  cv::Scalar color_black;
+  cv::Scalar color_white;
+  cv::Scalar color_gray;
 
   /**
    * Function sets actual GUI color.
@@ -216,7 +247,11 @@ private:
   double ratio_x, ratio_y;
 
   //scale
-  double scale, h, h1;
+  double scale;
+  //camera height
+  double h;
+  //device height
+  double h1;
   //camera position
   double camera_pos_x, camera_pos_y;
 
@@ -230,4 +265,8 @@ private:
   
   //tell about end
   bool end;
+
+  //for transmission
+  int transmission_progress;
+  int transmission_length;
 };

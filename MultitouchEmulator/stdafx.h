@@ -3,13 +3,15 @@
 // are changed infrequently
 //
 
-#pragma once
+#ifndef MULTITOUCH_EMULATOR_STDAFX_H
+#define MULTITOUCH_EMULATOR_STDAFX_H
 
 #include "targetver.h"
 
 #include <stdio.h>
 #include <tchar.h>
 
+#include <gtkmm.h>
 
 
-// TODO: reference additional headers your program requires here
+#endif MULTITOUCH_EMULATOR_STDAFX_H

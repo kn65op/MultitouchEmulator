@@ -172,3 +172,7 @@ pip-log.txt
 *.jpg
 *.bmp
 Debug/*.exe
+doc/*
+MultitouchEmulator/parameters.xml
+MultitouchEmulator/openCV.props
+MultitouchEmulator/openCVd.props

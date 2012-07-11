@@ -58,7 +58,7 @@ public:
 
   /**
    * Function to set message transmitted via optical channel.
-   * @param mes
+   * @param mes Message as message_type to be setted.
    */
   void setMessage(message_type mes);
   /**

@@ -31,16 +31,20 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="gtkmm-vc100-d-2_4.props" />
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="openCVd.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gtkmm-vc100-2_4.props" />
+    <Import Project="openCV.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Programy\opencv\build\include;C:\Programy\opencv\build\include\opencv;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Programy\opencv\build\x86\vc10\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -52,11 +56,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Programy\opencv\build\x86\vc10\lib\*d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,27 +81,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ApplicationController.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Devices.h" />
+    <ClInclude Include="EndWindow.h" />
     <ClInclude Include="Homography.h" />
     <ClInclude Include="ImageOperations.h" />
     <ClInclude Include="Key.h" />
+    <ClInclude Include="Parameters.h" />
+    <ClInclude Include="ParametersManager.h" />
+    <ClInclude Include="ParametersXML.h" />
     <ClInclude Include="ScreenShape.h" />
+    <ClInclude Include="StartWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ApplicationController.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Devices.cpp" />
+    <ClCompile Include="EndWindow.cpp" />
     <ClCompile Include="Homography.cpp" />
     <ClCompile Include="ImageOperations.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="MultitouchEmulator.cpp" />
+    <ClCompile Include="Parameters.cpp" />
+    <ClCompile Include="ParametersManager.cpp" />
+    <ClCompile Include="ParametersXML.cpp" />
     <ClCompile Include="ScreenShape.cpp" />
+    <ClCompile Include="StartWindow.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -43,6 +43,10 @@ void Device::calcRect()
 {
   //finding rectangle (not rotated)
   rect = cv::boundingRect(points);
+  rect.x  = rect.x - 30;
+  rect.y  = rect.y - 30;
+  rect.width  = rect.width + 60;
+  rect.height = rect.height + 60;
   bigger_rect.x  = rect.x - 30;
   bigger_rect.y  = rect.y - 30;
   bigger_rect.width  = rect.width + 60;
@@ -51,9 +55,18 @@ void Device::calcRect()
 
 void Device::setMessage(Device::message_type mes)
 {
+  message.clear();
+
   Device::message_iterator it, end;
   it = mes.begin();
   end = mes.end();
+
+  //initialization: 1 1 1
+
+  for (int i=0; i<1; ++i)
+  {
+    message.push_back(true);
+  }
 
   //Manchester Code
   for (; it != end; ++it)
@@ -71,6 +84,13 @@ void Device::setMessage(Device::message_type mes)
   }
 
   mit = message.begin();
+  
+  std::cout << "Manchester code: " ;
+  for (unsigned int i =0 ; i <message.size(); ++i)
+  {
+    std::cout << message[i];
+  }
+  std::cout << "\n";
 }
 
 void Device::showNoiseAround(cv::Mat & image)
@@ -88,6 +108,7 @@ void Device::showNextBit(cv::Mat & image)
   if (isNextBit())
   {
     cv::rectangle(image, rect, *(mit++) ? cv::Scalar(255,255,255): cv::Scalar(0,0,0), CV_FILLED);
+    
   }
 }
 
