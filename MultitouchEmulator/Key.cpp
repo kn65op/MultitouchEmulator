@@ -49,25 +49,12 @@ void Key::setNumberOfDevices(int  nod)
 
 std::vector<bool> Key::getMasterDeviceCode()
 {
-  std::vector<bool> ret;//(8); //TODO: space for number_of_devices
+  std::vector<bool> ret;
 
   //store number of devices in binary
- /* int tmp = number_of_devices;
-  int i = 7;
-  do
-  {
-    if ( (tmp & 1) == 0 )
-      ret[i--] = false;
-    else
-      ret[i--] = true;
+  //ret = changeIntToBinary(number_of_devices);
 
-    tmp >>= 1;
-  } while ( tmp );
-
-  while (i > -1)
-  {
-    ret[i--] = false;
-  }*/ //TODO: depends of the transmision protocol
+  //TODO: depends of the transmision protocol
 
   //copy key (from std::string cointains only '1' or '0') to binary. If alphabet changes it should be also changed
   std::string::iterator sit, send;
@@ -95,6 +82,9 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
   
   BYTE *hash = hash_func((BYTE*)ss.str().c_str(), ss.str().size(), SHA);
   //BYTE *hash = aes((BYTE*)ss.str().c_str(), ss.str().size());
+
+  //id of device:
+  ret = changeIntToBinary(n);
 
 	if (hash)
 	{
@@ -250,4 +240,26 @@ void Key::storeHexIntoKey(BYTE hex, std::vector<bool> & key)
 int Key::getLongestLength() const
 {
   return key_length + 8 > 128 ? key_length + 8 : 128;
+}
+
+std::vector<bool> Key::changeIntToBinary(int n)
+{
+  std::vector<bool> ret;
+  int i = 7;
+  do
+  {
+    if ( (n & 1) == 0 )
+      ret[i--] = false;
+    else
+      ret[i--] = true;
+
+    n >>= 1;
+  } while ( n ); 
+  
+  while (i > -1)
+  {
+    ret[i--] = false;
+  }
+
+  return ret;
 }

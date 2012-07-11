@@ -95,7 +95,8 @@ private:
    * @param key Vector where binary value is stored.
    */
   void storeHexIntoKey(BYTE hex, std::vector<bool> & key);
-  
+
+  std::vector<bool> changeIntToBinary(int n);
 
 };
 
