@@ -75,7 +75,8 @@ private:
   {
     MD2 = CALG_MD2,
     MD5 = CALG_MD5,
-    SHA = CALG_SHA
+    SHA = CALG_SHA,
+    SHA_256 = CALG_SHA_256
   };
 
   /**
