@@ -91,8 +91,7 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
   std::vector<bool> ret;
   //generating hash 
   std::stringstream ss;
-  //ss << n << key;
-  ss << "test";
+  ss << n << key;
   
   BYTE *hash = hash_func((BYTE*)ss.str().c_str(), ss.str().size(), SHA);
   //BYTE *hash = aes((BYTE*)ss.str().c_str(), ss.str().size());
@@ -103,7 +102,7 @@ std::vector<bool> Key::getSecondaryDeviceCode(int n)
 		std::cout << "hash: 0x";
 
     //change hash into binary code
-		for (int i = 0; i < 20; i ++)
+		for (int i = 0; i < 20; i ++) //it should be changed due to change of encryption.
     {
 			std::cout << std::hex << (int)hash[i];
       storeHexIntoKey(hash[i], ret);
