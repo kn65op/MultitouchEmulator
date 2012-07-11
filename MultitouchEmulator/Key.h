@@ -5,7 +5,7 @@
 #include <windows.h>
 
 /**
- * Class do all the job with keys
+ * Class does all the job with keys.
  */
 class Key
 {
@@ -17,7 +17,7 @@ public:
   void generateMainKey(int n);
 
   /**
-   * Setting hash length.
+   * Setting hash length. It actually does nothing.
    * @param length Demaned main key length.
    */
   void setHashLength(int length);
