@@ -138,6 +138,8 @@ int _tmain(int argc, char* argv[])
       ac.prepareTransmission();
 
       ac.transmission();
+
+      ac.endingScreen();
     }
     catch(ApplicationController::Exception e)
     {

@@ -178,16 +178,12 @@ void ApplicationController::transmission()
 
 void ApplicationController::endingScreen()
 {
-   while (true)
-  {
-    cv::imshow("generated", hom.getGUIEnd());
-    showImageWithoutFrame(L"generated", resolution.width, resolution.height);
+  cv::imshow("generated", hom.getGUIEnd());
+  showImageWithoutFrame(L"generated", resolution.width, resolution.height);
 
-    if(cv::waitKey(30) >= 0)
-    {
-      break;
-    }
-  }
+  //to show
+  cv::waitKey(1);
+
 }
 
 void ApplicationController::showCheck()
