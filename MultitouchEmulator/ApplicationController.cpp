@@ -161,7 +161,6 @@ void ApplicationController::searchingForDevices()
 
 void ApplicationController::transmission()
 {
-
   //transmission
   while(true)
   {
@@ -170,7 +169,7 @@ void ApplicationController::transmission()
     cv::imshow("generated", hom.getGUITransmission(devices));
     showImageWithoutFrame(L"generated", resolution.width, resolution.height);
 
-    if(cv::waitKey(30) >= 0 || hom.isEnd())
+    if(cv::waitKey(1) >= 0 || hom.isEnd())
     {
       break;
     }
