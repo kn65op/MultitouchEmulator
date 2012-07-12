@@ -37,6 +37,33 @@ void Key::generateMainKey(int n)
   std::cout << "Key: " << key << "\n";
 }
 
+
+void Key::generateMainKeyFourTimes(int n)
+{
+  key_length = n;
+  key = "";
+
+  std::string st;
+
+  //create random engine
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dist(0, alphabet.length() - 1);
+  
+  //generating key from alphabet
+  for (int i=0; i<n; ++i)
+  {
+    st += alphabet[dist(gen)];
+  }
+  //save key four time 
+  for (int i=0; i<4; ++i)
+  {
+    key += st;
+  }
+
+  std::cout << "Key: " << key << "\n";
+}
+
 void Key::setHashLength(int length)
 {
   hash_length = length;

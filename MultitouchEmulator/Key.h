@@ -15,6 +15,11 @@ public:
    * @param n Length of key.
    */
   void generateMainKey(int n);
+    /**
+   * Generates random key and store it four times. That means if you generate key of length 8, the key will have 32 bits, with same bits in ranges: 1-8, 9-16, 17-24, 25-32.
+   * @param n Length of key.
+   */
+  void generateMainKeyFourTimes(int n);
 
   /**
    * Setting hash length.
