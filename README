@@ -1,3 +1,7 @@
-In order to work you have to add two files in MultitouchEmulator:
+In order to work you have to:
+1. Install openCV and gtkmm
+2. Add two files in MultitouchEmulator:
 * openCV.props - with OpenCV configuration to release version,
 * openCVd.props - with OpenCV configuration to debug version.
+
+
